@@ -40,3 +40,8 @@ body {
   border: 1px solid $color-quinary;
   padding: 2rem;
 }
+
+.label-required-marker {
+  color: $color-quinary;
+  font-weight: bold;
+}
