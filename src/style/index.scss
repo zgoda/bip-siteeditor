@@ -29,9 +29,14 @@ body {
 }
 
 .mr-2 {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 
 .json-input {
-    height: 10rem;
+  height: 12rem;
+}
+
+.warning-box {
+  border: 1px solid $color-quinary;
+  padding: 2rem;
 }
