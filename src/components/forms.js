@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState, useRef } from 'preact/hooks';
 
 const Label = (({ forElement, labelText, isRequired = false }) => {
   if (isRequired) {
@@ -26,26 +26,31 @@ const TextField = (({ name, value, changeHandler, required, label }) => {
   )
 });
 
-const DataInputForm = (({ value, setValue }) => {
-  const [jsonData, setJsonData] = useState(value);
+const FileInput = (({ setValue }) => {
+  const fileInput = useRef(null);
 
-  const submitHandler = ((e) => {
-    setValue(jsonData);
-    e.preventDefault();
+  const fileSelectorClick = (() => {
+    fileInput.current && fileInput.current.click();
+  });
+
+  const onFileAdded = ((e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const reader = new FileReader();
+    reader.onload = ((e) => {
+      setValue(e.target.result);
+    })
+    reader.readAsText(file);
   });
 
   return (
-    <form onSubmit={submitHandler}>
+    <div>
+      <p>Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by załadować dane do edycji.</p>
       <fieldset>
-        <Label
-          htmlFor='jsondata'
-          labelText='Wklej zawartość pliku site.json twojej instancji BIP jeżeli chcesz zmienić jej dane'
-        />
-        <textarea className='json-input' name='jsondata' onInput={(e) => setJsonData(e.target.value)} value={jsonData} />
-        <button className='button button-primary mr-2' type='submit'>wczytaj</button>
-        <button className='button button-outline' onClick={() => setJsonData('')}>wyczyść</button>
+        <input type='file' ref={fileInput} accept='application/json' style='display:none' onChange={onFileAdded} />
+        <button id='fileSelect' onClick={fileSelectorClick}>wybierz plik</button>
       </fieldset>
-    </form>
+    </div>
   )
 });
 
@@ -134,4 +139,4 @@ const AddressDataForm = (({ data, setData }) => {
   )
 });
 
-export { DataInputForm, GenericDataForm, AddressDataForm };
+export { GenericDataForm, AddressDataForm, FileInput };

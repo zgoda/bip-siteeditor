@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { DataInputForm, GenericDataForm, AddressDataForm } from './components/forms';
+import { GenericDataForm, AddressDataForm, FileInput } from './components/forms';
 import { StartOverAgain } from './components/misc';
 
 const App = (() => {
@@ -46,7 +46,7 @@ const App = (() => {
   return (
     <div className='container'>
       <h1>Edytor danych instancji BIP</h1>
-      <DataInputForm value={inputData} setValue={inputDataChanged} />
+      <FileInput setValue={inputDataChanged} />
       <hr />
       <h2>Dane podstawowe</h2>
       <GenericDataForm data={genericData} setData={setGenericData} />
