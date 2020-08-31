@@ -1,5 +1,31 @@
 import { useState } from 'preact/hooks';
 
+const Label = (({ forElement, labelText, isRequired = false }) => {
+  if (isRequired) {
+    return (
+      <label htmlFor={forElement}>{labelText} <span className='label-required-marker'>*</span></label>
+    )
+  }
+  return (
+    <label htmlFor={forElement}>{labelText}</label>
+  )
+});
+
+const TextInput = (({ name, value, changeHandler, required }) => {
+  return (
+    <input type='text' name={name} value={value} onInput={changeHandler} required={required} />
+  )
+});
+
+const TextField = (({ name, value, changeHandler, required, label }) => {
+  return (
+    <>
+      <Label forElement={name} labelText={label} isRequired={required} />
+      <TextInput name={name} value={value} onInput={changeHandler} required={required} />
+    </>
+  )
+});
+
 const DataInputForm = (({ value, setValue }) => {
   const [jsonData, setJsonData] = useState(value);
 
@@ -11,7 +37,10 @@ const DataInputForm = (({ value, setValue }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <label htmlFor='jsondata'>Wklej zawartość pliku <code>site.json</code> twojej instancji BIP, jeżeli chcesz zmienić jej dane</label>
+        <Label
+          htmlFor='jsondata'
+          labelText='Wklej zawartość pliku site.json twojej instancji BIP jeżeli chcesz zmienić jej dane'
+        />
         <textarea className='json-input' name='jsondata' onInput={(e) => setJsonData(e.target.value)} value={jsonData} />
         <button className='button button-primary mr-2' type='submit'>wczytaj</button>
         <button className='button button-outline' onClick={() => setJsonData('')}>wyczyść</button>
@@ -43,17 +72,17 @@ const GenericDataForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <label htmlFor='name'>Nazwa instytucji <span className='label-required-marker'>*</span></label>
+        <Label forElement='name' labelText='Nazwa instytucji' isRequired={true} />
         <input type='text' name='name' value={name} onInput={(e) => setName(e.target.value)} required={true} />
-        <label htmlFor='shortName'>Nazwa skrócona</label>
+        <Label forElement='shortName' labelText='Nazwa skrócona' />
         <input type='text' name='shortName' value={short_name} onInput={(e) => setShortName(e.target.value)} />
-        <label htmlFor='bipUrl'>Adres strony BIP <span className='label-required-marker'>*</span></label>
+        <Label forElement='bipUrl' labelText='Adres strony BIP' isRequired={true} />
         <input type='text' name='bipUrl' value={bip_url} onInput={(e) => setBipUrl(e.target.value)} required={true} />
-        <label htmlFor='nip'>Numer NIP <span className='label-required-marker'>*</span></label>
+        <Label forElement='nip' labelText='Numer NIP' isRequired={true} />
         <input type='text' name='nip' value={nip} onInput={(e) => setNip(e.target.value)} required={true} />
-        <label htmlFor='regon'>Numer REGON <span className='label-required-marker'>*</span></label>
+        <Label forElement='regon' labelText='Numer REGON' isRequired={true} />
         <input type='text' name='regon' value={regon} onInput={(e) => setRegon(e.target.value)} required={true} />
-        <label htmlFor='krs'>Numer wpisu w KRS</label>
+        <Label forElement='krs' labelText='Numer wpisu w KRS' />
         <input type='text' name='krs' value={krs} onInput={(e) => setKrs(e.target.value)} />
         <button className='button button-primary' type='submit'>zapisz</button>
       </fieldset>
@@ -61,4 +90,48 @@ const GenericDataForm = (({ data, setData }) => {
   )
 });
 
-export { DataInputForm, GenericDataForm };
+const AddressDataForm = (({ data, setData }) => {
+  const [street, setStreet] = useState('');
+  const [zip_code, setZipCode] = useState('');
+  const [town, setTown] = useState('');
+
+  setStreet(data.street);
+  setZipCode(data.zip_code);
+  setTown(data.town);
+
+  const submitHandler = ((e) => {
+    setData({ street, zip_code, town });
+    e.preventDefault();
+  })
+
+  return (
+    <form onSubmit={submitHandler}>
+      <fieldset>
+        <TextField
+          name='street'
+          value={street}
+          changeHandler={(e) => setStreet(e.target.value)}
+          label='Ulica (miejscowość) z numerem budynku'
+          required={true}
+        />
+        <TextField
+          name='zip_code'
+          value={zip_code}
+          changeHandler={(e) => setZipCode(e.target.value)}
+          label='Kod pocztowy'
+          required={true}
+        />
+        <TextField
+          name='town'
+          value={town}
+          changeHandler={(e) => setTown(e.target.value)}
+          label='Miejscowość / poczta'
+          required={true}
+        />
+        <button className='button button-primary' type='submit'>zapisz</button>
+      </fieldset>
+    </form>
+  )
+});
+
+export { DataInputForm, GenericDataForm, AddressDataForm };

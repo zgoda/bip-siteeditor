@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { DataInputForm, GenericDataForm } from './components/forms';
+import { DataInputForm, GenericDataForm, AddressDataForm } from './components/forms';
 import { StartOverAgain } from './components/misc';
 
 const App = (() => {
@@ -50,6 +50,9 @@ const App = (() => {
       <hr />
       <h2>Dane podstawowe</h2>
       <GenericDataForm data={genericData} setData={setGenericData} />
+      <hr />
+      <h2>Dane adresowe</h2>
+      <AddressDataForm data={addressData} setData={setAddressData} />
       <hr />
       <StartOverAgain clearFunc={() => inputDataChanged('')} />
     </div>
