@@ -17,7 +17,7 @@ const TextInput = (({ name, value, changeHandler, required }) => {
   )
 });
 
-const TextField = (({ name, value, changeHandler, required, label }) => {
+const TextField = (({ name, value, changeHandler, required = false, label }) => {
   return (
     <>
       <Label forElement={name} labelText={label} isRequired={required} />
@@ -77,18 +77,46 @@ const GenericDataForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <Label forElement='name' labelText='Nazwa instytucji' isRequired={true} />
-        <input type='text' name='name' value={name} onInput={(e) => setName(e.target.value)} required={true} />
-        <Label forElement='shortName' labelText='Nazwa skrócona' />
-        <input type='text' name='shortName' value={short_name} onInput={(e) => setShortName(e.target.value)} />
-        <Label forElement='bipUrl' labelText='Adres strony BIP' isRequired={true} />
-        <input type='text' name='bipUrl' value={bip_url} onInput={(e) => setBipUrl(e.target.value)} required={true} />
-        <Label forElement='nip' labelText='Numer NIP' isRequired={true} />
-        <input type='text' name='nip' value={nip} onInput={(e) => setNip(e.target.value)} required={true} />
-        <Label forElement='regon' labelText='Numer REGON' isRequired={true} />
-        <input type='text' name='regon' value={regon} onInput={(e) => setRegon(e.target.value)} required={true} />
-        <Label forElement='krs' labelText='Numer wpisu w KRS' />
-        <input type='text' name='krs' value={krs} onInput={(e) => setKrs(e.target.value)} />
+        <TextField
+          name='name'
+          value={name}
+          changeHandler={(e) => setName(e.target.value)}
+          label='Nazwa instytucji'
+          required={true}
+        />
+        <TextField
+          name='shortName'
+          value={short_name}
+          changeHandler={(e) => setShortName(e.target.value)}
+          label='Nazwa skrócona'
+        />
+        <TextField
+          name='bipUrl'
+          value={bip_url}
+          changeHandler={(e) => setBipUrl(e.target.value)}
+          label='Adres strony BIP'
+          required={true}
+        />
+        <TextField
+          name='nip'
+          value={nip}
+          changeHandler={(e) => setNip(e.target.value)}
+          label='Numer NIP'
+          required={true}
+        />
+        <TextField
+          name='regon'
+          value={regon}
+          changeHandler={(e) => setRegon(e.target.value)}
+          label='Numer REGON'
+          required={true}
+        />
+        <TextField
+          name='krs'
+          value={krs}
+          changeHandler={(e) => setKrs(e.target.value)}
+          label='Numer wpisu w KRS'
+        />
         <button className='button button-primary' type='submit'>zapisz</button>
       </fieldset>
     </form>
@@ -139,4 +167,4 @@ const AddressDataForm = (({ data, setData }) => {
   )
 });
 
-export { GenericDataForm, AddressDataForm, FileInput };
+export { GenericDataForm, AddressDataForm, FileInput, TextField };
