@@ -128,9 +128,9 @@ const AddressDataForm = (({ data, setData }) => {
   const [zip_code, setZipCode] = useState('');
   const [town, setTown] = useState('');
 
-  setStreet(data.street);
-  setZipCode(data.zip_code);
-  setTown(data.town);
+  setStreet(data.street || '');
+  setZipCode(data.zip_code || '');
+  setTown(data.town || '');
 
   const submitHandler = ((e) => {
     setData({ street, zip_code, town });

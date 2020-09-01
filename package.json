@@ -30,6 +30,7 @@
     "sirv-cli": "1.0.6"
   },
   "dependencies": {
+    "hooked-head": "^0.4.1",
     "milligram": "^1.4.1",
     "preact": "^10.4.8",
     "preact-render-to-string": "^5.1.10"

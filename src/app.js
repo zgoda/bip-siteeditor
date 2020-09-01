@@ -1,11 +1,10 @@
 import { useState } from 'preact/hooks';
+import { useTitle, useMeta, useLang } from 'hooked-head/preact';
 import { GenericDataForm, AddressDataForm, FileInput } from './components/forms';
 import { StartOverAgain } from './components/misc';
 import { ContactGrid } from './components/contacts'
 
 const App = (() => {
-  const [inputData, setInputData] = useState('');
-  const [siteData, setSiteData] = useState({});
   const [genericData, setGenericData] = useState({});
   const [addressData, setAddressData] = useState({});
   const [contactData, setContactData] = useState([]);
@@ -36,24 +35,27 @@ const App = (() => {
 
   const inputDataChanged = ((value) => {
     value = value.trim();
-    setInputData(value);
     if (value) {
       const data = JSON.parse(value);
-      setSiteData(data);
       parseSiteDataParts(data);
     } else {
-      setSiteData({});
       clearSiteDataParts();
     }
   });
 
+  const appTitle = 'Edytor danych instancji BIP';
+
+  useLang('pl');
+  useTitle(appTitle);
+  useMeta({name: 'author', content: 'Jarek Zgoda'});
+
   return (
     <div className='container'>
-      <h1>Edytor danych instancji BIP</h1>
+      <h1>{appTitle}</h1>
       <FileInput setValue={inputDataChanged} />
+      <p>We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką (<span className='label-required-marker'>*</span>) jest wymagane.</p>
       <hr />
       <h2>Dane podstawowe</h2>
-      <p>Wypełnienie pól oznaczonych czerwoną gwiazdką (<span className='label-required-marker'>*</span>) jest wymagane.</p>
       <GenericDataForm data={genericData} setData={setGenericData} />
       <hr />
       <h2>Dane adresowe</h2>

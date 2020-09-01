@@ -24,7 +24,7 @@ const ContactForm = (({ data, setData }) => {
           name='name'
           value={name}
           changeHandler={(e) => setName(e.target.value)}
-          label='Nazwa kontaktu (pozostaw pustą dla głównego kontaktu)'
+          label='Nazwa kontaktu (można pozostawić pustą jeżeli ma być tylko jeden)'
         />
         <TextField
           name='phone'
@@ -99,4 +99,4 @@ const ContactGrid = (({ data, setData }) => {
   )
 });
 
-export { ContactForm, ContactGrid };
+export { ContactGrid };
