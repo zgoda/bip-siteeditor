@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
-import { TextField } from './forms';
+import { TextField, SubmitButton } from './forms';
+import { chunkArray } from './utils';
 
 const ContactForm = (({ data, setData }) => {
   const [name, setName] = useState('');
@@ -39,7 +40,7 @@ const ContactForm = (({ data, setData }) => {
           changeHandler={(e) => setEmail(e.target.value)}
           label='Adres email'
         />
-        <button className='button button-primary' type='submit'>zapisz</button>
+        <SubmitButton />
       </fieldset>
     </form>
   )
@@ -59,15 +60,6 @@ const ContactFormRow = (({ row, dataChanged }) => {
 
 const ContactGrid = (({ data, setData }) => {
   const rowSize = 4;
-
-  const chunkArray = ((array, chunkSize) => {
-    let a = array || [];
-    let R = [];
-    for (let index = 0; index < a.length; index += chunkSize) {
-      R.push(a.slice(index, index + chunkSize));
-    }
-    return R;
-  });
 
   const contactArray = data || [];
   let rows = [];

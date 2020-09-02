@@ -41,6 +41,12 @@ body {
   padding: 2rem;
 }
 
+.item-box {
+  border: 1px solid lightgray;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .label-required-marker {
   color: $color-quinary;
   font-weight: bold;

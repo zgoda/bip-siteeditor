@@ -26,6 +26,19 @@ const TextField = (({ name, value, changeHandler, required = false, label }) => 
   )
 });
 
+const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, label }) => {
+  return (
+    <>
+      <Label forElement={name} labelText={label} isRequired={required} />
+      <select value={value} onChange={changeHandler} required={required} name={name}>
+      {choices.map((option) => {
+        <option value={option.value}>{option.name}</option>
+      })}
+      </select>
+    </>
+  )
+})
+
 const FileInput = (({ setValue }) => {
   const fileInput = useRef(null);
 
@@ -53,6 +66,12 @@ const FileInput = (({ setValue }) => {
     </div>
   )
 });
+
+const SubmitButton = (({ text = 'zapisz' }) => {
+  return (
+    <button className='button button-primary' type='submit'>{text}</button>
+  )
+})
 
 const GenericDataForm = (({ data, setData }) => {
   const [name, setName] = useState('');
@@ -117,7 +136,7 @@ const GenericDataForm = (({ data, setData }) => {
           changeHandler={(e) => setKrs(e.target.value)}
           label='Numer wpisu w KRS'
         />
-        <button className='button button-primary' type='submit'>zapisz</button>
+        <SubmitButton />
       </fieldset>
     </form>
   )
@@ -144,7 +163,7 @@ const AddressDataForm = (({ data, setData }) => {
           name='street'
           value={street}
           changeHandler={(e) => setStreet(e.target.value)}
-          label='Ulica (miejscowość) z numerem budynku'
+          label='Ulica lub miejscowość z numerem budynku'
           required={true}
         />
         <TextField
@@ -161,10 +180,10 @@ const AddressDataForm = (({ data, setData }) => {
           label='Miejscowość / poczta'
           required={true}
         />
-        <button className='button button-primary' type='submit'>zapisz</button>
+        <SubmitButton />
       </fieldset>
     </form>
   )
 });
 
-export { GenericDataForm, AddressDataForm, FileInput, TextField };
+export { GenericDataForm, AddressDataForm, FileInput, TextField, SubmitButton, ChoiceSingle };
