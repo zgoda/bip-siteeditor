@@ -32,7 +32,7 @@ const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, 
       <Label forElement={name} labelText={label} isRequired={required} />
       <select value={value} onChange={changeHandler} required={required} name={name}>
       {choices.map((option) => {
-        <option value={option.value}>{option.name}</option>
+        <option value={option.value} key={option.value}>{option.name}</option>
       })}
       </select>
     </>

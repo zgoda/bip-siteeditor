@@ -145,7 +145,14 @@ const DepartmentBox = (({ data, setData }) => {
   setStaff(data.staff);
 
   const staffMemberDataChanged = ((oldData, newData) => {
-
+    const itemIndex = staff.findIndex((x) => x.person_name == oldData.person_name);
+    const newStaff = staff.map((item, i) => {
+      if (i === itemIndex) {
+        return newData;
+      }
+      return item;
+    })
+    setData(newStaff);
   });
 
   return (
