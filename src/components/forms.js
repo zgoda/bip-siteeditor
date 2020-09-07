@@ -31,8 +31,10 @@ const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, 
     <>
       <Label forElement={name} labelText={label} isRequired={required} />
       <select value={value} onChange={changeHandler} required={required} name={name}>
-      {choices.map((option) => {
-        <option value={option.value} key={option.value}>{option.name}</option>
+      {choices.map((item) => {
+        return (
+          <option value={item.value} key={item.value}>{item.name}</option>
+        )
       })}
       </select>
     </>
