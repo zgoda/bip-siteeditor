@@ -54,7 +54,7 @@ const App = (() => {
   useMeta({name: 'author', content: 'Jarek Zgoda'});
 
   return (
-    <div class='container'>
+    <div class='container grid-lg my-2'>
       <h1>{appTitle}</h1>
       <FileInput setValue={inputDataChanged} />
       <p>
