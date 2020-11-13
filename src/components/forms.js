@@ -3,41 +3,41 @@ import { useState, useRef } from 'preact/hooks';
 const Label = (({ forElement, labelText, isRequired = false }) => {
   if (isRequired) {
     return (
-      <label htmlFor={forElement}>{labelText} <span className='label-required-marker'>*</span></label>
+      <label class='form-label' for={forElement}>{labelText} <span class='label-required-marker'>*</span></label>
     )
   }
   return (
-    <label htmlFor={forElement}>{labelText}</label>
+    <label class='form-label' for={forElement}>{labelText}</label>
   )
 });
 
 const TextInput = (({ name, value, changeHandler, required }) => {
   return (
-    <input type='text' name={name} value={value} onInput={changeHandler} required={required} />
+    <input class='form-input' type='text' name={name} value={value} onInput={changeHandler} required={required} />
   )
 });
 
 const TextField = (({ name, value, changeHandler, required = false, label }) => {
   return (
-    <>
+    <div class='form-group'>
       <Label forElement={name} labelText={label} isRequired={required} />
       <TextInput name={name} value={value} onInput={changeHandler} required={required} />
-    </>
+    </div>
   )
 });
 
 const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, label }) => {
   return (
-    <>
+    <div class='form-group'>
       <Label forElement={name} labelText={label} isRequired={required} />
-      <select value={value} onChange={changeHandler} required={required} name={name}>
+      <select class='form-select' value={value} onChange={changeHandler} required={required} name={name}>
       {choices.map((item) => {
         return (
           <option value={item.value} key={item.value}>{item.name}</option>
         )
       })}
       </select>
-    </>
+    </div>
   )
 })
 
@@ -59,11 +59,11 @@ const FileInput = (({ setValue }) => {
   });
 
   return (
-    <div>
+    <div class='form-group'>
       <p>Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by załadować dane do edycji.</p>
       <fieldset>
-        <input type='file' ref={fileInput} accept='application/json' style='display:none' onChange={onFileAdded} />
-        <button id='fileSelect' onClick={fileSelectorClick}>wybierz plik</button>
+        <input class='form-input' type='file' ref={fileInput} accept='application/json' style='display:none' onChange={onFileAdded} />
+        <button class='btn btn-primary' id='fileSelect' onClick={fileSelectorClick}>wybierz plik</button>
       </fieldset>
     </div>
   )
@@ -71,7 +71,7 @@ const FileInput = (({ setValue }) => {
 
 const SubmitButton = (({ text = 'zapisz' }) => {
   return (
-    <button className='button button-primary' type='submit'>{text}</button>
+    <button class='btn btn-primary' type='submit'>{text}</button>
   )
 })
 
