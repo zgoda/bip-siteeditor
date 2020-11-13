@@ -168,7 +168,7 @@ const DepartmentBox = (({ data, setData }) => {
       <h4>Dane pracowników</h4>
       {staff.map((staffMember) => {
         return (
-          <div className='item-box'>
+          <div class='item-box'>
             <StaffMemberForm data={staffMember} setData={staffMemberDataChanged} />
           </div>
         )
@@ -179,9 +179,9 @@ const DepartmentBox = (({ data, setData }) => {
 
 const DepartmentRow = (({ row, dataChanged }) => {
   return (
-    <div className='row'>
+    <div class='row'>
     {row.map((item) => (
-      <div className='column' key={item.name}>
+      <div class='column' key={item.name}>
         <DepartmentBox data={item} setData={dataChanged} />
       </div>
     ))}
@@ -214,7 +214,7 @@ const DepartmentGrid = (({ data, setData }) => {
   });
 
   return (
-    <div className='container'>
+    <div class='container'>
     {rows.map((row) => (
       <DepartmentRow row={row} dataChanged={departmentDataChanged} />
     ))}

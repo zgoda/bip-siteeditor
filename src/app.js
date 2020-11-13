@@ -54,7 +54,7 @@ const App = (() => {
   useMeta({name: 'author', content: 'Jarek Zgoda'});
 
   return (
-    <div className='container'>
+    <div class='container'>
       <h1>{appTitle}</h1>
       <FileInput setValue={inputDataChanged} />
       <p>
@@ -63,7 +63,7 @@ const App = (() => {
       </p>
       <p>
         We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką
-        (<span className='label-required-marker'>*</span>) jest wymagane.
+        (<span class='label-required-marker'>*</span>) jest wymagane.
       </p>
       <hr />
       <h2>Dane podstawowe</h2>

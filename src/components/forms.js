@@ -3,7 +3,7 @@ import { useState, useRef } from 'preact/hooks';
 const Label = (({ forElement, labelText, isRequired = false }) => {
   if (isRequired) {
     return (
-      <label htmlFor={forElement}>{labelText} <span className='label-required-marker'>*</span></label>
+      <label htmlFor={forElement}>{labelText} <span class='label-required-marker'>*</span></label>
     )
   }
   return (
@@ -71,7 +71,7 @@ const FileInput = (({ setValue }) => {
 
 const SubmitButton = (({ text = 'zapisz' }) => {
   return (
-    <button className='button button-primary' type='submit'>{text}</button>
+    <button class='btn btn-primary' type='submit'>{text}</button>
   )
 })
 

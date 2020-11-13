@@ -48,9 +48,9 @@ const ContactForm = (({ data, setData }) => {
 
 const ContactFormRow = (({ row, dataChanged }) => {
   return (
-    <div className='row'>
+    <div class='row'>
     {row.map((item) => (
-      <div className='column' key={item.name}>
+      <div class='column' key={item.name}>
         <ContactForm data={item} setData={dataChanged} />
       </div>
     ))}
@@ -83,7 +83,7 @@ const ContactGrid = (({ data, setData }) => {
   });
 
   return (
-    <div className='container'>
+    <div class='container'>
     {rows.map((row) => (
       <ContactFormRow row={row} dataChanged={contactDataChanged} />
     ))}
