@@ -179,7 +179,7 @@ const DepartmentBox = (({ data, setData }) => {
 
 const DepartmentRow = (({ row, dataChanged }) => {
   return (
-    <div class='row'>
+    <div class='columns'>
     {row.map((item) => (
       <div class='column' key={item.name}>
         <DepartmentBox data={item} setData={dataChanged} />
