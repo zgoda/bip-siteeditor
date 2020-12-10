@@ -91,8 +91,8 @@ const GenericDataForm = (({ data, setData }) => {
   setKrs(data.krs || '');
 
   const submitHandler = ((e) => {
-    setData({ name, bip_url, nip, regon, short_name, krs });
     e.preventDefault();
+    setData({ name, bip_url, nip, regon, short_name, krs });
   });
 
   return (

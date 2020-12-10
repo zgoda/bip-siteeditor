@@ -6,22 +6,32 @@ import { ContactGrid } from './components/contacts';
 import { DepartmentGrid } from './components/departments';
 
 const App = (() => {
-  const [genericData, setGenericData] = useState({});
-  const [addressData, setAddressData] = useState({});
+  const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
+  const addressFields = ['street', 'zip_code', 'town'];
+
+  const emptyGenericData = {};
+  for (const key of genericFields) {
+    emptyGenericData[key] = '';
+  }
+  const emptyAddress = {}
+  for (const key of addressFields) {
+    emptyAddress[key] = '';
+  }
+
+  const [genericData, setGenericData] = useState(emptyGenericData);
+  const [addressData, setAddressData] = useState(emptyAddress);
   const [contactData, setContactData] = useState([]);
   const [departmentData, setDepartmentData] = useState([]);
 
   const parseSiteDataParts = ((jsonData) => {
     // parse generic data
     let data = {};
-    const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
     genericFields.map((name) => {
       data[name] = jsonData[name];
     })
     setGenericData(data);
     // parse address data
     data = {};
-    const addressFields = ['street', 'zip_code', 'town'];
     addressFields.map((name) => {
       data[name] = jsonData.address[name];
     })
@@ -31,8 +41,8 @@ const App = (() => {
   });
 
   const clearSiteDataParts = (() => {
-    setGenericData({});
-    setAddressData({});
+    setGenericData(emptyGenericData);
+    setAddressData(emptyAddress);
     setContactData([]);
     setDepartmentData([]);
   });
@@ -57,40 +67,23 @@ const App = (() => {
     <div class='container grid-lg my-2'>
       <h1>{appTitle}</h1>
       <FileInput setValue={inputDataChanged} />
-      <p>
-        Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie i nie służą one do niczego
-        innego.
-      </p>
-      <p>
-        We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką
-        (<span class='label-required-marker'>*</span>) jest wymagane.
-      </p>
+      <p>Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie BIP jako dane instytucji.</p>
+      <p>We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.</p>
       <hr />
       <h2>Dane podstawowe</h2>
-      <p>
-        Podstawowe dane instytucji.
-      </p>
+      <p>Podstawowe dane instytucji.</p>
       <GenericDataForm data={genericData} setData={setGenericData} />
       <hr />
       <h2>Dane adresowe</h2>
-      <p>
-        Dane adresowe instytucji.
-      </p>
+      <p>Dane adresowe instytucji.</p>
       <AddressDataForm data={addressData} setData={setAddressData} />
       <hr />
       <h2>Dane kontaktowe</h2>
-      <p>
-        Dane kontaktowe instytucji. W przypadku jedynego wpisu nazwę można pozostawić pustą,
-        w przeciwnym wypadku jest ona wymagana.
-      </p>
+      <p>Dane kontaktowe instytucji. W przypadku jedynego wpisu nazwę można pozostawić pustą, w przeciwnym wypadku jest ona wymagana.</p>
       <ContactGrid data={contactData} setData={setContactData} />
       <hr />
       <h2>Dane wydziałów i pracowników</h2>
-      <p>
-        Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych. W
-        szczególnym przypadku braku podziału na jednostki organizacyjne nazwę można pozostawić
-        pustą, w przeciwnym wypadku jest ona wymagana.
-      </p>
+      <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych. W szczególnym przypadku braku podziału na jednostki organizacyjne nazwę można pozostawić pustą, w przeciwnym wypadku jest ona wymagana.</p>
       <DepartmentGrid data={departmentData} setData={setDepartmentData} />
       <hr />
       <StartOverAgain clearFunc={() => inputDataChanged('')} />

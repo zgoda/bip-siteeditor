@@ -46,12 +46,29 @@ const ContactForm = (({ data, setData }) => {
   )
 });
 
-const ContactFormRow = (({ row, dataChanged }) => {
+const ContactItem = (({ data }) => {
+  return (
+    <div class="card">
+      <div class="card-header">
+        <p class="card-title h5">{data.name}</p>
+      </div>
+      <div class="card-body">
+        <p><strong>Numer telefonu:</strong> {data.phone}</p>
+        <p><strong>Adres email:</strong> {data.email}</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary">zmień dane</button>
+      </div>
+    </div>
+  )
+});
+
+const ContactFormRow = (({ row }) => {
   return (
     <div class='row'>
     {row.map((item) => (
       <div class='column' key={item.name}>
-        <ContactForm data={item} setData={dataChanged} />
+        <ContactItem data={item} />
       </div>
     ))}
     </div>
@@ -60,6 +77,11 @@ const ContactFormRow = (({ row, dataChanged }) => {
 
 const ContactGrid = (({ data, setData }) => {
   const rowSize = 4;
+  const emptyData = {
+    name: '',
+    phone: '',
+    email: '',
+  }
 
   const contactArray = data || [];
   let rows = [];
@@ -82,11 +104,18 @@ const ContactGrid = (({ data, setData }) => {
     setData(newData);
   });
 
+  const contactDataAdded = ((_oldItem, newItem) => {
+    let newData = Array.from(data);
+    newData.push(newItem);
+    setData(newData);
+  });
+
   return (
     <div class='container'>
     {rows.map((row) => (
-      <ContactFormRow row={row} dataChanged={contactDataChanged} />
+      <ContactFormRow row={row} />
     ))}
+      <ContactForm data={emptyData} setData={contactDataAdded} />
     </div>
   )
 });
