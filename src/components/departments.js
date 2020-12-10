@@ -14,31 +14,31 @@ const DepartmentForm = ((props) => {
         <TextField
           name='name'
           value={props.name}
-          changeHandler={(e) => props.setName(e.target.value)}
+          changeHandler={props.setName}
           label='Nazwa wydziału / jednostki organizacyjnej'
         />
         <TextField
           name='domain'
           value={props.domain}
-          changeHandler={(e) => props.setDomain(e.target.value)}
+          changeHandler={props.setDomain}
           label='Zakres działalności'
         />
         <TextField
           name='location'
           value={props.location}
-          changeHandler={(e) => props.setLocation(e.target.value)}
+          changeHandler={props.setLocation}
           label='Lokalizacja'
         />
         <TextField
           name='phone'
           value={props.phone}
-          changeHandler={(e) => props.setPhone(e.target.value)}
+          changeHandler={props.setPhone}
           label='Numer telefonu'
         />
         <TextField
           name='email'
           value={props.email}
-          changeHandler={(e) => props.setEmail(e.target.value)}
+          changeHandler={props.setEmail}
           label='Adres email'
         />
         <SubmitButton />
@@ -86,14 +86,14 @@ const StaffMemberForm = (({ data, setData }) => {
         <TextField
           name='person_name'
           value={person_name}
-          changeHandler={(e) => setPersonName(e.target.value)}
+          changeHandler={setPersonName}
           label='Imię i nazwisko osoby'
           required={true}
         />
         <TextField
           name='role_name'
           value={role_name}
-          changeHandler={(e) => setRoleName(e.target.value)}
+          changeHandler={setRoleName}
           label='Stanowisko'
           required={true}
         />
@@ -101,26 +101,26 @@ const StaffMemberForm = (({ data, setData }) => {
           name='role_type'
           value={role_type}
           choices={roleTypeChoices}
-          changeHandler={(e) => setRoleType(e.target.value)}
+          changeHandler={setRoleType}
           label='Rodzaj stanowiska'
           required={true}
         />
         <TextField
           name='photo_url'
           value={photo_url}
-          changeHandler={(e) => setPhotoUrl(e.target.value)}
+          changeHandler={setPhotoUrl}
           label='Adres URL zdjęcia'
         />
         <TextField
           name='phone'
           value={phone}
-          changeHandler={(e) => setPhone(e.target.value)}
+          changeHandler={setPhone}
           label='Numer telefonu'
         />
         <TextField
           name='email'
           value={email}
-          changeHandler={(e) => setEmail(e.target.value)}
+          changeHandler={setEmail}
           label='Adres email'
         />
         <SubmitButton />

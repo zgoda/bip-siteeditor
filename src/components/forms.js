@@ -13,7 +13,7 @@ const Label = (({ forElement, labelText, isRequired = false }) => {
 
 const TextInput = (({ name, value, changeHandler, required }) => {
   return (
-    <input class='form-input' type='text' name={name} value={value} onInput={changeHandler} required={required} />
+    <input class='form-input' type='text' name={name} value={value} onInput={(e) => changeHandler(e.target.value)} required={required} />
   )
 });
 
@@ -21,7 +21,7 @@ const TextField = (({ name, value, changeHandler, required = false, label }) => 
   return (
     <div class='form-group'>
       <Label forElement={name} labelText={label} isRequired={required} />
-      <TextInput name={name} value={value} onInput={changeHandler} required={required} />
+      <TextInput name={name} value={value} changeHandler={changeHandler} required={required} />
     </div>
   )
 });
@@ -30,7 +30,7 @@ const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, 
   return (
     <div class='form-group'>
       <Label forElement={name} labelText={label} isRequired={required} />
-      <select class='form-select' value={value} onChange={changeHandler} required={required} name={name}>
+      <select class='form-select' value={value} onChange={(e) => changeHandler(e.target.value)} required={required} name={name}>
       {choices.map((item) => {
         return (
           <option value={item.value} key={item.value}>{item.name}</option>
@@ -76,19 +76,12 @@ const SubmitButton = (({ text = 'zapisz' }) => {
 })
 
 const GenericDataForm = (({ data, setData }) => {
-  const [name, setName] = useState('');
-  const [bip_url, setBipUrl] = useState('');
-  const [nip, setNip] = useState('');
-  const [regon, setRegon] = useState('');
-  const [short_name, setShortName] = useState('');
-  const [krs, setKrs] = useState('');
-
-  setName(data.name || '');
-  setBipUrl(data.bip_url || '');
-  setNip(data.nip || '');
-  setRegon(data.regon || '');
-  setShortName(data.short_name || '');
-  setKrs(data.krs || '');
+  const [name, setName] = useState(data.name || '');
+  const [bip_url, setBipUrl] = useState(data.bip_url || '');
+  const [nip, setNip] = useState(data.nip || '');
+  const [regon, setRegon] = useState(data.regon || '');
+  const [short_name, setShortName] = useState(data.short_name || '');
+  const [krs, setKrs] = useState(data.krs || '');
 
   const submitHandler = ((e) => {
     e.preventDefault();
@@ -98,46 +91,12 @@ const GenericDataForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField
-          name='name'
-          value={name}
-          changeHandler={(e) => setName(e.target.value)}
-          label='Nazwa instytucji'
-          required={true}
-        />
-        <TextField
-          name='shortName'
-          value={short_name}
-          changeHandler={(e) => setShortName(e.target.value)}
-          label='Nazwa skrócona'
-        />
-        <TextField
-          name='bipUrl'
-          value={bip_url}
-          changeHandler={(e) => setBipUrl(e.target.value)}
-          label='Adres strony BIP'
-          required={true}
-        />
-        <TextField
-          name='nip'
-          value={nip}
-          changeHandler={(e) => setNip(e.target.value)}
-          label='Numer NIP'
-          required={true}
-        />
-        <TextField
-          name='regon'
-          value={regon}
-          changeHandler={(e) => setRegon(e.target.value)}
-          label='Numer REGON'
-          required={true}
-        />
-        <TextField
-          name='krs'
-          value={krs}
-          changeHandler={(e) => setKrs(e.target.value)}
-          label='Numer wpisu w KRS'
-        />
+        <TextField name='name' value={name} changeHandler={setName} label='Nazwa instytucji' required={true} />
+        <TextField name='shortName' value={short_name} changeHandler={setShortName} label='Nazwa skrócona' />
+        <TextField name='bipUrl' value={bip_url} changeHandler={setBipUrl} label='Adres strony BIP' required={true} />
+        <TextField name='nip' value={nip} changeHandler={setNip} label='Numer NIP' required={true} />
+        <TextField name='regon' value={regon} changeHandler={setRegon} label='Numer REGON' required={true} />
+        <TextField name='krs' value={krs} changeHandler={setKrs} label='Numer wpisu w KRS' />
         <SubmitButton />
       </fieldset>
     </form>
@@ -164,21 +123,21 @@ const AddressDataForm = (({ data, setData }) => {
         <TextField
           name='street'
           value={street}
-          changeHandler={(e) => setStreet(e.target.value)}
+          changeHandler={setStreet}
           label='Ulica lub miejscowość z numerem budynku'
           required={true}
         />
         <TextField
           name='zip_code'
           value={zip_code}
-          changeHandler={(e) => setZipCode(e.target.value)}
+          changeHandler={setZipCode}
           label='Kod pocztowy'
           required={true}
         />
         <TextField
           name='town'
           value={town}
-          changeHandler={(e) => setTown(e.target.value)}
+          changeHandler={setTown}
           label='Miejscowość / poczta'
           required={true}
         />

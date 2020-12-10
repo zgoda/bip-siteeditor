@@ -24,20 +24,20 @@ const ContactForm = (({ data, setData }) => {
         <TextField
           name='name'
           value={name}
-          changeHandler={(e) => setName(e.target.value)}
+          changeHandler={setName}
           label='Nazwa kontaktu (można pozostawić pustą jeżeli ma być tylko jeden)'
         />
         <TextField
           name='phone'
           value={phone}
-          changeHandler={(e) => setPhone(e.target.value)}
+          changeHandler={setPhone}
           label='Numer telefonu'
           required={true}
         />
         <TextField
           name='email'
           value={email}
-          changeHandler={(e) => setEmail(e.target.value)}
+          changeHandler={setEmail}
           label='Adres email'
         />
         <SubmitButton />
