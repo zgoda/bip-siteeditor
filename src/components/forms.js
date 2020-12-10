@@ -104,43 +104,21 @@ const GenericDataForm = (({ data, setData }) => {
 });
 
 const AddressDataForm = (({ data, setData }) => {
-  const [street, setStreet] = useState('');
-  const [zip_code, setZipCode] = useState('');
-  const [town, setTown] = useState('');
-
-  setStreet(data.street || '');
-  setZipCode(data.zip_code || '');
-  setTown(data.town || '');
+  const [street, setStreet] = useState(data.street || '');
+  const [zip_code, setZipCode] = useState(data.zip_code || '');
+  const [town, setTown] = useState(data.town || '');
 
   const submitHandler = ((e) => {
-    setData({ street, zip_code, town });
     e.preventDefault();
+    setData({ street, zip_code, town });
   })
 
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField
-          name='street'
-          value={street}
-          changeHandler={setStreet}
-          label='Ulica lub miejscowość z numerem budynku'
-          required={true}
-        />
-        <TextField
-          name='zip_code'
-          value={zip_code}
-          changeHandler={setZipCode}
-          label='Kod pocztowy'
-          required={true}
-        />
-        <TextField
-          name='town'
-          value={town}
-          changeHandler={setTown}
-          label='Miejscowość / poczta'
-          required={true}
-        />
+        <TextField name='street' value={street} changeHandler={setStreet} label='Ulica lub miejscowość z numerem budynku' required={true} />
+        <TextField name='zip_code' value={zip_code} changeHandler={setZipCode} label='Kod pocztowy' required={true} />
+        <TextField name='town' value={town} changeHandler={setTown} label='Miejscowość / poczta' required={true} />
         <SubmitButton />
       </fieldset>
     </form>

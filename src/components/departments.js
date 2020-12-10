@@ -6,41 +6,18 @@ const DepartmentForm = ((props) => {
 
   const submitHandler = ((e) => {
     e.preventDefault();
+    const { name, domain, location, phone, email } = {... props};
+    props.submitHandler({ name, domain, location, phone, email });
   })
 
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField
-          name='name'
-          value={props.name}
-          changeHandler={props.setName}
-          label='Nazwa wydziału / jednostki organizacyjnej'
-        />
-        <TextField
-          name='domain'
-          value={props.domain}
-          changeHandler={props.setDomain}
-          label='Zakres działalności'
-        />
-        <TextField
-          name='location'
-          value={props.location}
-          changeHandler={props.setLocation}
-          label='Lokalizacja'
-        />
-        <TextField
-          name='phone'
-          value={props.phone}
-          changeHandler={props.setPhone}
-          label='Numer telefonu'
-        />
-        <TextField
-          name='email'
-          value={props.email}
-          changeHandler={props.setEmail}
-          label='Adres email'
-        />
+        <TextField name='name' value={props.name} changeHandler={props.setName} label='Nazwa wydziału / jednostki organizacyjnej' />
+        <TextField name='domain' value={props.domain} changeHandler={props.setDomain} label='Zakres działalności' />
+        <TextField name='location' value={props.location} changeHandler={props.setLocation} label='Lokalizacja' />
+        <TextField name='phone' value={props.phone} changeHandler={props.setPhone} label='Numer telefonu' />
+        <TextField name='email' value={props.email} changeHandler={props.setEmail} label='Adres email' />
         <SubmitButton />
       </fieldset>
     </form>
@@ -48,21 +25,14 @@ const DepartmentForm = ((props) => {
 }); 
 
 const StaffMemberForm = (({ data, setData }) => {
-  const [person_name, setPersonName] = useState('');
-  const [role_name, setRoleName] = useState('');
-  const [role_type, setRoleType] = useState('');
-  const [photo_url, setPhotoUrl] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [person_name, setPersonName] = useState(data.person_name || '');
+  const [role_name, setRoleName] = useState(data.role_name || '');
+  const [role_type, setRoleType] = useState(data.role_type || '');
+  const [photo_url, setPhotoUrl] = useState(data.photo_url || '');
+  const [phone, setPhone] = useState(data.phone || '');
+  const [email, setEmail] = useState(data.email || '');
 
   const origData = { ...data };
-
-  setPersonName(data.person_name);
-  setRoleName(data.role_name);
-  setRoleType(data.role_type);
-  setPhotoUrl(data.photo_url);
-  setPhone(data.phone);
-  setEmail(data.email);
 
   const roleTypeChoices = [
     {
@@ -83,46 +53,12 @@ const StaffMemberForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField
-          name='person_name'
-          value={person_name}
-          changeHandler={setPersonName}
-          label='Imię i nazwisko osoby'
-          required={true}
-        />
-        <TextField
-          name='role_name'
-          value={role_name}
-          changeHandler={setRoleName}
-          label='Stanowisko'
-          required={true}
-        />
-        <ChoiceSingle
-          name='role_type'
-          value={role_type}
-          choices={roleTypeChoices}
-          changeHandler={setRoleType}
-          label='Rodzaj stanowiska'
-          required={true}
-        />
-        <TextField
-          name='photo_url'
-          value={photo_url}
-          changeHandler={setPhotoUrl}
-          label='Adres URL zdjęcia'
-        />
-        <TextField
-          name='phone'
-          value={phone}
-          changeHandler={setPhone}
-          label='Numer telefonu'
-        />
-        <TextField
-          name='email'
-          value={email}
-          changeHandler={setEmail}
-          label='Adres email'
-        />
+        <TextField name='person_name' value={person_name} changeHandler={setPersonName} label='Imię i nazwisko osoby' required={true} />
+        <TextField name='role_name' value={role_name} changeHandler={setRoleName} label='Stanowisko' required={true} />
+        <ChoiceSingle name='role_type' value={role_type} choices={roleTypeChoices} changeHandler={setRoleType} label='Rodzaj stanowiska' required={true} />
+        <TextField name='photo_url' value={photo_url} changeHandler={setPhotoUrl} label='Adres URL zdjęcia' />
+        <TextField name='phone' value={phone} changeHandler={setPhone} label='Numer telefonu' />
+        <TextField name='email' value={email} changeHandler={setEmail} label='Adres email' />
         <SubmitButton />
       </fieldset>
     </form>
@@ -130,19 +66,12 @@ const StaffMemberForm = (({ data, setData }) => {
 });
 
 const DepartmentBox = (({ data, setData }) => {
-  const [name, setName] = useState('');
-  const [domain, setDomain] = useState('');
-  const [location, setLocation] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [staff, setStaff] = useState([]);
-
-  setName(data.name);
-  setDomain(data.domain);
-  setLocation(data.location);
-  setPhone(data.phone);
-  setEmail(data.email);
-  setStaff(data.staff);
+  const [name, setName] = useState(data.name || '');
+  const [domain, setDomain] = useState(data.domain || '');
+  const [location, setLocation] = useState(data.location || '');
+  const [phone, setPhone] = useState(data.phone || '');
+  const [email, setEmail] = useState(data.email || '');
+  const [staff, setStaff] = useState(data.staff || []);
 
   const staffMemberDataChanged = ((oldData, newData) => {
     const itemIndex = staff.findIndex((x) => x.person_name == oldData.person_name);
@@ -152,7 +81,8 @@ const DepartmentBox = (({ data, setData }) => {
       }
       return item;
     })
-    setData(newStaff);
+    setStaff(newStaff);
+    setData({ name, domain, location, phone, email, staff });
   });
 
   return (
@@ -164,6 +94,7 @@ const DepartmentBox = (({ data, setData }) => {
         location={location} setLocation={setLocation}
         phone={phone} setPhone={setPhone}
         email={email} setEmail={setEmail}
+        submitHandler={setData}
       />
       <h4>Dane pracowników</h4>
       {staff.map((staffMember) => {

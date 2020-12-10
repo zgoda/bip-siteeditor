@@ -3,15 +3,11 @@ import { TextField, SubmitButton } from './forms';
 import { chunkArray } from './utils';
 
 const ContactForm = (({ data, setData }) => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(data.name || '');
+  const [phone, setPhone] = useState(data.phone || '');
+  const [email, setEmail] = useState(data.email || '');
 
   const origData = { ...data };
-
-  setName(data.name);
-  setPhone(data.phone);
-  setEmail(data.email);
 
   const submitHandler = ((e) => {
     e.preventDefault();
