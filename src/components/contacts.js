@@ -62,7 +62,7 @@ const ContactItem = (({ data }) => {
 
 const ContactFormRow = (({ row }) => {
   return (
-    <div class='columns'>
+    <div class='columns mb-2r'>
     {row.map((item) => (
       <div class='column' key={item.name}>
         <ContactItem data={item} />
