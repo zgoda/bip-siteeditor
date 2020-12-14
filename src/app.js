@@ -79,11 +79,11 @@ const App = (() => {
       <AddressDataForm data={addressData} setData={setAddressData} />
       <hr />
       <h2>Dane kontaktowe</h2>
-      <p>Dane kontaktowe instytucji. W przypadku jedynego wpisu nazwę można pozostawić pustą, w przeciwnym wypadku jest ona wymagana.</p>
+      <p>Dane kontaktowe instytucji.</p>
       <ContactGrid data={contactData} setData={setContactData} />
       <hr />
       <h2>Dane wydziałów i pracowników</h2>
-      <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych. W szczególnym przypadku braku podziału na jednostki organizacyjne nazwę można pozostawić pustą, w przeciwnym wypadku jest ona wymagana.</p>
+      <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych.</p>
       <DepartmentGrid data={departmentData} setData={setDepartmentData} />
       <hr />
       <StartOverAgain clearFunc={() => inputDataChanged('')} />

@@ -21,7 +21,8 @@ const ContactForm = (({ data, setData }) => {
           name='name'
           value={name}
           changeHandler={setName}
-          label='Nazwa kontaktu (można pozostawić pustą jeżeli ma być tylko jeden)'
+          label='Nazwa kontaktu'
+          required={true}
         />
         <TextField
           name='phone'
@@ -61,7 +62,7 @@ const ContactItem = (({ data }) => {
 
 const ContactFormRow = (({ row }) => {
   return (
-    <div class='row'>
+    <div class='columns'>
     {row.map((item) => (
       <div class='column' key={item.name}>
         <ContactItem data={item} />
@@ -108,8 +109,8 @@ const ContactGrid = (({ data, setData }) => {
 
   return (
     <div class='container'>
-    {rows.map((row) => (
-      <ContactFormRow row={row} />
+    {rows.map((row, index) => (
+      <ContactFormRow row={row} key={`contact-row-${index}`} />
     ))}
       <ContactForm data={emptyData} setData={contactDataAdded} />
     </div>
