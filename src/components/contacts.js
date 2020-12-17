@@ -12,6 +12,9 @@ const ContactForm = (({ data, setData }) => {
   const submitHandler = ((e) => {
     e.preventDefault();
     setData(origData, { name, phone, email });
+    setName('');
+    setPhone('');
+    setEmail('');
   });
 
   return (
@@ -90,6 +93,7 @@ const ContactGrid = (({ data, setData }) => {
     }
   }
 
+  /*
   const contactDataChanged = ((oldItem, newItem) => {
     const itemIndex = data.findIndex((x) => x.name == oldItem.name);
     const newData = data.map((item, j) => {
@@ -100,6 +104,7 @@ const ContactGrid = (({ data, setData }) => {
     });
     setData(newData);
   });
+  */
 
   const contactDataAdded = ((_oldItem, newItem) => {
     let newData = Array.from(data);
