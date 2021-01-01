@@ -33,6 +33,7 @@
     "hooked-head": "^0.4.1",
     "preact": "^10.5.8",
     "preact-render-to-string": "^5.1.12",
+    "redux-zero": "^5.1.7",
     "spectre.css": "^0.5.9"
   },
   "jest": {
