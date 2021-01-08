@@ -50,7 +50,6 @@ const FileInput = (({ setValue }) => {
 
   const onFileAdded = ((e) => {
     const file = e.target.files[0];
-    console.log(file);
     const reader = new FileReader();
     reader.onload = ((e) => {
       setValue(e.target.result);
