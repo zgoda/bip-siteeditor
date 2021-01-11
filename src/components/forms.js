@@ -49,6 +49,7 @@ const FileInput = (({ setValue }) => {
   });
 
   const onFileAdded = ((e) => {
+    e.preventDefault();
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = ((e) => {
@@ -61,7 +62,7 @@ const FileInput = (({ setValue }) => {
     <div class='form-group'>
       <p>Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by załadować dane do edycji.</p>
       <fieldset>
-        <input class='form-input' type='file' ref={fileInput} accept='application/json' style='display:none' onChange={onFileAdded} />
+        <input class='form-input' type='file' ref={fileInput} accept='application/json' style='display:none' onInput={onFileAdded} />
         <button class='btn btn-primary' id='fileSelect' onClick={fileSelectorClick}>wybierz plik</button>
       </fieldset>
     </div>
