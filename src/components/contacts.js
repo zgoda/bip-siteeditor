@@ -107,6 +107,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     {rows.map((row, index) => (
       <ContactFormRow row={row} key={`contact-row-${index}`} />
     ))}
+      <h3>Dodaj nowy kontakt</h3>
       <ContactForm data={emptyData} setData={contactDataAdded} />
     </div>
   )

@@ -105,6 +105,11 @@ const FileInputBase = (({ setGenericData, setAddressData, setContactData, setDep
 
 const FileInput = connect(allDataMapToProps, actions)(FileInputBase);
 
+const genericDataMapToProps = (
+  ({ genericData }) => ({ genericData })
+);
+
+
 const GenericDataFormBase = (({ genericData, setGenericData }) => {
   const [name, setName] = useState(genericData.name || '');
   const [bip_url, setBipUrl] = useState(genericData.bip_url || '');
@@ -133,7 +138,7 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
   )
 });
 
-const GenericDataForm = connect(allDataMapToProps, actions)(GenericDataFormBase);
+const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
 
 const AddressDataFormBase = (({ addressData, setAddressData }) => {
   const [street, setStreet] = useState(addressData.street || '');
