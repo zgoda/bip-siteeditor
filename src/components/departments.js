@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks';
-import { TextField, SubmitButton, ChoiceSingle } from './forms';
-import { chunkArray } from './utils';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
+import { ChoiceSingle,SubmitButton, TextField } from './forms';
+import { chunkArray } from './utils';
 
 const DepartmentForm = ((props) => {
 

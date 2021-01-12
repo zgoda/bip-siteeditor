@@ -1,10 +1,10 @@
-import { useTitle, useMeta, useLang } from 'hooked-head/preact';
-import { GenericDataForm, AddressDataForm, FileInput } from './components/forms';
-import { StartOverAgain } from './components/misc';
-import { ContactGrid } from './components/contacts';
-import { DepartmentGrid } from './components/departments';
+import { useLang,useMeta, useTitle } from 'hooked-head/preact';
 import { Provider } from 'redux-zero/preact';
 
+import { ContactGrid } from './components/contacts';
+import { DepartmentGrid } from './components/departments';
+import { AddressDataForm, FileInput,GenericDataForm } from './components/forms';
+import { StartOverAgain } from './components/misc';
 import store from './store';
 
 const App = (() => {

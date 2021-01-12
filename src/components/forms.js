@@ -1,4 +1,4 @@
-import { useState, useRef } from 'preact/hooks';
+import { useRef,useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
@@ -159,4 +159,4 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
 
 const AddressDataForm = connect(allDataMapToProps, actions)(AddressDataFormBase);
 
-export { GenericDataForm, AddressDataForm, FileInput, TextField, SubmitButton, ChoiceSingle };
+export { AddressDataForm, ChoiceSingle, FileInput, GenericDataForm, SubmitButton, TextField };

@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks';
-import { TextField, SubmitButton } from './forms';
-import { chunkArray } from './utils';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
+import { SubmitButton,TextField } from './forms';
+import { chunkArray } from './utils';
 
 const ContactForm = (({ data, setData }) => {
   const [name, setName] = useState(data.name || '');
@@ -23,26 +23,9 @@ const ContactForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField
-          name='name'
-          value={name}
-          changeHandler={setName}
-          label='Nazwa kontaktu'
-          required={true}
-        />
-        <TextField
-          name='phone'
-          value={phone}
-          changeHandler={setPhone}
-          label='Numer telefonu'
-          required={true}
-        />
-        <TextField
-          name='email'
-          value={email}
-          changeHandler={setEmail}
-          label='Adres email'
-        />
+        <TextField name='name' value={name} changeHandler={setName} label='Nazwa kontaktu' required={true} />
+        <TextField name='phone' value={phone} changeHandler={setPhone} label='Numer telefonu' required={true} />
+        <TextField name='email' value={email} changeHandler={setEmail} label='Adres email' />
         <SubmitButton />
       </fieldset>
     </form>
@@ -102,14 +85,14 @@ const ContactGridBase = (({ contactData, setContactData }) => {
 
   /*
   const contactDataChanged = ((oldItem, newItem) => {
-    const itemIndex = data.findIndex((x) => x.name == oldItem.name);
-    const newData = data.map((item, j) => {
+    const itemIndex = contactArray.findIndex((x) => x.name === oldItem.name);
+    const newData = contactArray.map((item, j) => {
       if (j === itemIndex) {
         return newItem;
       }
       return item;
     });
-    setData(newData);
+    setContactData(newData);
   });
   */
 
