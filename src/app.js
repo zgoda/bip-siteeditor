@@ -4,6 +4,9 @@ import { GenericDataForm, AddressDataForm, FileInput } from './components/forms'
 import { StartOverAgain } from './components/misc';
 import { ContactGrid } from './components/contacts';
 import { DepartmentGrid } from './components/departments';
+import { Provider } from 'redux-zero/preact';
+
+import store from './store';
 
 const App = (() => {
   const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
@@ -18,44 +21,8 @@ const App = (() => {
     emptyAddress[key] = '';
   }
 
-  const [genericData, setGenericData] = useState(emptyGenericData);
-  const [addressData, setAddressData] = useState(emptyAddress);
   const [contactData, setContactData] = useState([]);
   const [departmentData, setDepartmentData] = useState([]);
-
-  const parseSiteDataParts = ((jsonData) => {
-    // parse generic data
-    let data = {};
-    genericFields.map((name) => {
-      data[name] = jsonData[name];
-    })
-    setGenericData(data);
-    // parse address data
-    data = {};
-    addressFields.map((name) => {
-      data[name] = jsonData.address[name];
-    })
-    setAddressData(data);
-    setContactData(jsonData.contacts);
-    setDepartmentData(jsonData.departments);
-  });
-
-  const clearSiteDataParts = (() => {
-    setGenericData(emptyGenericData);
-    setAddressData(emptyAddress);
-    setContactData([]);
-    setDepartmentData([]);
-  });
-
-  const inputDataChanged = ((value) => {
-    value = value.trim();
-    if (value) {
-      const data = JSON.parse(value);
-      parseSiteDataParts(data);
-    } else {
-      clearSiteDataParts();
-    }
-  });
 
   const appTitle = 'Edytor danych instancji BIP';
 
@@ -63,31 +30,35 @@ const App = (() => {
   useTitle(appTitle);
   useMeta({name: 'author', content: 'Jarek Zgoda'});
 
+  const clearData = (() => store.reset());
+
   return (
-    <div class='container grid-lg my-2'>
-      <h1>{appTitle}</h1>
-      <FileInput setValue={inputDataChanged} />
-      <p>Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie BIP jako dane instytucji.</p>
-      <p>We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.</p>
-      <hr />
-      <h2>Dane podstawowe</h2>
-      <p>Podstawowe dane instytucji.</p>
-      <GenericDataForm data={genericData} setData={setGenericData} />
-      <hr />
-      <h2>Dane adresowe</h2>
-      <p>Dane adresowe instytucji.</p>
-      <AddressDataForm data={addressData} setData={setAddressData} />
-      <hr />
-      <h2>Dane kontaktowe</h2>
-      <p>Dane kontaktowe instytucji.</p>
-      <ContactGrid data={contactData} setData={setContactData} />
-      <hr />
-      <h2>Dane wydziałów i pracowników</h2>
-      <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych.</p>
-      <DepartmentGrid data={departmentData} setData={setDepartmentData} />
-      <hr />
-      <StartOverAgain clearFunc={() => inputDataChanged('')} />
-    </div>
+    <Provider store={store}>
+      <div class='container grid-lg my-2'>
+        <h1>{appTitle}</h1>
+        <FileInput />
+        <p>Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie BIP jako dane instytucji.</p>
+        <p>We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.</p>
+        <hr />
+        <h2>Dane podstawowe</h2>
+        <p>Podstawowe dane instytucji.</p>
+        <GenericDataForm />
+        <hr />
+        <h2>Dane adresowe</h2>
+        <p>Dane adresowe instytucji.</p>
+        <AddressDataForm />
+        <hr />
+        <h2>Dane kontaktowe</h2>
+        <p>Dane kontaktowe instytucji.</p>
+        <ContactGrid data={contactData} setData={setContactData} />
+        <hr />
+        <h2>Dane wydziałów i pracowników</h2>
+        <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych.</p>
+        <DepartmentGrid data={departmentData} setData={setDepartmentData} />
+        <hr />
+        <StartOverAgain clearFunc={clearData} />
+      </div>
+    </Provider>
   );
 });
 

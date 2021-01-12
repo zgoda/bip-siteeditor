@@ -1,4 +1,7 @@
 import { useState, useRef } from 'preact/hooks';
+import { connect } from 'redux-zero/preact';
+
+import actions from '../actions';
 
 const Label = (({ forElement, labelText, isRequired = false }) => {
   if (isRequired) {
@@ -39,10 +42,41 @@ const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, 
       </select>
     </div>
   )
-})
+});
 
-const FileInput = (({ setValue }) => {
+const SubmitButton = (({ text = 'zapisz' }) => {
+  return (
+    <button class='btn btn-primary' type='submit'>{text}</button>
+  )
+});
+
+const allDataMapToProps = (
+  ({ genericData, addressData, contactData, departmentData }) => ({ genericData, addressData, contactData, departmentData })
+);
+
+const FileInputBase = (({ setGenericData, setAddressData, setContactData, setDepartmentData }) => {
   const fileInput = useRef(null);
+
+  const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
+  const addressFields = ['street', 'zip_code', 'town'];
+
+  const parseSiteDataParts = ((content) => {
+    const jsonData = JSON.parse(content);
+    // parse generic data
+    let data = {};
+    genericFields.map((name) => {
+      data[name] = jsonData[name];
+    })
+    setGenericData(data);
+    // parse address data
+    data = {};
+    addressFields.map((name) => {
+      data[name] = jsonData.address[name];
+    })
+    setAddressData(data);
+    setContactData(jsonData.contacts);
+    setDepartmentData(jsonData.departments);
+  });
 
   const fileSelectorClick = (() => {
     fileInput.current && fileInput.current.click();
@@ -53,7 +87,7 @@ const FileInput = (({ setValue }) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = ((e) => {
-      setValue(e.target.result);
+      parseSiteDataParts(e.target.result);
     })
     reader.readAsText(file);
   });
@@ -69,23 +103,19 @@ const FileInput = (({ setValue }) => {
   )
 });
 
-const SubmitButton = (({ text = 'zapisz' }) => {
-  return (
-    <button class='btn btn-primary' type='submit'>{text}</button>
-  )
-})
+const FileInput = connect(allDataMapToProps, actions)(FileInputBase);
 
-const GenericDataForm = (({ data, setData }) => {
-  const [name, setName] = useState(data.name || '');
-  const [bip_url, setBipUrl] = useState(data.bip_url || '');
-  const [nip, setNip] = useState(data.nip || '');
-  const [regon, setRegon] = useState(data.regon || '');
-  const [short_name, setShortName] = useState(data.short_name || '');
-  const [krs, setKrs] = useState(data.krs || '');
+const GenericDataFormBase = (({ genericData, setGenericData }) => {
+  const [name, setName] = useState(genericData.name || '');
+  const [bip_url, setBipUrl] = useState(genericData.bip_url || '');
+  const [nip, setNip] = useState(genericData.nip || '');
+  const [regon, setRegon] = useState(genericData.regon || '');
+  const [short_name, setShortName] = useState(genericData.short_name || '');
+  const [krs, setKrs] = useState(genericData.krs || '');
 
   const submitHandler = ((e) => {
     e.preventDefault();
-    setData({ name, bip_url, nip, regon, short_name, krs });
+    setGenericData({ name, bip_url, nip, regon, short_name, krs });
   });
 
   return (
@@ -103,14 +133,16 @@ const GenericDataForm = (({ data, setData }) => {
   )
 });
 
-const AddressDataForm = (({ data, setData }) => {
-  const [street, setStreet] = useState(data.street || '');
-  const [zip_code, setZipCode] = useState(data.zip_code || '');
-  const [town, setTown] = useState(data.town || '');
+const GenericDataForm = connect(allDataMapToProps, actions)(GenericDataFormBase);
+
+const AddressDataFormBase = (({ addressData, setAddressData }) => {
+  const [street, setStreet] = useState(addressData.street || '');
+  const [zip_code, setZipCode] = useState(addressData.zip_code || '');
+  const [town, setTown] = useState(addressData.town || '');
 
   const submitHandler = ((e) => {
     e.preventDefault();
-    setData({ street, zip_code, town });
+    setAddressData({ street, zip_code, town });
   })
 
   return (
@@ -124,5 +156,7 @@ const AddressDataForm = (({ data, setData }) => {
     </form>
   )
 });
+
+const AddressDataForm = connect(allDataMapToProps, actions)(AddressDataFormBase);
 
 export { GenericDataForm, AddressDataForm, FileInput, TextField, SubmitButton, ChoiceSingle };
