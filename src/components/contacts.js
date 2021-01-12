@@ -1,6 +1,9 @@
 import { useState } from 'preact/hooks';
 import { TextField, SubmitButton } from './forms';
 import { chunkArray } from './utils';
+import { connect } from 'redux-zero/preact';
+
+import actions from '../actions';
 
 const ContactForm = (({ data, setData }) => {
   const [name, setName] = useState(data.name || '');
@@ -75,7 +78,11 @@ const ContactFormRow = (({ row }) => {
   )
 });
 
-const ContactGrid = (({ data, setData }) => {
+const allDataMapToProps = (
+  ({ contactData }) => ({ contactData })
+);
+
+const ContactGridBase = (({ contactData, setContactData }) => {
   const rowSize = 4;
   const emptyData = {
     name: '',
@@ -83,7 +90,7 @@ const ContactGrid = (({ data, setData }) => {
     email: '',
   }
 
-  const contactArray = data || [];
+  const contactArray = contactData || [];
   let rows = [];
   if (contactArray.length) {
     if (contactArray.length > rowSize) {
@@ -107,9 +114,9 @@ const ContactGrid = (({ data, setData }) => {
   */
 
   const contactDataAdded = ((_oldItem, newItem) => {
-    let newData = Array.from(data);
+    let newData = Array.from(contactData);
     newData.push(newItem);
-    setData(newData);
+    setContactData(newData);
   });
 
   return (
@@ -121,5 +128,7 @@ const ContactGrid = (({ data, setData }) => {
     </div>
   )
 });
+
+const ContactGrid = connect(allDataMapToProps, actions)(ContactGridBase);
 
 export { ContactGrid };

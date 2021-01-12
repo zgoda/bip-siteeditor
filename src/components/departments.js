@@ -1,6 +1,9 @@
 import { useState } from 'preact/hooks';
 import { TextField, SubmitButton, ChoiceSingle } from './forms';
 import { chunkArray } from './utils';
+import { connect } from 'redux-zero/preact';
+
+import actions from '../actions';
 
 const DepartmentForm = ((props) => {
 
@@ -120,10 +123,14 @@ const DepartmentRow = (({ row, dataChanged }) => {
   )
 });
 
-const DepartmentGrid = (({ data, setData }) => {
+const allDataMapToProps = (
+  ({ departmentData }) => ({ departmentData })
+);
+
+const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
   const rowSize = 2;
 
-  const deptArray = data || [];
+  const deptArray = departmentData || [];
   let rows = [];
   if (deptArray.length) {
     if (deptArray.length > rowSize) {
@@ -134,14 +141,14 @@ const DepartmentGrid = (({ data, setData }) => {
   }
 
   const departmentDataChanged = ((oldItem, newItem) => {
-    const itemIndex = data.findIndex((x) => x.name == oldItem.name);
-    const newData = data.map((item, j) => {
+    const itemIndex = departmentData.findIndex((x) => x.name == oldItem.name);
+    const newData = departmentData.map((item, j) => {
       if (j === itemIndex) {
         return newItem;
       }
       return item;
     });
-    setData(newData);
+    setDepartmentData(newData);
   });
 
   return (
@@ -152,5 +159,7 @@ const DepartmentGrid = (({ data, setData }) => {
     </div>
   )
 });
+
+const DepartmentGrid = connect(allDataMapToProps, actions)(DepartmentGridBase);
 
 export { DepartmentGrid }
