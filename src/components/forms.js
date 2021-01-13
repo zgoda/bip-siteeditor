@@ -1,4 +1,4 @@
-import { useRef,useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
@@ -118,14 +118,16 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
   const [short_name, setShortName] = useState('');
   const [krs, setKrs] = useState('');
 
-  if (genericData) {
-    setName(genericData.name || '');
-    setBipUrl(genericData.bip_url || '');
-    setNip(genericData.nip || '');
-    setRegon(genericData.regon || '');
-    setShortName(genericData.short_name || '');
-    setKrs(genericData.krs || '');
-  }
+  useEffect(() => {
+    if (genericData) {
+      setName(genericData.name || '');
+      setBipUrl(genericData.bip_url || '');
+      setNip(genericData.nip || '');
+      setRegon(genericData.regon || '');
+      setShortName(genericData.short_name || '');
+      setKrs(genericData.krs || '');
+    }
+  }, [genericData]);
 
   const submitHandler = ((e) => {
     e.preventDefault();
@@ -154,11 +156,13 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
   const [zip_code, setZipCode] = useState('');
   const [town, setTown] = useState('');
 
-  if (addressData) {
-    setStreet(addressData.street || '');
-    setZipCode(addressData.zip_code || '');
-    setTown(addressData.town || '');
-  }
+  useEffect(() => {
+    if (addressData) {
+      setStreet(addressData.street || '');
+      setZipCode(addressData.zip_code || '');
+      setTown(addressData.town || '');
+    }
+  }, [addressData]);
 
   const submitHandler = ((e) => {
     e.preventDefault();
