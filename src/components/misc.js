@@ -14,4 +14,8 @@ const SectionTitle = (({ title, level = 2 }) => {
   )
 });
 
-export { SectionTitle, StartOverAgain };
+const EmptyItem = (({ clickHandler }) => {
+
+});
+
+export { EmptyItem, SectionTitle, StartOverAgain };
