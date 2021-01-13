@@ -3,6 +3,7 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { SubmitButton,TextField } from './forms';
+import { SectionTitle } from './misc';
 import { chunkArray } from './utils';
 
 const ContactForm = (({ data, setData }) => {
@@ -39,8 +40,12 @@ const ContactItem = (({ data }) => {
         <p class="card-title h5">{data.name}</p>
       </div>
       <div class="card-body">
-        <p><strong>Numer telefonu:</strong> {data.phone}</p>
-        <p><strong>Adres email:</strong> {data.email}</p>
+        <dl>
+          <dt>Numer telefonu</dt>
+          <dd>{data.phone}</dd>
+          <dt>Adres email</dt>
+          <dd>{data.email}</dd>
+        </dl>
       </div>
       <div class="card-footer">
         <button class="btn btn-primary">zmień dane</button>
@@ -53,7 +58,7 @@ const ContactFormRow = (({ row }) => {
   return (
     <div class='columns mb-2r'>
     {row.map((item) => (
-      <div class='column' key={item.name}>
+      <div class='column col-3 col-sm-6 col-xs-12' key={item.name}>
         <ContactItem data={item} />
       </div>
     ))}
@@ -107,7 +112,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     {rows.map((row, index) => (
       <ContactFormRow row={row} key={`contact-row-${index}`} />
     ))}
-      <h3>Dodaj nowy kontakt</h3>
+      <SectionTitle title='Dodaj nowy kontakt' level={3} />
       <ContactForm data={emptyData} setData={contactDataAdded} />
     </div>
   )

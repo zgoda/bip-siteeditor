@@ -7,4 +7,11 @@ const StartOverAgain = (({ clearFunc }) => {
   )
 });
 
-export { StartOverAgain };
+const SectionTitle = (({ title, level = 2 }) => {
+  const Tag = `h${level}`;
+  return (
+    <Tag>{title}</Tag>
+  )
+});
+
+export { SectionTitle, StartOverAgain };

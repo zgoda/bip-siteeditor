@@ -4,7 +4,7 @@ import { Provider } from 'redux-zero/preact';
 import { ContactGrid } from './components/contacts';
 import { DepartmentGrid } from './components/departments';
 import { AddressDataForm, FileInput,GenericDataForm } from './components/forms';
-import { StartOverAgain } from './components/misc';
+import { SectionTitle, StartOverAgain } from './components/misc';
 import store from './store';
 
 const App = (() => {
@@ -24,19 +24,19 @@ const App = (() => {
         <p>Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie BIP jako dane instytucji.</p>
         <p>We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.</p>
         <hr />
-        <h2>Dane podstawowe</h2>
+        <SectionTitle title='Dane podstawowe' />
         <p>Podstawowe dane instytucji.</p>
         <GenericDataForm />
         <hr />
-        <h2>Dane adresowe</h2>
+        <SectionTitle title='Dane adresowe' />
         <p>Dane adresowe instytucji.</p>
         <AddressDataForm />
         <hr />
-        <h2>Dane kontaktowe</h2>
+        <SectionTitle title='Dane kontaktowe' />
         <p>Dane kontaktowe instytucji.</p>
         <ContactGrid />
         <hr />
-        <h2>Dane wydziałów i pracowników</h2>
+        <SectionTitle title='Dane wydziałów i pracowników' />
         <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych.</p>
         <DepartmentGrid />
         <hr />

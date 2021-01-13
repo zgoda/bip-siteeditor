@@ -3,6 +3,7 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { ChoiceSingle, SubmitButton, TextField } from './forms';
+import { SectionTitle } from './misc';
 import { chunkArray } from './utils';
 
 const DepartmentForm = ((props) => {
@@ -99,7 +100,7 @@ const DepartmentBox = (({ data, setData }) => {
         email={email} setEmail={setEmail}
         submitHandler={setData}
       />
-      <h4>Dane pracowników</h4>
+      <SectionTitle title='Dane pracowników' level={4} />
       {staff.map((staffMember) => {
         return (
           <div class='item-box'>
