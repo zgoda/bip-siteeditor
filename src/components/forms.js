@@ -111,12 +111,21 @@ const genericDataMapToProps = (
 
 
 const GenericDataFormBase = (({ genericData, setGenericData }) => {
-  const [name, setName] = useState(genericData.name || '');
-  const [bip_url, setBipUrl] = useState(genericData.bip_url || '');
-  const [nip, setNip] = useState(genericData.nip || '');
-  const [regon, setRegon] = useState(genericData.regon || '');
-  const [short_name, setShortName] = useState(genericData.short_name || '');
-  const [krs, setKrs] = useState(genericData.krs || '');
+  const [name, setName] = useState('');
+  const [bip_url, setBipUrl] = useState('');
+  const [nip, setNip] = useState('');
+  const [regon, setRegon] = useState('');
+  const [short_name, setShortName] = useState('');
+  const [krs, setKrs] = useState('');
+
+  if (genericData) {
+    setName(genericData.name || '');
+    setBipUrl(genericData.bip_url || '');
+    setNip(genericData.nip || '');
+    setRegon(genericData.regon || '');
+    setShortName(genericData.short_name || '');
+    setKrs(genericData.krs || '');
+  }
 
   const submitHandler = ((e) => {
     e.preventDefault();
@@ -141,9 +150,15 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
 const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
 
 const AddressDataFormBase = (({ addressData, setAddressData }) => {
-  const [street, setStreet] = useState(addressData.street || '');
-  const [zip_code, setZipCode] = useState(addressData.zip_code || '');
-  const [town, setTown] = useState(addressData.town || '');
+  const [street, setStreet] = useState('');
+  const [zip_code, setZipCode] = useState('');
+  const [town, setTown] = useState('');
+
+  if (addressData) {
+    setStreet(addressData.street || '');
+    setZipCode(addressData.zip_code || '');
+    setTown(addressData.town || '');
+  }
 
   const submitHandler = ((e) => {
     e.preventDefault();
