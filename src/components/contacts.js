@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
@@ -7,9 +7,17 @@ import { EmptyItem, SectionTitle } from './misc';
 import { chunkArray } from './utils';
 
 const ContactForm = (({ data, setData }) => {
-  const [name, setName] = useState(data.name || '');
-  const [phone, setPhone] = useState(data.phone || '');
-  const [email, setEmail] = useState(data.email || '');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setName(data.name || '');
+      setPhone(data.phone || '');
+      setEmail(data.email || '');
+    }
+  }, [data])
 
   const origData = { ...data };
 
@@ -33,7 +41,13 @@ const ContactForm = (({ data, setData }) => {
   )
 });
 
-const ContactItem = (({ data }) => {
+const ContactItem = (({ data, dataEditSwitch }) => {
+
+  const buttonClickHandler = ((e) => {
+    e.preventDefault();
+    dataEditSwitch(false, data);
+  });
+
   return (
     <div class="card">
       <div class="card-header">
@@ -48,23 +62,29 @@ const ContactItem = (({ data }) => {
         </dl>
       </div>
       <div class="card-footer">
-        <button class="btn btn-primary">zmień dane</button>
+        <button class="btn btn-primary" onClick={buttonClickHandler}>zmień dane</button>
       </div>
     </div>
   )
 });
 
-const ContactFormRow = (({ row, withAddButton, formVisibilitySwitch }) => {
+const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
+
+  const emptyItemClickHandler = ((e) => {
+    e.preventDefault();
+    dataEditSwitch(true);
+  })
+  
   const contactAddItem = (
     <div class='column col-3 col-sm-6 col-xs-12' key='contact-add-button'>
-      <EmptyItem clickHandler={formVisibilitySwitch} />
+      <EmptyItem clickHandler={emptyItemClickHandler} />
     </div>
   )
   return (
     <div class='columns mb-2r'>
     {row.map((item) => (
       <div class='column col-3 col-sm-6 col-xs-12' key={item.name}>
-        <ContactItem data={item} />
+        <ContactItem data={item} dataEditSwitch={dataEditSwitch} />
       </div>
     ))}
     {withAddButton ? contactAddItem : null }
@@ -77,13 +97,17 @@ const allDataMapToProps = (
 );
 
 const ContactGridBase = (({ contactData, setContactData }) => {
-  const [formVisible, setFormVisible] = useState(false);
+
   const rowSize = 4;
   const emptyData = {
     name: '',
     phone: '',
     email: '',
   }
+
+  const [formVisible, setFormVisible] = useState(false);
+  const [addingNew, setAddingNew] = useState(true);
+  const [formData, setFormData] = useState(emptyData);
 
   const contactArray = contactData || [];
   let rows = [];
@@ -97,7 +121,6 @@ const ContactGridBase = (({ contactData, setContactData }) => {
 
   const addButtonSeparate = contactArray.length % rowSize === 0;
 
-  /*
   const contactDataChanged = ((oldItem, newItem) => {
     const itemIndex = contactArray.findIndex((x) => x.name === oldItem.name);
     const newData = contactArray.map((item, j) => {
@@ -108,12 +131,6 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     });
     setContactData(newData);
   });
-  */
-
-  const formVisibilitySwitch = ((e) => {
-    e.preventDefault();
-    setFormVisible(!formVisible);
-  });
 
   const contactDataAdded = ((_oldItem, newItem) => {
     let newData = Array.from(contactData);
@@ -121,12 +138,32 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     setContactData(newData);
   });
 
+  const formSectionTitle = addingNew ? 'Dodaj nowy kontakt' : 'Edytuj dane kontaktu';
+
+  const changedDataHandler = ((oldItem, newItem) => {
+    if (addingNew) {
+      contactDataAdded(oldItem, newItem);
+    } else {
+      contactDataChanged(oldItem, newItem);
+    }
+  });
+
+  const switchEditMode = ((val, data) => {
+    setAddingNew(val);
+    if (val) {
+      setFormData(emptyData);
+    } else {
+      setFormData(data);
+    }
+    setFormVisible(!formVisible);
+  });
+
   const formSection = (
     <>
-      <SectionTitle title='Dodaj nowy kontakt' level={3} />
-      <ContactForm data={emptyData} setData={contactDataAdded} />
+      <SectionTitle title={formSectionTitle} level={3} />
+      <ContactForm data={formData} setData={changedDataHandler} />
     </>
-  )
+  );
 
   return (
     <div class='container'>
@@ -134,10 +171,10 @@ const ContactGridBase = (({ contactData, setContactData }) => {
       const isLastRow = arr.length === index + 1;
       const withAddButton = isLastRow && row.length < 4;
       return (
-        <ContactFormRow row={row} key={`contact-row-${index}`} withAddButton={withAddButton} formVisibilitySwitch={formVisibilitySwitch} />
+        <ContactFormRow row={row} key={`contact-row-${index}`} withAddButton={withAddButton} dataEditSwitch={switchEditMode} />
       )
     })}
-      {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} formVisibilitySwitch={formVisibilitySwitch} />}
+      {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} dataEditSwitch={switchEditMode} />}
       {formVisible ? formSection : null}
     </div>
   )
