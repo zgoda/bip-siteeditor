@@ -54,10 +54,10 @@ const ContactItem = (({ data }) => {
   )
 });
 
-const ContactFormRow = (({ row, withAddButton }) => {
+const ContactFormRow = (({ row, withAddButton, formVisibilitySwitch }) => {
   const contactAddItem = (
     <div class='column col-3 col-sm-6 col-xs-12' key='contact-add-button'>
-      <EmptyItem />
+      <EmptyItem clickHandler={formVisibilitySwitch} />
     </div>
   )
   return (
@@ -77,6 +77,7 @@ const allDataMapToProps = (
 );
 
 const ContactGridBase = (({ contactData, setContactData }) => {
+  const [formVisible, setFormVisible] = useState(false);
   const rowSize = 4;
   const emptyData = {
     name: '',
@@ -109,11 +110,23 @@ const ContactGridBase = (({ contactData, setContactData }) => {
   });
   */
 
+  const formVisibilitySwitch = ((e) => {
+    e.preventDefault();
+    setFormVisible(!formVisible);
+  });
+
   const contactDataAdded = ((_oldItem, newItem) => {
     let newData = Array.from(contactData);
     newData.push(newItem);
     setContactData(newData);
   });
+
+  const formSection = (
+    <>
+      <SectionTitle title='Dodaj nowy kontakt' level={3} />
+      <ContactForm data={emptyData} setData={contactDataAdded} />
+    </>
+  )
 
   return (
     <div class='container'>
@@ -121,12 +134,11 @@ const ContactGridBase = (({ contactData, setContactData }) => {
       const isLastRow = arr.length === index + 1;
       const withAddButton = isLastRow && row.length < 4;
       return (
-        <ContactFormRow row={row} key={`contact-row-${index}`} withAddButton={withAddButton} />
+        <ContactFormRow row={row} key={`contact-row-${index}`} withAddButton={withAddButton} formVisibilitySwitch={formVisibilitySwitch} />
       )
     })}
-      {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} />}
-      <SectionTitle title='Dodaj nowy kontakt' level={3} />
-      <ContactForm data={emptyData} setData={contactDataAdded} />
+      {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} formVisibilitySwitch={formVisibilitySwitch} />}
+      {formVisible ? formSection : null}
     </div>
   )
 });
