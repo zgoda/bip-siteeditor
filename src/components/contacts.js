@@ -3,7 +3,7 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { SubmitButton,TextField } from './forms';
-import { SectionTitle } from './misc';
+import { EmptyItem, SectionTitle } from './misc';
 import { chunkArray } from './utils';
 
 const ContactForm = (({ data, setData }) => {
@@ -54,7 +54,12 @@ const ContactItem = (({ data }) => {
   )
 });
 
-const ContactFormRow = (({ row }) => {
+const ContactFormRow = (({ row, withAddButton }) => {
+  const contactAddItem = (
+    <div class='column col-3 col-sm-6 col-xs-12' key='contact-add-button'>
+      <EmptyItem />
+    </div>
+  )
   return (
     <div class='columns mb-2r'>
     {row.map((item) => (
@@ -62,6 +67,7 @@ const ContactFormRow = (({ row }) => {
         <ContactItem data={item} />
       </div>
     ))}
+    {withAddButton ? contactAddItem : null }
     </div>
   )
 });
@@ -88,6 +94,8 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     }
   }
 
+  const addButtonSeparate = contactArray.length % rowSize === 0;
+
   /*
   const contactDataChanged = ((oldItem, newItem) => {
     const itemIndex = contactArray.findIndex((x) => x.name === oldItem.name);
@@ -109,9 +117,14 @@ const ContactGridBase = (({ contactData, setContactData }) => {
 
   return (
     <div class='container'>
-    {rows.map((row, index) => (
-      <ContactFormRow row={row} key={`contact-row-${index}`} />
-    ))}
+    {rows.map((row, index, arr) => {
+      const isLastRow = arr.length === index + 1;
+      const withAddButton = isLastRow && row.length < 4;
+      return (
+        <ContactFormRow row={row} key={`contact-row-${index}`} withAddButton={withAddButton} />
+      )
+    })}
+      {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} />}
       <SectionTitle title='Dodaj nowy kontakt' level={3} />
       <ContactForm data={emptyData} setData={contactDataAdded} />
     </div>

@@ -30,3 +30,22 @@ $primary-color: #7E8D85;
   color: $error-color;
   font-weight: bold;
 }
+
+.card {
+  height: 100%;
+}
+
+.card .item-add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-add-button svg {
+  vertical-align: middle;
+}
+
+.item-add-button .btn-action {
+  width: fit-content;
+  height:fit-content;
+}

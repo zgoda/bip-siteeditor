@@ -1,3 +1,5 @@
+import { PlusCircle } from 'preact-feather';
+
 const StartOverAgain = (({ clearFunc }) => {
   return (
     <div class='warning-box'>
@@ -15,7 +17,13 @@ const SectionTitle = (({ title, level = 2 }) => {
 });
 
 const EmptyItem = (({ clickHandler }) => {
-
+  return (
+    <div class="card">
+      <div class="card-body item-add-button">
+        <button class="btn btn-link btn-action" onClick={clickHandler}><PlusCircle size={48} /></button>
+      </div>
+    </div>
+  )
 });
 
 export { EmptyItem, SectionTitle, StartOverAgain };
