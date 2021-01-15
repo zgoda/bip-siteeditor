@@ -170,12 +170,12 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
           <SectionTitle title='Dane wydziałów' level={3} />
           {deptArray.map((item) => {
             return (
-              <DepartmentItem departmentData={item} />
+              <DepartmentItem key={`department-item-${item.name}`} departmentData={item} />
             )
           })}
           {deptFormVisible && <DepartmentForm data={emptyDeptData} />}
         </div>
-        <div clsss="column col-xs-6">
+        <div class="column col-xs-6">
           <SectionTitle title='Pracownicy' level={3} />
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
