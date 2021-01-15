@@ -1,27 +1,42 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { ChoiceSingle, SubmitButton, TextField } from './forms';
 import { SectionTitle } from './misc';
-import { chunkArray } from './utils';
 
-const DepartmentForm = ((props) => {
+const DepartmentForm = (({ data, setData }) => {
+  const [name, setName] = useState('');
+  const [domain, setDomain] = useState('');
+  const [location, setLocation] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setName(data.name || '');
+      setDomain(data.domain || '');
+      setLocation(data.location || '');
+      setPhone(data.phone || '');
+      setEmail(data.email || '');
+    }
+  }, [data]);
+
+  const origData = { ...data };
 
   const submitHandler = ((e) => {
     e.preventDefault();
-    const { name, domain, location, phone, email } = {... props};
-    props.submitHandler({ name, domain, location, phone, email });
+    setData(origData, { name, domain, location, phone, email });
   })
 
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField name='name' value={props.name} changeHandler={props.setName} label='Nazwa wydziału / jednostki organizacyjnej' />
-        <TextField name='domain' value={props.domain} changeHandler={props.setDomain} label='Zakres działalności' />
-        <TextField name='location' value={props.location} changeHandler={props.setLocation} label='Lokalizacja' />
-        <TextField name='phone' value={props.phone} changeHandler={props.setPhone} label='Numer telefonu' />
-        <TextField name='email' value={props.email} changeHandler={props.setEmail} label='Adres email' />
+        <TextField name='name' value={name} changeHandler={setName} label='Nazwa wydziału / jednostki organizacyjnej' required={true} />
+        <TextField name='domain' value={domain} changeHandler={setDomain} label='Zakres działalności' />
+        <TextField name='location' value={location} changeHandler={setLocation} label='Lokalizacja' />
+        <TextField name='phone' value={phone} changeHandler={setPhone} label='Numer telefonu' />
+        <TextField name='email' value={email} changeHandler={setEmail} label='Adres email' />
         <SubmitButton />
       </fieldset>
     </form>
@@ -29,12 +44,23 @@ const DepartmentForm = ((props) => {
 }); 
 
 const StaffMemberForm = (({ data, setData }) => {
-  const [person_name, setPersonName] = useState(data.person_name || '');
-  const [role_name, setRoleName] = useState(data.role_name || '');
-  const [role_type, setRoleType] = useState(data.role_type || '');
-  const [photo_url, setPhotoUrl] = useState(data.photo_url || '');
-  const [phone, setPhone] = useState(data.phone || '');
-  const [email, setEmail] = useState(data.email || '');
+  const [person_name, setPersonName] = useState('');
+  const [role_name, setRoleName] = useState('');
+  const [role_type, setRoleType] = useState('');
+  const [photo_url, setPhotoUrl] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    if (data) {
+      setPersonName(data.person_name || '');
+      setRoleName(data.role_name || '');
+      setRoleType(data.role_type || '');
+      setPhotoUrl(data.photo_url || '');
+      setPhone(data.phone || '');
+      setEmail(data.email || '');
+    }
+  }, [data]);
 
   const origData = { ...data };
 
@@ -69,57 +95,43 @@ const StaffMemberForm = (({ data, setData }) => {
   )
 });
 
-const DepartmentBox = (({ data, setData }) => {
-  const [name, setName] = useState(data.name || '');
-  const [domain, setDomain] = useState(data.domain || '');
-  const [location, setLocation] = useState(data.location || '');
-  const [phone, setPhone] = useState(data.phone || '');
-  const [email, setEmail] = useState(data.email || '');
-  const [staff, setStaff] = useState(data.staff || []);
+const DepartmentItem = (({ departmentData }) => {
 
-  const staffMemberDataChanged = ((oldData, newData) => {
-    const itemIndex = staff.findIndex((x) => x.person_name == oldData.person_name);
-    const newStaff = staff.map((item, i) => {
-      if (i === itemIndex) {
-        return newData;
-      }
-      return item;
-    })
-    setStaff(newStaff);
-    setData({ name, domain, location, phone, email, staff });
+  const showLocationLine = departmentData.location || departmentData.domain;
+  const locationLine = (() => {
+    let elems = [];
+    if (departmentData.location) {
+      elems.push(departmentData.location);
+    }
+    if (departmentData.domain) {
+      elems.push(departmentData.domain);
+    }
+    return elems.join(' &middot; ');
+  });
+
+  const showContactLine = departmentData.phone || departmentData.email;
+  const contactLine = (() => {
+    let elems = [];
+    if (departmentData.phone) {
+      elems.push(departmentData.phone);
+    }
+    if (departmentData.email) {
+      elems.push(departmentData.email);
+    }
+    return elems.join(' &middot; ');
   });
 
   return (
-    <div>
-      {name && <h3>Dane wydziału {name}</h3>}
-      <DepartmentForm
-        name={name} setName={setName}
-        domain={domain} setDomain={setDomain}
-        location={location} setLocation={setLocation}
-        phone={phone} setPhone={setPhone}
-        email={email} setEmail={setEmail}
-        submitHandler={setData}
-      />
-      <SectionTitle title='Dane pracowników' level={4} />
-      {staff.map((staffMember) => {
-        return (
-          <div class='item-box'>
-            <StaffMemberForm data={staffMember} setData={staffMemberDataChanged} />
-          </div>
-        )
-      })}
-    </div>
-  )
-})
-
-const DepartmentRow = (({ row, dataChanged }) => {
-  return (
-    <div class='columns'>
-    {row.map((item) => (
-      <div class='column' key={item.name}>
-        <DepartmentBox data={item} setData={dataChanged} />
+    <div class="tile">
+      <div class="tile-content">
+        <p class="tile-title text-large text-bold">{departmentData.name}</p>
+        {showLocationLine && <p class="tile-subtitle">{locationLine()}</p>}
+        {showContactLine && <small class="tile-subtitle text-gray">{contactLine()}</small>}
+        <p><button class="btn btn-primary btn-sm">zmień dane</button></p>
       </div>
-    ))}
+      <div class="tile-action">
+        <button class="btn btn-link">pracownicy</button>
+      </div>
     </div>
   )
 });
@@ -129,34 +141,24 @@ const allDataMapToProps = (
 );
 
 const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
-  const rowSize = 2;
 
   const deptArray = departmentData || [];
-  let rows = [];
-  if (deptArray.length) {
-    if (deptArray.length > rowSize) {
-      rows = chunkArray(deptArray, rowSize);
-    } else {
-      rows = [deptArray];
-    }
-  }
-
-  const departmentDataChanged = ((oldItem, newItem) => {
-    const itemIndex = departmentData.findIndex((x) => x.name == oldItem.name);
-    const newData = departmentData.map((item, j) => {
-      if (j === itemIndex) {
-        return newItem;
-      }
-      return item;
-    });
-    setDepartmentData(newData);
-  });
 
   return (
     <div class='container'>
-    {rows.map((row) => (
-      <DepartmentRow row={row} dataChanged={departmentDataChanged} />
-    ))}
+      <div class="columns">
+        <div class="column col-xs-6">
+          <SectionTitle title='Dane wydziałów' level={3} />
+          {deptArray.map((item) => {
+            return (
+              <DepartmentItem departmentData={item} />
+            )
+          })}
+        </div>
+        <div clsss="column col-xs-6">
+          <SectionTitle title='Pracownicy' level={3} />
+        </div>
+      </div>
     </div>
   )
 });

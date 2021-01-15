@@ -1,9 +1,9 @@
-import { useLang,useMeta, useTitle } from 'hooked-head/preact';
+import { useLang, useMeta, useTitle } from 'hooked-head/preact';
 import { Provider } from 'redux-zero/preact';
 
 import { ContactGrid } from './components/contacts';
 import { DepartmentGrid } from './components/departments';
-import { AddressDataForm, FileInput,GenericDataForm } from './components/forms';
+import { AddressDataForm, FileInput, GenericDataForm } from './components/forms';
 import { SectionTitle, StartOverAgain } from './components/misc';
 import store from './store';
 
