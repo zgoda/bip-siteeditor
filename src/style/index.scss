@@ -34,19 +34,19 @@ $primary-color: #7E8D85;
 .empty-item {
   height: 100%;
   min-height: 224px;
-}
 
-.empty-item .card-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .card-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.empty-item svg {
-  vertical-align: middle;
-}
+  svg {
+    vertical-align: middle;
+  }
 
-.empty-item .btn-action {
-  width: fit-content;
-  height:fit-content;
+  .btn-action {
+    width: fit-content;
+    height:fit-content;
+  }
 }
