@@ -141,6 +141,25 @@ const allDataMapToProps = (
 );
 
 const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
+  const [deptFormVisible, setDeptFormVisible] = useState(false);
+  const [staffFormVisible, setStaffFormVisible] = useState(false);
+
+  const emptyDeptData = {
+    name: '',
+    domain: '',
+    location: '',
+    phone: '',
+    email: '',
+  }
+
+  const emptyStaffData = {
+    person_name: '',
+    role_name: '',
+    role_type: 'staff',
+    photo_url: '',
+    phone: '',
+    email: '',
+  }
 
   const deptArray = departmentData || [];
 
@@ -154,9 +173,11 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
               <DepartmentItem departmentData={item} />
             )
           })}
+          {deptFormVisible && <DepartmentForm data={emptyDeptData} />}
         </div>
         <div clsss="column col-xs-6">
           <SectionTitle title='Pracownicy' level={3} />
+          {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
       </div>
     </div>

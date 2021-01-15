@@ -139,20 +139,13 @@ const ContactGridBase = (({ contactData, setContactData }) => {
   const formSectionTitle = addingNew ? 'Dodaj nowy kontakt' : 'Edytuj dane kontaktu';
 
   const changedDataHandler = ((oldItem, newItem) => {
-    if (addingNew) {
-      contactDataAdded(oldItem, newItem);
-    } else {
-      contactDataChanged(oldItem, newItem);
-    }
+    const func = addingNew ? contactDataAdded : contactDataChanged;
+    func(oldItem, newItem);
   });
 
   const switchEditMode = ((val, data) => {
     setAddingNew(val);
-    if (val) {
-      setFormData(emptyData);
-    } else {
-      setFormData(data);
-    }
+    setFormData(val ? emptyData : data);
     setFormVisible(!formVisible);
   });
 
