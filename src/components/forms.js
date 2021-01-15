@@ -109,7 +109,6 @@ const genericDataMapToProps = (
   ({ genericData }) => ({ genericData })
 );
 
-
 const GenericDataFormBase = (({ genericData, setGenericData }) => {
   const [name, setName] = useState('');
   const [bip_url, setBipUrl] = useState('');
