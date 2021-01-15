@@ -6,7 +6,7 @@ import { SubmitButton,TextField } from './forms';
 import { EmptyItem, SectionTitle } from './misc';
 import { chunkArray } from './utils';
 
-const ContactForm = (({ data, setData }) => {
+const ContactForm = (({ data, setData, switchEditMode }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -24,9 +24,7 @@ const ContactForm = (({ data, setData }) => {
   const submitHandler = ((e) => {
     e.preventDefault();
     setData(origData, { name, phone, email });
-    setName('');
-    setPhone('');
-    setEmail('');
+    switchEditMode(false);
   });
 
   return (
@@ -161,7 +159,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
   const formSection = (
     <>
       <SectionTitle title={formSectionTitle} level={3} />
-      <ContactForm data={formData} setData={changedDataHandler} />
+      <ContactForm data={formData} setData={changedDataHandler} switchEditMode={switchEditMode} />
     </>
   );
 
