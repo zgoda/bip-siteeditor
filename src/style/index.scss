@@ -31,21 +31,22 @@ $primary-color: #7E8D85;
   font-weight: bold;
 }
 
-.card {
+.empty-item {
   height: 100%;
+  min-height: 224px;
 }
 
-.card .item-add-button {
+.empty-item .card-body {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.item-add-button svg {
+.empty-item svg {
   vertical-align: middle;
 }
 
-.item-add-button .btn-action {
+.empty-item .btn-action {
   width: fit-content;
   height:fit-content;
 }

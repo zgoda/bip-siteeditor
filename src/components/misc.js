@@ -18,8 +18,8 @@ const SectionTitle = (({ title, level = 2 }) => {
 
 const EmptyItem = (({ clickHandler }) => {
   return (
-    <div class="card">
-      <div class="card-body item-add-button">
+    <div class="card empty-item">
+      <div class="card-body">
         <button class="btn btn-link btn-action" onClick={clickHandler}><PlusCircle size={48} /></button>
       </div>
     </div>
