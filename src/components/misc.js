@@ -31,7 +31,7 @@ const EmptyItem = (({ clickHandler }) => {
  * Toast component
  */
 
-const Toast = (({ toastList, position, timeout }) => {
+const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
   const [list, setList] = useState(toastList);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Toast = (({ toastList, position, timeout }) => {
       return () => clearInterval(interval);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeout]);
+  }, [timeout, list]);
 
   const statusToIcon = ((status) => {
     switch (status) {

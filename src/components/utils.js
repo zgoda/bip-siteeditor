@@ -1,3 +1,5 @@
+import { customAlphabet, urlAlphabet } from 'nanoid';
+
 const chunkArray = ((array, chunkSize) => {
   let a = array || [];
   let R = [];
@@ -7,4 +9,10 @@ const chunkArray = ((array, chunkSize) => {
   return R;
 });
 
-export { chunkArray };
+const genToastId = ((len = 20) => {
+  const alphabet = urlAlphabet.replace('_', '');
+  const nanoid = customAlphabet(alphabet, len);
+  return nanoid();
+});
+
+export { chunkArray, genToastId };

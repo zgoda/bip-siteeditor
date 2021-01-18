@@ -4,7 +4,7 @@ const initialState = {
   genericData: {},
   addressData: {},
   contactData: [],
-  departmentData: []
+  departmentData: [],
 };
 
 const store = createStore(initialState);

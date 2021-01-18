@@ -3,8 +3,8 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { SubmitButton, TextField } from './forms';
-import { EmptyItem, SectionTitle } from './misc';
-import { chunkArray } from './utils';
+import { EmptyItem, SectionTitle, Toast } from './misc';
+import { chunkArray, genToastId } from './utils';
 
 const ContactForm = (({ data, setData, switchEditMode }) => {
   const [name, setName] = useState('');
@@ -106,6 +106,8 @@ const ContactGridBase = (({ contactData, setContactData }) => {
   const [formVisible, setFormVisible] = useState(false);
   const [addingNew, setAddingNew] = useState(true);
   const [formData, setFormData] = useState(emptyData);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastList, setToastList] = useState([]);
 
   const contactArray = contactData || [];
   let rows = [];
@@ -128,12 +130,30 @@ const ContactGridBase = (({ contactData, setContactData }) => {
       return item;
     });
     setContactData(newData);
+    const newList = Array.from(toastList);
+    newList.push({
+      id: genToastId(),
+      icon: 'success',
+      title: 'Dane kontaktu zapisane',
+      message: 'Zmienione dane kontaktu zostały zapisane'
+    });
+    setToastList(newList);
+    setToastVisible(true);
   });
 
   const contactDataAdded = ((_oldItem, newItem) => {
     let newData = Array.from(contactData);
     newData.push(newItem);
     setContactData(newData);
+    const newList = Array.from(toastList);
+    newList.push({
+      id: genToastId(),
+      icon: 'success',
+      title: 'Dane kontaktu zapisane',
+      message: 'Dane nowego kontaktu zostały zapisane'
+    });
+    setToastList(newList);
+    setToastVisible(true);
   });
 
   const formSectionTitle = addingNew ? 'Dodaj nowy kontakt' : 'Edytuj dane kontaktu';
@@ -167,6 +187,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     })}
       {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} dataEditSwitch={switchEditMode} />}
       {formVisible ? formSection : null}
+      {toastVisible && <Toast toastList={toastList} />}
     </div>
   )
 });
