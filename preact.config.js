@@ -3,4 +3,5 @@ export default (config, env, helpers) => {
   let babelConfig = rule.options;
   
   babelConfig.plugins.push(require.resolve('@babel/plugin-transform-react-jsx-source'));
+  babelConfig.plugins.push(require.resolve('babel-plugin-transform-hook-names'));
 };
