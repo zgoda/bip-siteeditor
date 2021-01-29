@@ -150,6 +150,10 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
 
 const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
 
+const addressDataMapToProps = (
+  ({ addressData }) => ({ addressData })
+);
+
 const AddressDataFormBase = (({ addressData, setAddressData }) => {
   const [street, setStreet] = useState('');
   const [zip_code, setZipCode] = useState('');
@@ -180,6 +184,6 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
   )
 });
 
-const AddressDataForm = connect(allDataMapToProps, actions)(AddressDataFormBase);
+const AddressDataForm = connect(addressDataMapToProps, actions)(AddressDataFormBase);
 
 export { AddressDataForm, ChoiceSingle, FileInput, GenericDataForm, SubmitButton, TextField };
