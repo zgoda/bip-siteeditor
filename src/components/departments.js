@@ -3,7 +3,7 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { ChoiceSingle, SubmitButton, TextField } from './forms';
-import { SectionTitle } from './misc';
+import { EmptyTileItem, SectionTitle } from './misc';
 
 const DepartmentForm = (({ data, setData }) => {
   const [name, setName] = useState('');
@@ -136,13 +136,8 @@ const DepartmentItem = (({ departmentData }) => {
   )
 });
 
-const allDataMapToProps = (
-  ({ departmentData }) => ({ departmentData })
-);
-
-const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
+const DepartmentSection = (({ departmentData, setDepartmentData }) => {
   const [deptFormVisible, setDeptFormVisible] = useState(false);
-  const [staffFormVisible, setStaffFormVisible] = useState(false);
 
   const emptyDeptData = {
     name: '',
@@ -150,7 +145,35 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
     location: '',
     phone: '',
     email: '',
-  }
+  };
+
+  const addDepartmentClick = ((e) => {
+    e.preventDefault();
+    setDeptFormVisible(!deptFormVisible);
+  });
+
+  return (
+    <>
+      <SectionTitle title='Dane wydziałów' level={3} />
+      {departmentData.map((item) => {
+        return (
+          <DepartmentItem key={`department-item-${item.name}`} departmentData={item} />
+        )
+      })}
+      <EmptyTileItem clickHandler={addDepartmentClick} />
+      {deptFormVisible && <DepartmentForm data={emptyDeptData} />}    
+    </>
+  )
+  
+});
+
+const allDataMapToProps = (
+  ({ departmentData }) => ({ departmentData })
+);
+
+const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
+  const [staffFormVisible, setStaffFormVisible] = useState(false);
+  const [staffAddButtonVisible, setStaffAddButtonVisible] = useState(false);
 
   const emptyStaffData = {
     person_name: '',
@@ -159,24 +182,26 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
     photo_url: '',
     phone: '',
     email: '',
-  }
+  };
+
+  const addStaffMemberClick = ((e) => {
+    e.preventDefault();
+    setStaffFormVisible(!staffFormVisible);
+  });
 
   const deptArray = departmentData || [];
+
+  setStaffAddButtonVisible(deptArray.length > 0);
 
   return (
     <div class='container'>
       <div class="columns">
-        <div class="column col-xs-6">
-          <SectionTitle title='Dane wydziałów' level={3} />
-          {deptArray.map((item) => {
-            return (
-              <DepartmentItem key={`department-item-${item.name}`} departmentData={item} />
-            )
-          })}
-          {deptFormVisible && <DepartmentForm data={emptyDeptData} />}
+        <div class="column col-xs-3">
+          <DepartmentSection departmentData={deptArray} setDepartmentData={setDepartmentData} />
         </div>
-        <div class="column col-xs-6">
+        <div class="column col-xs-9">
           <SectionTitle title='Pracownicy' level={3} />
+          {staffAddButtonVisible && <EmptyTileItem clickHandler={addStaffMemberClick} />}
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
       </div>

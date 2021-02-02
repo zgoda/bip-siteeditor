@@ -17,10 +17,20 @@ const SectionTitle = (({ title, level = 2 }) => {
   )
 });
 
-const EmptyItem = (({ clickHandler }) => {
+const EmptyCardItem = (({ clickHandler }) => {
   return (
-    <div class="card empty-item">
+    <div class="card empty-card-item">
       <div class="card-body">
+        <button class="btn btn-link btn-action" onClick={clickHandler}><PlusCircle size={48} /></button>
+      </div>
+    </div>
+  )
+});
+
+const EmptyTileItem = (({ clickHandler }) => {
+  return (
+    <div class="tile empty-tile-item">
+      <div class="tile-content text-center">
         <button class="btn btn-link btn-action" onClick={clickHandler}><PlusCircle size={48} /></button>
       </div>
     </div>
@@ -98,4 +108,4 @@ const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
   )
 });
 
-export { EmptyItem, SectionTitle, StartOverAgain, Toast };
+export { EmptyCardItem, EmptyTileItem, SectionTitle, StartOverAgain, Toast };

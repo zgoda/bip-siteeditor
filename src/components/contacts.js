@@ -3,7 +3,7 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 import { SubmitButton, TextField } from './forms';
-import { EmptyItem, SectionTitle, Toast } from './misc';
+import { EmptyCardItem, SectionTitle, Toast } from './misc';
 import { chunkArray, genToastId } from './utils';
 
 const ContactForm = (({ data, setData, switchEditMode }) => {
@@ -75,13 +75,14 @@ const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
   
   const contactAddItem = (
     <div class='column col-3 col-sm-6 col-xs-12' key='contact-add-button'>
-      <EmptyItem clickHandler={emptyItemClickHandler} />
+      <EmptyCardItem clickHandler={emptyItemClickHandler} />
     </div>
   )
+
   return (
     <div class='columns mb-2r'>
     {row.map((item) => (
-      <div class='column col-3 col-sm-6 col-xs-12' key={item.name}>
+      <div class='column col-3 col-sm-6 col-xs-12' key={`contact-item-${item.name}`}>
         <ContactItem data={item} dataEditSwitch={dataEditSwitch} />
       </div>
     ))}

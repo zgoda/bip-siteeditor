@@ -31,7 +31,7 @@ $primary-color: #7E8D85;
   font-weight: bold;
 }
 
-.empty-item {
+.empty-card-item {
   height: 100%;
   min-height: 224px;
 
@@ -47,7 +47,19 @@ $primary-color: #7E8D85;
 
   .btn-action {
     width: fit-content;
-    height:fit-content;
+    height: fit-content;
+  }
+}
+
+.empty-tile-item {
+
+  svg {
+    vertical-align: middle;
+  }
+
+  .btn-action {
+    width: fit-content;
+    height: fit-content;
   }
 }
 
