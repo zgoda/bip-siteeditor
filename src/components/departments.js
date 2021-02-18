@@ -168,7 +168,7 @@ const DepartmentSection = (({ departmentData, setDepartmentData, departmentStaff
       <EmptyTileItem clickHandler={addDepartmentClick} />
       {deptFormVisible && <DepartmentForm data={emptyDeptData} />}    
     </>
-  )  
+  )
 });
 
 const StaffMemberItem = (({ person }) => {
@@ -196,12 +196,24 @@ const StaffMemberItem = (({ person }) => {
     return elems.join(` ${String.fromCharCode(183)} `);
   });
 
+  const personPhoto = (
+    <div class="tile-icon">
+      <figure class="avatar avatar-xl">
+        <img src={person.photo_url} alt={person.name} />
+      </figure>
+    </div>
+  )
+
   return (
     <div class="tile">
+      {person.photo_url ? personPhoto : null}
       <div class="tile-content">
         <p class="tile-title text-large text-bold">{person.person_name}</p>
         <p class="tile-subtitle">{roleLine()}</p>
         <small class="tile-subtitle text-gray">{contactLine()}</small>
+      </div>
+      <div class="tile-action">
+        <button class="btn btn-primary btn-sm">zmień dane</button>
       </div>
     </div>
   )
@@ -255,6 +267,9 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
   });
 
   setStaffAddButtonVisible(deptArray.length > 0);
+  if (deptArray.length > 0 && !currentDepartment) {
+    setCurrentDepartment(deptArray[0].name);
+  }
 
   return (
     <div class='container'>
