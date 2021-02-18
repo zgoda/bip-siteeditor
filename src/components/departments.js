@@ -41,7 +41,7 @@ const DepartmentForm = (({ data, setData }) => {
       </fieldset>
     </form>
   )
-}); 
+});
 
 const StaffMemberForm = (({ data, setData }) => {
   const [person_name, setPersonName] = useState('');
@@ -95,7 +95,7 @@ const StaffMemberForm = (({ data, setData }) => {
   )
 });
 
-const DepartmentItem = (({ departmentData }) => {
+const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
 
   const showLocationLine = departmentData.location || departmentData.domain;
   const locationLine = (() => {
@@ -121,6 +121,11 @@ const DepartmentItem = (({ departmentData }) => {
     return elems.join(' &middot; ');
   });
 
+  const displayStaffButtonClick = ((e) => {
+    e.preventDefault();
+    departmentStaffDisplay(departmentData.name);
+  });
+
   return (
     <div class="tile">
       <div class="tile-content">
@@ -130,13 +135,13 @@ const DepartmentItem = (({ departmentData }) => {
         <p><button class="btn btn-primary btn-sm">zmień dane</button></p>
       </div>
       <div class="tile-action">
-        <button class="btn btn-link">pracownicy</button>
+        <button class="btn btn-link" onclick={displayStaffButtonClick}>pracownicy</button>
       </div>
     </div>
   )
 });
 
-const DepartmentSection = (({ departmentData, setDepartmentData }) => {
+const DepartmentSection = (({ departmentData, setDepartmentData, departmentStaffDisplay }) => {
   const [deptFormVisible, setDeptFormVisible] = useState(false);
 
   const emptyDeptData = {
@@ -157,14 +162,21 @@ const DepartmentSection = (({ departmentData, setDepartmentData }) => {
       <SectionTitle title='Dane wydziałów' level={3} />
       {departmentData.map((item) => {
         return (
-          <DepartmentItem key={`department-item-${item.name}`} departmentData={item} />
+          <DepartmentItem key={`department-item-${item.name}`} departmentData={item} departmentStaffDisplay={departmentStaffDisplay} />
         )
       })}
       <EmptyTileItem clickHandler={addDepartmentClick} />
       {deptFormVisible && <DepartmentForm data={emptyDeptData} />}    
     </>
+  )  
+});
+
+const StaffSection = (({ departmentName }) => {
+  return (
+    <>
+      <SectionTitle title={`${departmentName} - pracownicy`} level={3} />
+    </>
   )
-  
 });
 
 const allDataMapToProps = (
@@ -174,6 +186,7 @@ const allDataMapToProps = (
 const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
   const [staffFormVisible, setStaffFormVisible] = useState(false);
   const [staffAddButtonVisible, setStaffAddButtonVisible] = useState(false);
+  const [currentDepartment, setCurrentDepartment] = useState('');
 
   const emptyStaffData = {
     person_name: '',
@@ -189,6 +202,10 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
     setStaffFormVisible(!staffFormVisible);
   });
 
+  const displayDepartmentStaff = ((department) => {
+    setCurrentDepartment(department);
+  });
+
   const deptArray = departmentData || [];
 
   setStaffAddButtonVisible(deptArray.length > 0);
@@ -197,10 +214,11 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
     <div class='container'>
       <div class="columns">
         <div class="column col-xs-3">
-          <DepartmentSection departmentData={deptArray} setDepartmentData={setDepartmentData} />
+          <DepartmentSection departmentData={deptArray} setDepartmentData={setDepartmentData} departmentStaffDisplay={displayDepartmentStaff} />
         </div>
+        <div class="divider-vert" />
         <div class="column col-xs-9">
-          <SectionTitle title='Pracownicy' level={3} />
+          {currentDepartment && <StaffSection departmentName={currentDepartment} />}
           {staffAddButtonVisible && <EmptyTileItem clickHandler={addStaffMemberClick} />}
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
