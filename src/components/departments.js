@@ -106,7 +106,7 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
     if (departmentData.domain) {
       elems.push(departmentData.domain);
     }
-    return elems.join(' &middot; ');
+    return elems.join(` ${String.fromCharCode(183)} `);
   });
 
   const showContactLine = departmentData.phone || departmentData.email;
@@ -118,7 +118,7 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
     if (departmentData.email) {
       elems.push(departmentData.email);
     }
-    return elems.join(' &middot; ');
+    return elems.join(` ${String.fromCharCode(183)} `);
   });
 
   const displayStaffButtonClick = ((e) => {
@@ -171,10 +171,51 @@ const DepartmentSection = (({ departmentData, setDepartmentData, departmentStaff
   )  
 });
 
-const StaffSection = (({ departmentName }) => {
+const StaffMemberItem = (({ person }) => {
+
+  const roleLine = (() => {
+    const rolesMap = {
+      manager: 'kierownik',
+      staff: 'pracownik',
+    };
+    const elems = [
+      rolesMap[person.role_type] || 'pracownik',
+      person.role_name,
+    ];
+    return elems.join(` ${String.fromCharCode(183)} `);
+  });
+
+  const contactLine = (() => {
+    const elems = [];
+    if (person.phone) {
+      elems.push(person.phone);
+    }
+    if (person.email) {
+      elems.push(person.email);
+    }
+    return elems.join(` ${String.fromCharCode(183)} `);
+  });
+
+  return (
+    <div class="tile">
+      <div class="tile-content">
+        <p class="tile-title text-large text-bold">{person.person_name}</p>
+        <p class="tile-subtitle">{roleLine()}</p>
+        <small class="tile-subtitle text-gray">{contactLine()}</small>
+      </div>
+    </div>
+  )
+});
+
+const StaffSection = (({ departmentName, staff }) => {
   return (
     <>
       <SectionTitle title={`${departmentName} - pracownicy`} level={3} />
+      {staff.map((item) => {
+        return (
+          <StaffMemberItem key={`${departmentName}-staff-${item.person_name}`} person={item} />
+        )
+      })}
     </>
   )
 });
@@ -208,6 +249,11 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
 
   const deptArray = departmentData || [];
 
+  const staffMap = {};
+  deptArray.forEach((element) => {
+    staffMap[element.name] = element.staff;
+  });
+
   setStaffAddButtonVisible(deptArray.length > 0);
 
   return (
@@ -218,7 +264,7 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
         </div>
         <div class="divider-vert" />
         <div class="column col-xs-9">
-          {currentDepartment && <StaffSection departmentName={currentDepartment} />}
+          {currentDepartment && <StaffSection departmentName={currentDepartment} staff={staffMap[currentDepartment] || []} />}
           {staffAddButtonVisible && <EmptyTileItem clickHandler={addStaffMemberClick} />}
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
