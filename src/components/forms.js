@@ -6,7 +6,9 @@ import actions from '../actions';
 const Label = (({ forElement, labelText, isRequired = false }) => {
   if (isRequired) {
     return (
-      <label class='form-label' for={forElement}>{labelText} <span class='label-required-marker'>*</span></label>
+      <label class='form-label' for={forElement}>
+        {labelText} <span class='label-required-marker'>*</span>
+      </label>
     )
   }
   return (
@@ -16,7 +18,14 @@ const Label = (({ forElement, labelText, isRequired = false }) => {
 
 const TextInput = (({ name, value, changeHandler, required }) => {
   return (
-    <input class='form-input' type='text' name={name} value={value} onInput={(e) => changeHandler(e.target.value)} required={required} />
+    <input
+      class='form-input'
+      type='text'
+      name={name}
+      value={value}
+      onInput={(e) => changeHandler(e.target.value)}
+      required={required}
+    />
   )
 });
 
@@ -24,16 +33,28 @@ const TextField = (({ name, value, changeHandler, required = false, label }) => 
   return (
     <div class='form-group'>
       <Label forElement={name} labelText={label} isRequired={required} />
-      <TextInput name={name} value={value} changeHandler={changeHandler} required={required} />
+      <TextInput
+        name={name}
+        value={value}
+        changeHandler={changeHandler}
+        required={required}
+      />
     </div>
   )
 });
 
-const ChoiceSingle = (({ name, value, choices, changeHandler, required = false, label }) => {
+const ChoiceSingle = (
+    ({ name, value, choices, changeHandler, required = false, label }) => {
   return (
     <div class='form-group'>
       <Label forElement={name} labelText={label} isRequired={required} />
-      <select class='form-select' value={value} onChange={(e) => changeHandler(e.target.value)} required={required} name={name}>
+      <select
+        class='form-select'
+        value={value}
+        onChange={(e) => changeHandler(e.target.value)}
+        required={required}
+        name={name}
+      >
       {choices.map((item) => {
         return (
           <option value={item.value} key={item.value}>{item.name}</option>
@@ -51,10 +72,12 @@ const SubmitButton = (({ text = 'zapisz' }) => {
 });
 
 const allDataMapToProps = (
-  ({ genericData, addressData, contactData, departmentData }) => ({ genericData, addressData, contactData, departmentData })
+  ({ genericData, addressData, contactData, departmentData }) =>
+      ({ genericData, addressData, contactData, departmentData })
 );
 
-const FileInputBase = (({ setGenericData, setAddressData, setContactData, setDepartmentData }) => {
+const FileInputBase = (
+    ({ setGenericData, setAddressData, setContactData, setDepartmentData }) => {
   const fileInput = useRef(null);
 
   const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
@@ -94,10 +117,22 @@ const FileInputBase = (({ setGenericData, setAddressData, setContactData, setDep
 
   return (
     <div class='form-group'>
-      <p>Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by załadować dane do edycji.</p>
+      <p>
+        Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by
+        załadować dane do edycji.
+      </p>
       <fieldset>
-        <input class='form-input' type='file' ref={fileInput} accept='application/json' style='display:none' onInput={onFileAdded} />
-        <button class='btn btn-primary' id='fileSelect' onClick={fileSelectorClick}>wybierz plik</button>
+        <input
+          class='form-input'
+          type='file'
+          ref={fileInput}
+          accept='application/json'
+          style='display:none'
+          onInput={onFileAdded}
+        />
+        <button class='btn btn-primary' id='fileSelect' onClick={fileSelectorClick}>
+          wybierz plik
+        </button>
       </fieldset>
     </div>
   )
@@ -136,12 +171,46 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField name='name' value={name} changeHandler={setName} label='Nazwa instytucji' required={true} />
-        <TextField name='shortName' value={short_name} changeHandler={setShortName} label='Nazwa skrócona' />
-        <TextField name='bipUrl' value={bip_url} changeHandler={setBipUrl} label='Adres strony BIP' required={true} />
-        <TextField name='nip' value={nip} changeHandler={setNip} label='Numer NIP' required={true} />
-        <TextField name='regon' value={regon} changeHandler={setRegon} label='Numer REGON' required={true} />
-        <TextField name='krs' value={krs} changeHandler={setKrs} label='Numer wpisu w KRS' />
+        <TextField
+          name='name'
+          value={name}
+          changeHandler={setName}
+          label='Nazwa instytucji'
+          required={true}
+        />
+        <TextField
+          name='shortName'
+          value={short_name}
+          changeHandler={setShortName}
+          label='Nazwa skrócona'
+        />
+        <TextField
+          name='bipUrl'
+          value={bip_url}
+          changeHandler={setBipUrl}
+          label='Adres strony BIP'
+          required={true}
+        />
+        <TextField
+          name='nip'
+          value={nip}
+          changeHandler={setNip}
+          label='Numer NIP'
+          required={true}
+        />
+        <TextField
+          name='regon'
+          value={regon}
+          changeHandler={setRegon}
+          label='Numer REGON'
+          required={true}
+        />
+        <TextField
+          name='krs'
+          value={krs}
+          changeHandler={setKrs}
+          label='Numer wpisu w KRS'
+        />
         <SubmitButton />
       </fieldset>
     </form>
@@ -175,9 +244,27 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField name='street' value={street} changeHandler={setStreet} label='Ulica lub miejscowość z numerem budynku' required={true} />
-        <TextField name='zip_code' value={zip_code} changeHandler={setZipCode} label='Kod pocztowy' required={true} />
-        <TextField name='town' value={town} changeHandler={setTown} label='Miejscowość / poczta' required={true} />
+        <TextField
+          name='street'
+          value={street}
+          changeHandler={setStreet}
+          label='Ulica lub miejscowość z numerem budynku'
+          required={true}
+        />
+        <TextField
+          name='zip_code'
+          value={zip_code}
+          changeHandler={setZipCode}
+          label='Kod pocztowy'
+          required={true}
+        />
+        <TextField
+          name='town'
+          value={town}
+          changeHandler={setTown}
+          label='Miejscowość / poczta'
+          required={true}
+        />
         <SubmitButton />
       </fieldset>
     </form>
@@ -186,4 +273,6 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
 
 const AddressDataForm = connect(addressDataMapToProps, actions)(AddressDataFormBase);
 
-export { AddressDataForm, ChoiceSingle, FileInput, GenericDataForm, SubmitButton, TextField };
+export {
+  AddressDataForm, ChoiceSingle, FileInput, GenericDataForm, SubmitButton, TextField
+};

@@ -33,11 +33,37 @@ const DepartmentForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField name='name' value={name} changeHandler={setName} label='Nazwa wydziału / jednostki organizacyjnej' required={true} />
-        <TextField name='domain' value={domain} changeHandler={setDomain} label='Zakres działalności' />
-        <TextField name='location' value={location} changeHandler={setLocation} label='Lokalizacja' />
-        <TextField name='phone' value={phone} changeHandler={setPhone} label='Numer telefonu' />
-        <TextField name='email' value={email} changeHandler={setEmail} label='Adres email' />
+        <TextField
+          name='name'
+          value={name}
+          changeHandler={setName}
+          label='Nazwa wydziału / jednostki organizacyjnej'
+          required={true}
+        />
+        <TextField
+          name='domain'
+          value={domain}
+          changeHandler={setDomain}
+          label='Zakres działalności'
+        />
+        <TextField
+          name='location'
+          value={location}
+          changeHandler={setLocation}
+          label='Lokalizacja'
+        />
+        <TextField
+          name='phone'
+          value={phone}
+          changeHandler={setPhone}
+          label='Numer telefonu'
+        />
+        <TextField
+          name='email'
+          value={email}
+          changeHandler={setEmail}
+          label='Adres email'
+        />
         <SubmitButton />
       </fieldset>
     </form>
@@ -80,17 +106,23 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
       <div class="tile-content">
         <p class="tile-title text-large text-bold">{departmentData.name}</p>
         {showLocationLine && <p class="tile-subtitle">{locationLine()}</p>}
-        {showContactLine && <small class="tile-subtitle text-gray">{contactLine()}</small>}
+        {
+          showContactLine &&
+              <small class="tile-subtitle text-gray">{contactLine()}</small>
+        }
         <p><button class="btn btn-primary btn-sm">zmień dane</button></p>
       </div>
       <div class="tile-action">
-        <button class="btn btn-link" onclick={displayStaffButtonClick}>pracownicy</button>
+        <button class="btn btn-link" onclick={displayStaffButtonClick}>
+          pracownicy
+        </button>
       </div>
     </div>
   )
 });
 
-const DepartmentSection = (({ departmentData, setDepartmentData, departmentStaffDisplay }) => {
+const DepartmentSection = (
+    ({ departmentData, setDepartmentData, departmentStaffDisplay }) => {
   const [deptFormVisible, setDeptFormVisible] = useState(false);
 
   const emptyDeptData = {
@@ -111,7 +143,11 @@ const DepartmentSection = (({ departmentData, setDepartmentData, departmentStaff
       <SectionTitle title='Dane wydziałów' level={3} />
       {departmentData.map((item) => {
         return (
-          <DepartmentItem key={`department-item-${item.name}`} departmentData={item} departmentStaffDisplay={departmentStaffDisplay} />
+          <DepartmentItem
+            key={`department-item-${item.name}`}
+            departmentData={item}
+            departmentStaffDisplay={departmentStaffDisplay}
+          />
         )
       })}
       <EmptyTileItem clickHandler={addDepartmentClick} />
@@ -163,12 +199,25 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
     <div class='container'>
       <div class="columns">
         <div class="column col-xs-3">
-          <DepartmentSection departmentData={deptArray} setDepartmentData={setDepartmentData} departmentStaffDisplay={displayDepartmentStaff} />
+          <DepartmentSection
+            departmentData={deptArray}
+            setDepartmentData={setDepartmentData}
+            departmentStaffDisplay={displayDepartmentStaff}
+          />
         </div>
         <div class="divider-vert" />
         <div class="column col-xs-9">
-          {currentDepartment && <StaffSection departmentName={currentDepartment} staff={staffMap[currentDepartment] || []} />}
-          {staffAddButtonVisible && <EmptyTileItem clickHandler={addStaffMemberClick} />}
+          {
+            currentDepartment &&
+                <StaffSection
+                  departmentName={currentDepartment}
+                  staff={staffMap[currentDepartment] || []} 
+                />
+          }
+          {
+            staffAddButtonVisible &&
+                <EmptyTileItem clickHandler={addStaffMemberClick} />
+          }
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
       </div>

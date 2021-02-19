@@ -4,8 +4,13 @@ import { AlertCircle, CheckCircle, Info, PlusCircle, XCircle } from 'preact-feat
 const StartOverAgain = (({ clearFunc }) => {
   return (
     <div class='warning-box'>
-      <p>Klikając poniższy przycisk wyczyścisz wszystkie wprowadzone dane i zaczniesz edycję od początku.</p>
-      <p><button class='btn btn-primary' onClick={() => clearFunc()}>wyzeruj</button></p>
+      <p>
+        Klikając poniższy przycisk wyczyścisz wszystkie wprowadzone dane i zaczniesz
+        edycję od początku.
+      </p>
+      <p>
+        <button class='btn btn-primary' onClick={() => clearFunc()}>wyzeruj</button>
+      </p>
     </div>
   )
 });
@@ -21,7 +26,9 @@ const EmptyCardItem = (({ clickHandler }) => {
   return (
     <div class="card empty-card-item">
       <div class="card-body">
-        <button class="btn btn-link btn-action" onClick={clickHandler}><PlusCircle size={48} /></button>
+        <button class="btn btn-link btn-action" onClick={clickHandler}>
+          <PlusCircle size={48} />
+        </button>
       </div>
     </div>
   )
@@ -31,7 +38,9 @@ const EmptyTileItem = (({ clickHandler }) => {
   return (
     <div class="tile empty-tile-item">
       <div class="tile-content text-center">
-        <button class="btn btn-link btn-action" onClick={clickHandler}><PlusCircle size={48} /></button>
+        <button class="btn btn-link btn-action" onClick={clickHandler}>
+          <PlusCircle size={48} />
+        </button>
       </div>
     </div>
   )
@@ -92,7 +101,10 @@ const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
     <div class={`notification-container ${position}`}>
       {list.map((toast, i) => {
         return (
-          <div key={i} class={`notification snackbar ${position} bg-${statusToColor(toast.icon)}`}>
+          <div
+            key={i}
+            class={`notification snackbar ${position} bg-${statusToColor(toast.icon)}`}
+          >
             <button onClick={() => deleteToast(toast.id)}>x</button>
             <div class="notification-image">
               {statusToIcon(toast.icon)}

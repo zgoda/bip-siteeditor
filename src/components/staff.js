@@ -43,12 +43,46 @@ const StaffMemberForm = (({ data, setData }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField name='person_name' value={person_name} changeHandler={setPersonName} label='Imię i nazwisko osoby' required={true} />
-        <TextField name='role_name' value={role_name} changeHandler={setRoleName} label='Stanowisko' required={true} />
-        <ChoiceSingle name='role_type' value={role_type} choices={roleTypeChoices} changeHandler={setRoleType} label='Rodzaj stanowiska' required={true} />
-        <TextField name='photo_url' value={photo_url} changeHandler={setPhotoUrl} label='Adres URL zdjęcia' />
-        <TextField name='phone' value={phone} changeHandler={setPhone} label='Numer telefonu' />
-        <TextField name='email' value={email} changeHandler={setEmail} label='Adres email' />
+        <TextField
+          name='person_name'
+          value={person_name}
+          changeHandler={setPersonName}
+          label='Imię i nazwisko osoby'
+          required={true}
+        />
+        <TextField
+          name='role_name'
+          value={role_name}
+          changeHandler={setRoleName}
+          label='Stanowisko'
+          required={true}
+        />
+        <ChoiceSingle
+          name='role_type'
+          value={role_type}
+          choices={roleTypeChoices}
+          changeHandler={setRoleType}
+          label='Rodzaj stanowiska'
+          required={true}
+        />
+        <TextField
+          name='photo_url'
+          value={photo_url}
+          changeHandler={setPhotoUrl}
+          label='Adres URL zdjęcia'
+        />
+        <TextField
+          name='phone'
+          value={phone}
+          changeHandler={setPhone}
+          label='Numer telefonu'
+        />
+        <TextField
+          name='email'
+          value={email}
+          changeHandler={setEmail}
+          label='Adres email'
+        />
         <SubmitButton />
       </fieldset>
     </form>
@@ -109,7 +143,10 @@ const StaffSection = (({ departmentName, staff }) => {
       <SectionTitle title={`${departmentName} - pracownicy`} level={3} />
       {staff.map((item) => {
         return (
-          <StaffMemberItem key={`${departmentName}-staff-${item.person_name}`} person={item} />
+          <StaffMemberItem
+            key={`${departmentName}-staff-${item.person_name}`}
+            person={item}
+          />
         )
       })}
     </>

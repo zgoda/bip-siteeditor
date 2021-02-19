@@ -30,9 +30,26 @@ const ContactForm = (({ data, setData, switchEditMode }) => {
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
-        <TextField name='name' value={name} changeHandler={setName} label='Nazwa kontaktu' required={true} />
-        <TextField name='phone' value={phone} changeHandler={setPhone} label='Numer telefonu' required={true} />
-        <TextField name='email' value={email} changeHandler={setEmail} label='Adres email' />
+        <TextField
+          name='name'
+          value={name}
+          changeHandler={setName}
+          label='Nazwa kontaktu'
+          required={true}
+        />
+        <TextField
+          name='phone'
+          value={phone}
+          changeHandler={setPhone}
+          label='Numer telefonu'
+          required={true}
+        />
+        <TextField
+          name='email'
+          value={email}
+          changeHandler={setEmail}
+          label='Adres email'
+        />
         <SubmitButton />
       </fieldset>
     </form>
@@ -173,7 +190,11 @@ const ContactGridBase = (({ contactData, setContactData }) => {
   const formSection = (
     <>
       <SectionTitle title={formSectionTitle} level={3} />
-      <ContactForm data={formData} setData={changedDataHandler} switchEditMode={switchEditMode} />
+      <ContactForm
+        data={formData}
+        setData={changedDataHandler}
+        switchEditMode={switchEditMode}
+      />
     </>
   );
 
@@ -183,10 +204,23 @@ const ContactGridBase = (({ contactData, setContactData }) => {
       const isLastRow = arr.length === index + 1;
       const withAddButton = isLastRow && row.length < 4;
       return (
-        <ContactFormRow row={row} key={`contact-row-${index}`} withAddButton={withAddButton} dataEditSwitch={switchEditMode} />
+        <ContactFormRow
+          row={row}
+          key={`contact-row-${index}`}
+          withAddButton={withAddButton}
+          dataEditSwitch={switchEditMode}
+        />
       )
     })}
-      {addButtonSeparate && <ContactFormRow row={[]} key={`contact-row-${rows.length}`} withAddButton={true} dataEditSwitch={switchEditMode} />}
+      {
+        addButtonSeparate &&
+          <ContactFormRow
+            row={[]}
+            key={`contact-row-${rows.length}`}
+            withAddButton={true}
+            dataEditSwitch={switchEditMode}
+          />
+      }
       {formVisible ? formSection : null}
       {toastVisible && <Toast toastList={toastList} />}
     </div>

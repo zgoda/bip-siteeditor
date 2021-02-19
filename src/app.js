@@ -21,8 +21,14 @@ const App = (() => {
       <div class='container grid-lg my-2'>
         <h1>{appTitle}</h1>
         <FileInput />
-        <p>Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie BIP jako dane instytucji.</p>
-        <p>We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.</p>
+        <p>
+          Wszystkie wprowadzone poniżej dane są wyświetlane w serwisie BIP jako dane
+          instytucji.
+        </p>
+        <p>
+          We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną
+          gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.
+        </p>
         <hr />
         <SectionTitle title='Dane podstawowe' />
         <p>Podstawowe dane instytucji.</p>
@@ -37,7 +43,10 @@ const App = (() => {
         <ContactGrid />
         <hr />
         <SectionTitle title='Dane wydziałów i pracowników' />
-        <p>Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych.</p>
+        <p>
+          Dane jednostek organizacyjnych instytucji oraz pracowników w nich
+          zatrudnionych.
+        </p>
         <DepartmentGrid />
         <hr />
         <StartOverAgain clearFunc={clearData} />
