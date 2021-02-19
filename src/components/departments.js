@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
@@ -72,6 +72,8 @@ const DepartmentForm = (({ data, setData }) => {
 
 const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
 
+  const staffButtonRef = useRef(null);
+
   const showLocationLine = departmentData.location || departmentData.domain;
   const locationLine = (() => {
     let elems = [];
@@ -98,6 +100,7 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
 
   const displayStaffButtonClick = ((e) => {
     e.preventDefault();
+    staffButtonRef && staffButtonRef.current.blur();
     departmentStaffDisplay(departmentData.name);
   });
 
@@ -113,7 +116,11 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
         <p><button class="btn btn-primary btn-sm">zmień dane</button></p>
       </div>
       <div class="tile-action">
-        <button class="btn btn-link" onclick={displayStaffButtonClick}>
+        <button
+          class="btn btn-link"
+          onclick={displayStaffButtonClick}
+          ref={staffButtonRef}
+        >
           pracownicy
         </button>
       </div>
@@ -124,6 +131,7 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
 const DepartmentSection = (
     ({ departmentData, setDepartmentData, departmentStaffDisplay }) => {
   const [deptFormVisible, setDeptFormVisible] = useState(false);
+  const addDepartmentButtonRef = useRef(null);
 
   const emptyDeptData = {
     name: '',
@@ -135,6 +143,7 @@ const DepartmentSection = (
 
   const addDepartmentClick = ((e) => {
     e.preventDefault();
+    addDepartmentButtonRef.current && addDepartmentButtonRef.current.blur();
     setDeptFormVisible(!deptFormVisible);
   });
 
@@ -150,7 +159,10 @@ const DepartmentSection = (
           />
         )
       })}
-      <EmptyTileItem clickHandler={addDepartmentClick} />
+      <EmptyTileItem
+        clickHandler={addDepartmentClick}
+        itemRef={addDepartmentButtonRef}
+      />
       {deptFormVisible && <DepartmentForm data={emptyDeptData} />}    
     </>
   )
@@ -164,6 +176,7 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
   const [staffFormVisible, setStaffFormVisible] = useState(false);
   const [staffAddButtonVisible, setStaffAddButtonVisible] = useState(false);
   const [currentDepartment, setCurrentDepartment] = useState('');
+  const addStaffMemberButtonRef = useRef(null);
 
   const emptyStaffData = {
     person_name: '',
@@ -176,6 +189,7 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
 
   const addStaffMemberClick = ((e) => {
     e.preventDefault();
+    addStaffMemberButtonRef.current && addStaffMemberButtonRef.current.blur();
     setStaffFormVisible(!staffFormVisible);
   });
 
@@ -216,7 +230,10 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
           }
           {
             staffAddButtonVisible &&
-                <EmptyTileItem clickHandler={addStaffMemberClick} />
+                <EmptyTileItem
+                  clickHandler={addStaffMemberClick}
+                  itemRef={addStaffMemberButtonRef}
+                />
           }
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>

@@ -21,7 +21,11 @@
     "rules": {
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
-      "max-len": ["error", 88, 2]
+      "max-len": [
+        "error",
+        88,
+        2
+      ]
     }
   },
   "devDependencies": {
@@ -35,7 +39,7 @@
     "jest": "^26.6.3",
     "jest-preset-preact": "^4.0.2",
     "preact-cli": "^3.0.5",
-    "sass": "^1.32.7",
+    "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
     "sirv-cli": "1.0.11"
   },

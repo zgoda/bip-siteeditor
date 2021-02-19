@@ -100,7 +100,8 @@ const StaffMemberItem = (({ person }) => {
       rolesMap[person.role_type] || 'pracownik',
       person.role_name,
     ];
-    return elems.join(` ${String.fromCharCode(183)} `);
+    const line = elems.join(` ${String.fromCharCode(183)} `);
+    return `Stanowisko: ${line}`;
   });
 
   const contactLine = (() => {
@@ -111,7 +112,8 @@ const StaffMemberItem = (({ person }) => {
     if (person.email) {
       elems.push(person.email);
     }
-    return elems.join(` ${String.fromCharCode(183)} `);
+    const line = elems.join(` ${String.fromCharCode(183)} `);
+    return `Kontakt: ${line}`;
   });
 
   const personPhoto = (

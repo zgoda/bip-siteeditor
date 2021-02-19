@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
@@ -84,17 +84,22 @@ const ContactItem = (({ data, dataEditSwitch }) => {
 });
 
 const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
+  const addContactButtonRef = useRef(null);
 
   const emptyItemClickHandler = ((e) => {
     e.preventDefault();
+    addContactButtonRef.current && addContactButtonRef.current.blur();
     dataEditSwitch(true);
-  })
+  });
   
   const contactAddItem = (
     <div class='column col-3 col-sm-6 col-xs-12' key='contact-add-button'>
-      <EmptyCardItem clickHandler={emptyItemClickHandler} />
+      <EmptyCardItem
+        clickHandler={emptyItemClickHandler}
+        itemRef={addContactButtonRef}
+      />
     </div>
-  )
+  );
 
   return (
     <div class='columns mb-2r'>

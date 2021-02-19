@@ -22,11 +22,11 @@ const SectionTitle = (({ title, level = 2 }) => {
   )
 });
 
-const EmptyCardItem = (({ clickHandler }) => {
+const EmptyCardItem = (({ clickHandler, itemRef }) => {
   return (
     <div class="card empty-card-item">
       <div class="card-body">
-        <button class="btn btn-link btn-action" onClick={clickHandler}>
+        <button class="btn btn-link btn-action" onClick={clickHandler} ref={itemRef}>
           <PlusCircle size={48} />
         </button>
       </div>
@@ -34,11 +34,11 @@ const EmptyCardItem = (({ clickHandler }) => {
   )
 });
 
-const EmptyTileItem = (({ clickHandler }) => {
+const EmptyTileItem = (({ clickHandler, itemRef }) => {
   return (
     <div class="tile empty-tile-item">
       <div class="tile-content text-center">
-        <button class="btn btn-link btn-action" onClick={clickHandler}>
+        <button class="btn btn-link btn-action" onClick={clickHandler} ref={itemRef}>
           <PlusCircle size={48} />
         </button>
       </div>
