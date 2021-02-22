@@ -70,7 +70,8 @@ const DepartmentForm = (({ data, setData }) => {
   )
 });
 
-const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
+const DepartmentItem = (({ departmentData, setData, departmentStaffDisplay }) => {
+  const [formVisible, setFormVisible] = useState(false)
 
   const staffButtonRef = useRef(null);
 
@@ -104,27 +105,39 @@ const DepartmentItem = (({ departmentData, departmentStaffDisplay }) => {
     departmentStaffDisplay(departmentData.name);
   });
 
+  const editButtonClick = ((e) => {
+    e.preventDefault();
+    setFormVisible(!formVisible);
+  });
+
   return (
-    <div class="tile">
-      <div class="tile-content">
-        <p class="tile-title text-large text-bold">{departmentData.name}</p>
-        {showLocationLine && <p class="tile-subtitle">{locationLine()}</p>}
-        {
-          showContactLine &&
-              <small class="tile-subtitle text-gray">{contactLine()}</small>
-        }
-        <p><button class="btn btn-primary btn-sm">zmień dane</button></p>
+    <>
+      <div class="tile">
+        <div class="tile-content">
+          <p class="tile-title text-large text-bold">{departmentData.name}</p>
+          {showLocationLine && <p class="tile-subtitle">{locationLine()}</p>}
+          {
+            showContactLine &&
+                <small class="tile-subtitle text-gray">{contactLine()}</small>
+          }
+          <p>
+            <button class="btn btn-primary btn-sm" onclick={editButtonClick}>
+              zmień dane
+            </button>
+          </p>
+        </div>
+        <div class="tile-action">
+          <button
+            class="btn btn-link"
+            onclick={displayStaffButtonClick}
+            ref={staffButtonRef}
+          >
+            pracownicy
+          </button>
+        </div>
       </div>
-      <div class="tile-action">
-        <button
-          class="btn btn-link"
-          onclick={displayStaffButtonClick}
-          ref={staffButtonRef}
-        >
-          pracownicy
-        </button>
-      </div>
-    </div>
+      {formVisible && <DepartmentForm data={departmentData} setData={setData} />}
+    </>
   )
 });
 
@@ -156,6 +169,7 @@ const DepartmentSection = (
             key={`department-item-${item.name}`}
             departmentData={item}
             departmentStaffDisplay={departmentStaffDisplay}
+            setData={setDepartmentData}
           />
         )
       })}
@@ -163,7 +177,10 @@ const DepartmentSection = (
         clickHandler={addDepartmentClick}
         itemRef={addDepartmentButtonRef}
       />
-      {deptFormVisible && <DepartmentForm data={emptyDeptData} />}    
+      {
+        deptFormVisible &&
+            <DepartmentForm data={emptyDeptData} setData={setDepartmentData} />
+      }
     </>
   )
 });
