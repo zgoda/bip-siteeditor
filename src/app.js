@@ -1,4 +1,4 @@
-import { useLang, useMeta, useTitle } from 'hooked-head/preact';
+import { useLang, useMeta, useTitle } from 'hoofd/preact';
 import { Provider } from 'redux-zero/preact';
 
 import { ContactGrid } from './components/contacts';
