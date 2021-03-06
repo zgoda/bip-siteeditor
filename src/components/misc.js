@@ -26,7 +26,12 @@ const EmptyCardItem = (({ clickHandler, itemRef }) => {
   return (
     <div class="card empty-card-item">
       <div class="card-body">
-        <button class="btn btn-link btn-action" onClick={clickHandler} ref={itemRef}>
+        <button
+          class="btn btn-link btn-action"
+          aria-label="dodaj element"
+          onClick={clickHandler}
+          ref={itemRef}
+        >
           <PlusCircle size={48} />
         </button>
       </div>
@@ -38,7 +43,12 @@ const EmptyTileItem = (({ clickHandler, itemRef }) => {
   return (
     <div class="tile empty-tile-item">
       <div class="tile-content text-center">
-        <button class="btn btn-link btn-action" onClick={clickHandler} ref={itemRef}>
+        <button
+          class="btn btn-link btn-action"
+          aria-label="dodaj element"
+          onClick={clickHandler}
+          ref={itemRef}
+        >
           <PlusCircle size={48} />
         </button>
       </div>

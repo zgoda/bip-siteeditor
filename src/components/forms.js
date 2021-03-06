@@ -16,9 +16,10 @@ const Label = (({ forElement, labelText, isRequired = false }) => {
   )
 });
 
-const TextInput = (({ name, value, changeHandler, required }) => {
+const TextInput = (({ id, name, value, changeHandler, required }) => {
   return (
     <input
+      id={id}
       class='form-input'
       type='text'
       name={name}
@@ -29,11 +30,14 @@ const TextInput = (({ name, value, changeHandler, required }) => {
   )
 });
 
-const TextField = (({ name, value, changeHandler, required = false, label }) => {
+const TextField = (
+      ({ name, value, changeHandler, required = false, label, formName }) => {
+  const inputId = `input-${formName}-${name}`
   return (
     <div class='form-group'>
-      <Label forElement={name} labelText={label} isRequired={required} />
+      <Label forElement={inputId} labelText={label} isRequired={required} />
       <TextInput
+        id={inputId}
         name={name}
         value={value}
         changeHandler={changeHandler}
@@ -44,16 +48,18 @@ const TextField = (({ name, value, changeHandler, required = false, label }) => 
 });
 
 const ChoiceSingle = (
-    ({ name, value, choices, changeHandler, required = false, label }) => {
+    ({ name, value, choices, changeHandler, required = false, label, formName }) => {
+  const inputId = `input-${formName}-${name}`
   return (
     <div class='form-group'>
-      <Label forElement={name} labelText={label} isRequired={required} />
+      <Label forElement={inputId} labelText={label} isRequired={required} />
       <select
         class='form-select'
         value={value}
         onChange={(e) => changeHandler(e.target.value)}
         required={required}
         name={name}
+        id={inputId}
       >
       {choices.map((item) => {
         return (
@@ -168,6 +174,8 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
     setGenericData({ name, bip_url, nip, regon, short_name, krs });
   });
 
+  const formName = 'generic';
+
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
@@ -177,12 +185,14 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
           changeHandler={setName}
           label='Nazwa instytucji'
           required={true}
+          formName={formName}
         />
         <TextField
           name='shortName'
           value={short_name}
           changeHandler={setShortName}
           label='Nazwa skrócona'
+          formName={formName}
         />
         <TextField
           name='bipUrl'
@@ -190,6 +200,7 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
           changeHandler={setBipUrl}
           label='Adres strony BIP'
           required={true}
+          formName={formName}
         />
         <TextField
           name='nip'
@@ -197,6 +208,7 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
           changeHandler={setNip}
           label='Numer NIP'
           required={true}
+          formName={formName}
         />
         <TextField
           name='regon'
@@ -204,12 +216,14 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
           changeHandler={setRegon}
           label='Numer REGON'
           required={true}
+          formName={formName}
         />
         <TextField
           name='krs'
           value={krs}
           changeHandler={setKrs}
           label='Numer wpisu w KRS'
+          formName={formName}
         />
         <SubmitButton />
       </fieldset>
@@ -241,6 +255,8 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
     setAddressData({ street, zip_code, town });
   })
 
+  const formName = 'address';
+
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
@@ -250,6 +266,7 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
           changeHandler={setStreet}
           label='Ulica lub miejscowość z numerem budynku'
           required={true}
+          formName={formName}
         />
         <TextField
           name='zip_code'
@@ -257,6 +274,7 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
           changeHandler={setZipCode}
           label='Kod pocztowy'
           required={true}
+          formName={formName}
         />
         <TextField
           name='town'
@@ -264,6 +282,7 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
           changeHandler={setTown}
           label='Miejscowość / poczta'
           required={true}
+          formName={formName}
         />
         <SubmitButton />
       </fieldset>
