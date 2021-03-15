@@ -1,4 +1,4 @@
-import { customAlphabet, urlAlphabet } from 'nanoid';
+import { uid } from 'uid/secure';
 
 const chunkArray = ((array, chunkSize) => {
   let a = array || [];
@@ -9,10 +9,8 @@ const chunkArray = ((array, chunkSize) => {
   return R;
 });
 
-const genToastId = ((len = 20) => {
-  const alphabet = urlAlphabet.replace('_', '');
-  const nanoid = customAlphabet(alphabet, len);
-  return nanoid();
+const genToastId = ((len = 24) => {
+  return uid(len);
 });
 
 export { chunkArray, genToastId };
