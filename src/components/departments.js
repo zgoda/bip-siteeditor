@@ -6,7 +6,7 @@ import { SubmitButton, TextField } from './forms';
 import { EmptyTileItem, SectionTitle } from './misc';
 import { StaffMemberForm, StaffSection } from './staff';
 
-const DepartmentForm = (({ data, setData }) => {
+function DepartmentForm({ data, setData }) {
   const [name, setName] = useState('');
   const [domain, setDomain] = useState('');
   const [location, setLocation] = useState('');
@@ -68,9 +68,9 @@ const DepartmentForm = (({ data, setData }) => {
       </fieldset>
     </form>
   );
-});
+}
 
-const DepartmentItem = (({ departmentData, setData, departmentStaffDisplay }) => {
+function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
   const [formVisible, setFormVisible] = useState(false);
 
   const staffButtonRef = useRef(null);
@@ -139,10 +139,11 @@ const DepartmentItem = (({ departmentData, setData, departmentStaffDisplay }) =>
       {formVisible && <DepartmentForm data={departmentData} setData={setData} />}
     </>
   );
-});
+}
 
-const DepartmentSection = (
-    ({ departmentData, setDepartmentData, departmentStaffDisplay }) => {
+function DepartmentSection(
+      { departmentData, setDepartmentData, departmentStaffDisplay }
+    ) {
   const [deptFormVisible, setDeptFormVisible] = useState(false);
   const addDepartmentButtonRef = useRef(null);
 
@@ -183,13 +184,13 @@ const DepartmentSection = (
       }
     </>
   );
-});
+}
 
 const allDataMapToProps = (
   ({ departmentData }) => ({ departmentData })
 );
 
-const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
+function DepartmentGridBase({ departmentData, setDepartmentData }) {
   const [staffFormVisible, setStaffFormVisible] = useState(false);
   const [staffAddButtonVisible, setStaffAddButtonVisible] = useState(false);
   const [currentDepartment, setCurrentDepartment] = useState('');
@@ -257,7 +258,7 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
       </div>
     </div>
   );
-});
+}
 
 const DepartmentGrid = connect(allDataMapToProps, actions)(DepartmentGridBase);
 

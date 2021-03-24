@@ -6,7 +6,7 @@ import { SubmitButton, TextField } from './forms';
 import { EmptyCardItem, SectionTitle, Toast } from './misc';
 import { chunkArray, genToastId } from './utils';
 
-const ContactForm = (({ data, setData, switchEditMode }) => {
+function ContactForm({ data, setData, switchEditMode }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -54,9 +54,9 @@ const ContactForm = (({ data, setData, switchEditMode }) => {
       </fieldset>
     </form>
   );
-});
+}
 
-const ContactItem = (({ data, dataEditSwitch }) => {
+function ContactItem({ data, dataEditSwitch }) {
 
   const buttonClickHandler = ((e) => {
     e.preventDefault();
@@ -81,9 +81,9 @@ const ContactItem = (({ data, dataEditSwitch }) => {
       </div>
     </div>
   );
-});
+}
 
-const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
+function ContactFormRow({ row, withAddButton, dataEditSwitch }) {
   const addContactButtonRef = useRef(null);
 
   const emptyItemClickHandler = ((e) => {
@@ -111,13 +111,13 @@ const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
     {withAddButton ? contactAddItem : null }
     </div>
   );
-});
+}
 
 const allDataMapToProps = (
   ({ contactData }) => ({ contactData })
 );
 
-const ContactGridBase = (({ contactData, setContactData }) => {
+function ContactGridBase({ contactData, setContactData }) {
 
   const rowSize = 4;
   const emptyData = {
@@ -230,7 +230,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
       {toastVisible && <Toast toastList={toastList} />}
     </div>
   );
-});
+}
 
 const ContactGrid = connect(allDataMapToProps, actions)(ContactGridBase);
 

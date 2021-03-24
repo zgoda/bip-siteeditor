@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { AlertCircle, CheckCircle, Info, PlusCircle, XCircle } from 'preact-feather';
 
-const StartOverAgain = (({ clearFunc }) => {
+function StartOverAgain({ clearFunc }) {
   return (
     <div class='warning-box'>
       <p>
@@ -13,16 +13,16 @@ const StartOverAgain = (({ clearFunc }) => {
       </p>
     </div>
   );
-});
+}
 
-const SectionTitle = (({ title, level = 2 }) => {
+function SectionTitle({ title, level = 2 }) {
   const Tag = `h${level}`;
   return (
     <Tag>{title}</Tag>
   );
-});
+}
 
-const EmptyCardItem = (({ clickHandler, itemRef }) => {
+function EmptyCardItem({ clickHandler, itemRef }) {
   return (
     <div class="card empty-card-item">
       <div class="card-body">
@@ -37,9 +37,9 @@ const EmptyCardItem = (({ clickHandler, itemRef }) => {
       </div>
     </div>
   );
-});
+}
 
-const EmptyTileItem = (({ clickHandler, itemRef }) => {
+function EmptyTileItem({ clickHandler, itemRef }) {
   return (
     <div class="tile empty-tile-item">
       <div class="tile-content text-center">
@@ -54,13 +54,13 @@ const EmptyTileItem = (({ clickHandler, itemRef }) => {
       </div>
     </div>
   );
-});
+}
 
 /**
  * Toast component
  */
 
-const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
+function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
   const [list, setList] = useState(toastList);
 
   useEffect(() => {
@@ -128,6 +128,6 @@ const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
       })}
     </div>
   );
-});
+}
 
 export { EmptyCardItem, EmptyTileItem, SectionTitle, StartOverAgain, Toast };

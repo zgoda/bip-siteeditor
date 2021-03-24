@@ -7,7 +7,7 @@ import {
 } from './components/parts';
 import store from './store';
 
-const App = (() => {
+function App() {
   const appTitle = 'Edytor danych instancji BIP';
 
   useLang('pl');
@@ -29,7 +29,7 @@ const App = (() => {
       </div>
     </Provider>
   );
-});
+}
 
 
 export { App };

@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-const actions = (store => ({
-  setGenericData: (state, newData) => ({ genericData: newData }),
-  setAddressData: (state, newData) => ({ addressData: newData }),
-  setContactData: (state, newData) => ({ contactData: newData }),
-  setDepartmentData: (state, newData) => ({ departmentData: newData }),
+const actions = (() => ({
+  setGenericData: (_state, newData) => ({ genericData: newData }),
+  setAddressData: (_state, newData) => ({ addressData: newData }),
+  setContactData: (_state, newData) => ({ contactData: newData }),
+  setDepartmentData: (_state, newData) => ({ departmentData: newData }),
 }));
 
 export default actions;

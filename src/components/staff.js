@@ -3,7 +3,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { ChoiceSingle, SubmitButton, TextField } from './forms';
 import { SectionTitle } from './misc';
 
-const StaffMemberForm = (({ data, setData }) => {
+function StaffMemberForm({ data, setData }) {
   const [person_name, setPersonName] = useState('');
   const [role_name, setRoleName] = useState('');
   const [role_type, setRoleType] = useState('');
@@ -87,9 +87,9 @@ const StaffMemberForm = (({ data, setData }) => {
       </fieldset>
     </form>
   );
-});
+}
 
-const StaffMemberItem = (({ person }) => {
+function StaffMemberItem({ person }) {
 
   const roleLine = (() => {
     const rolesMap = {
@@ -137,9 +137,9 @@ const StaffMemberItem = (({ person }) => {
       </div>
     </div>
   );
-});
+}
 
-const StaffSection = (({ departmentName, staff }) => {
+function StaffSection({ departmentName, staff }) {
   return (
     <>
       <SectionTitle title={`${departmentName} - pracownicy`} level={3} />
@@ -153,6 +153,6 @@ const StaffSection = (({ departmentName, staff }) => {
       })}
     </>
   );
-});
+}
 
 export { StaffMemberForm, StaffSection };

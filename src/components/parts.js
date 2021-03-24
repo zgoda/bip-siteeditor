@@ -3,7 +3,7 @@ import { DepartmentGrid } from './departments';
 import { AddressDataForm, FileInput, GenericDataForm } from './forms';
 import { SectionTitle } from './misc';
 
-const AppInfo = (({ appTitle }) => {
+function AppInfo({ appTitle }) {
   return (
     <>
       <h1>{appTitle}</h1>
@@ -19,9 +19,9 @@ const AppInfo = (({ appTitle }) => {
       <hr />
     </>
   );
-});
+}
 
-const GenericData = (() => {
+function GenericData() {
   return (
     <>
       <SectionTitle title='Dane podstawowe' />
@@ -30,9 +30,9 @@ const GenericData = (() => {
       <hr />
     </>
   );
-});
+}
 
-const AddressData = (() => {
+function AddressData() {
   return (
     <>
       <SectionTitle title='Dane adresowe' />
@@ -41,9 +41,9 @@ const AddressData = (() => {
       <hr />
     </>
   );
-});
+}
 
-const ContactData = (() => {
+function ContactData() {
   return (
     <>
       <SectionTitle title='Dane kontaktowe' />
@@ -52,9 +52,9 @@ const ContactData = (() => {
       <hr />
     </>
   );
-});
+}
 
-const DepartmentsData = (() => {
+function DepartmentsData() {
   return (
     <>
       <SectionTitle title='Dane wydziałów i pracowników' />
@@ -66,6 +66,6 @@ const DepartmentsData = (() => {
       <hr />
     </>
   );
-});
+}
 
 export { AddressData, AppInfo, ContactData, DepartmentsData, GenericData };

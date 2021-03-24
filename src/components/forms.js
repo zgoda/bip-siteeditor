@@ -3,7 +3,7 @@ import { connect } from 'redux-zero/preact';
 
 import actions from '../actions';
 
-const Label = (({ forElement, labelText, isRequired = false }) => {
+function Label({ forElement, labelText, isRequired = false }) {
   if (isRequired) {
     return (
       <label class='form-label' for={forElement}>
@@ -14,9 +14,9 @@ const Label = (({ forElement, labelText, isRequired = false }) => {
   return (
     <label class='form-label' for={forElement}>{labelText}</label>
   );
-});
+}
 
-const TextInput = (({ id, name, value, changeHandler, required }) => {
+function TextInput({ id, name, value, changeHandler, required }) {
   return (
     <input
       id={id}
@@ -28,10 +28,9 @@ const TextInput = (({ id, name, value, changeHandler, required }) => {
       required={required}
     />
   );
-});
+}
 
-const TextField = (
-      ({ name, value, changeHandler, required = false, label, formName }) => {
+function TextField({ name, value, changeHandler, required = false, label, formName }) {
   const inputId = `input-${formName}-${name}`;
   return (
     <div class='form-group'>
@@ -45,10 +44,11 @@ const TextField = (
       />
     </div>
   );
-});
+}
 
-const ChoiceSingle = (
-    ({ name, value, choices, changeHandler, required = false, label, formName }) => {
+function ChoiceSingle(
+      { name, value, choices, changeHandler, required = false, label, formName }
+    ) {
   const inputId = `input-${formName}-${name}`;
   return (
     <div class='form-group'>
@@ -69,21 +69,22 @@ const ChoiceSingle = (
       </select>
     </div>
   );
-});
+}
 
-const SubmitButton = (({ text = 'zapisz' }) => {
+function SubmitButton({ text = 'zapisz' }) {
   return (
     <button class='btn btn-primary' type='submit'>{text}</button>
   );
-});
+}
 
 const allDataMapToProps = (
   ({ genericData, addressData, contactData, departmentData }) =>
       ({ genericData, addressData, contactData, departmentData })
 );
 
-const FileInputBase = (
-    ({ setGenericData, setAddressData, setContactData, setDepartmentData }) => {
+function FileInputBase(
+      { setGenericData, setAddressData, setContactData, setDepartmentData }
+    ) {
   const fileInput = useRef(null);
 
   const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
@@ -142,7 +143,7 @@ const FileInputBase = (
       </fieldset>
     </div>
   );
-});
+}
 
 const FileInput = connect(allDataMapToProps, actions)(FileInputBase);
 
@@ -150,7 +151,7 @@ const genericDataMapToProps = (
   ({ genericData }) => ({ genericData })
 );
 
-const GenericDataFormBase = (({ genericData, setGenericData }) => {
+function GenericDataFormBase({ genericData, setGenericData }) {
   const [name, setName] = useState('');
   const [bip_url, setBipUrl] = useState('');
   const [nip, setNip] = useState('');
@@ -229,7 +230,7 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
       </fieldset>
     </form>
   );
-});
+}
 
 const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
 
@@ -237,7 +238,7 @@ const addressDataMapToProps = (
   ({ addressData }) => ({ addressData })
 );
 
-const AddressDataFormBase = (({ addressData, setAddressData }) => {
+function AddressDataFormBase({ addressData, setAddressData }) {
   const [street, setStreet] = useState('');
   const [zip_code, setZipCode] = useState('');
   const [town, setTown] = useState('');
@@ -288,7 +289,7 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
       </fieldset>
     </form>
   );
-});
+}
 
 const AddressDataForm = connect(addressDataMapToProps, actions)(AddressDataFormBase);
 
