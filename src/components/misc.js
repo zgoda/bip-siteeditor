@@ -12,14 +12,14 @@ const StartOverAgain = (({ clearFunc }) => {
         <button class='btn btn-primary' onClick={() => clearFunc()}>wyzeruj</button>
       </p>
     </div>
-  )
+  );
 });
 
 const SectionTitle = (({ title, level = 2 }) => {
   const Tag = `h${level}`;
   return (
     <Tag>{title}</Tag>
-  )
+  );
 });
 
 const EmptyCardItem = (({ clickHandler, itemRef }) => {
@@ -36,7 +36,7 @@ const EmptyCardItem = (({ clickHandler, itemRef }) => {
         </button>
       </div>
     </div>
-  )
+  );
 });
 
 const EmptyTileItem = (({ clickHandler, itemRef }) => {
@@ -53,7 +53,7 @@ const EmptyTileItem = (({ clickHandler, itemRef }) => {
         </button>
       </div>
     </div>
-  )
+  );
 });
 
 /**
@@ -82,13 +82,13 @@ const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
   const statusToIcon = ((status) => {
     switch (status) {
       case 'success':
-        return <CheckCircle />
+        return <CheckCircle />;
       case 'error':
-        return <XCircle />
+        return <XCircle />;
       case 'warning':
-        return <AlertCircle />
+        return <AlertCircle />;
       default:
-        return <Info />
+        return <Info />;
     }
   });
 
@@ -124,10 +124,10 @@ const Toast = (({ toastList, position = 'bottom-left', timeout = 4000 }) => {
               <p class="notification-message">{toast.message}</p>
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 });
 
 export { EmptyCardItem, EmptyTileItem, SectionTitle, StartOverAgain, Toast };

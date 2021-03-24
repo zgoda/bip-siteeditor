@@ -28,7 +28,7 @@ const DepartmentForm = (({ data, setData }) => {
   const submitHandler = ((e) => {
     e.preventDefault();
     setData(origData, { name, domain, location, phone, email });
-  })
+  });
 
   return (
     <form onSubmit={submitHandler}>
@@ -67,11 +67,11 @@ const DepartmentForm = (({ data, setData }) => {
         <SubmitButton />
       </fieldset>
     </form>
-  )
+  );
 });
 
 const DepartmentItem = (({ departmentData, setData, departmentStaffDisplay }) => {
-  const [formVisible, setFormVisible] = useState(false)
+  const [formVisible, setFormVisible] = useState(false);
 
   const staffButtonRef = useRef(null);
 
@@ -138,7 +138,7 @@ const DepartmentItem = (({ departmentData, setData, departmentStaffDisplay }) =>
       </div>
       {formVisible && <DepartmentForm data={departmentData} setData={setData} />}
     </>
-  )
+  );
 });
 
 const DepartmentSection = (
@@ -171,7 +171,7 @@ const DepartmentSection = (
             departmentStaffDisplay={departmentStaffDisplay}
             setData={setDepartmentData}
           />
-        )
+        );
       })}
       <EmptyTileItem
         clickHandler={addDepartmentClick}
@@ -182,7 +182,7 @@ const DepartmentSection = (
             <DepartmentForm data={emptyDeptData} setData={setDepartmentData} />
       }
     </>
-  )
+  );
 });
 
 const allDataMapToProps = (
@@ -256,9 +256,9 @@ const DepartmentGridBase = (({ departmentData, setDepartmentData }) => {
         </div>
       </div>
     </div>
-  )
+  );
 });
 
 const DepartmentGrid = connect(allDataMapToProps, actions)(DepartmentGridBase);
 
-export { DepartmentGrid }
+export { DepartmentGrid };

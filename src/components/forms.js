@@ -9,11 +9,11 @@ const Label = (({ forElement, labelText, isRequired = false }) => {
       <label class='form-label' for={forElement}>
         {labelText} <span class='label-required-marker'>*</span>
       </label>
-    )
+    );
   }
   return (
     <label class='form-label' for={forElement}>{labelText}</label>
-  )
+  );
 });
 
 const TextInput = (({ id, name, value, changeHandler, required }) => {
@@ -27,12 +27,12 @@ const TextInput = (({ id, name, value, changeHandler, required }) => {
       onInput={(e) => changeHandler(e.target.value)}
       required={required}
     />
-  )
+  );
 });
 
 const TextField = (
       ({ name, value, changeHandler, required = false, label, formName }) => {
-  const inputId = `input-${formName}-${name}`
+  const inputId = `input-${formName}-${name}`;
   return (
     <div class='form-group'>
       <Label forElement={inputId} labelText={label} isRequired={required} />
@@ -44,12 +44,12 @@ const TextField = (
         required={required}
       />
     </div>
-  )
+  );
 });
 
 const ChoiceSingle = (
     ({ name, value, choices, changeHandler, required = false, label, formName }) => {
-  const inputId = `input-${formName}-${name}`
+  const inputId = `input-${formName}-${name}`;
   return (
     <div class='form-group'>
       <Label forElement={inputId} labelText={label} isRequired={required} />
@@ -64,17 +64,17 @@ const ChoiceSingle = (
       {choices.map((item) => {
         return (
           <option value={item.value} key={item.value}>{item.name}</option>
-        )
+        );
       })}
       </select>
     </div>
-  )
+  );
 });
 
 const SubmitButton = (({ text = 'zapisz' }) => {
   return (
     <button class='btn btn-primary' type='submit'>{text}</button>
-  )
+  );
 });
 
 const allDataMapToProps = (
@@ -95,13 +95,13 @@ const FileInputBase = (
     let data = {};
     genericFields.map((name) => {
       data[name] = jsonData[name];
-    })
+    });
     setGenericData(data);
     // parse address data
     data = {};
     addressFields.map((name) => {
       data[name] = jsonData.address[name];
-    })
+    });
     setAddressData(data);
     setContactData(jsonData.contacts);
     setDepartmentData(jsonData.departments);
@@ -117,7 +117,7 @@ const FileInputBase = (
     const reader = new FileReader();
     reader.onload = ((e) => {
       parseSiteDataParts(e.target.result);
-    })
+    });
     reader.readAsText(file);
   });
 
@@ -141,7 +141,7 @@ const FileInputBase = (
         </button>
       </fieldset>
     </div>
-  )
+  );
 });
 
 const FileInput = connect(allDataMapToProps, actions)(FileInputBase);
@@ -228,7 +228,7 @@ const GenericDataFormBase = (({ genericData, setGenericData }) => {
         <SubmitButton />
       </fieldset>
     </form>
-  )
+  );
 });
 
 const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
@@ -253,7 +253,7 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
   const submitHandler = ((e) => {
     e.preventDefault();
     setAddressData({ street, zip_code, town });
-  })
+  });
 
   const formName = 'address';
 
@@ -287,7 +287,7 @@ const AddressDataFormBase = (({ addressData, setAddressData }) => {
         <SubmitButton />
       </fieldset>
     </form>
-  )
+  );
 });
 
 const AddressDataForm = connect(addressDataMapToProps, actions)(AddressDataFormBase);

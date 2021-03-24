@@ -18,7 +18,7 @@ const AppInfo = (({ appTitle }) => {
       </p>
       <hr />
     </>
-  )
+  );
 });
 
 const GenericData = (() => {
@@ -29,7 +29,7 @@ const GenericData = (() => {
       <GenericDataForm />
       <hr />
     </>
-  )
+  );
 });
 
 const AddressData = (() => {
@@ -40,7 +40,7 @@ const AddressData = (() => {
       <AddressDataForm />
       <hr />
     </>
-  )
+  );
 });
 
 const ContactData = (() => {
@@ -51,7 +51,7 @@ const ContactData = (() => {
       <ContactGrid />
       <hr />
     </>
-  )
+  );
 });
 
 const DepartmentsData = (() => {
@@ -65,7 +65,7 @@ const DepartmentsData = (() => {
       <DepartmentGrid />
       <hr />
     </>
-  )
+  );
 });
 
 export { AddressData, AppInfo, ContactData, DepartmentsData, GenericData };

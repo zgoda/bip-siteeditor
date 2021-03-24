@@ -17,7 +17,7 @@ const ContactForm = (({ data, setData, switchEditMode }) => {
       setPhone(data.phone || '');
       setEmail(data.email || '');
     }
-  }, [data])
+  }, [data]);
 
   const origData = { ...data };
 
@@ -53,7 +53,7 @@ const ContactForm = (({ data, setData, switchEditMode }) => {
         <SubmitButton />
       </fieldset>
     </form>
-  )
+  );
 });
 
 const ContactItem = (({ data, dataEditSwitch }) => {
@@ -80,7 +80,7 @@ const ContactItem = (({ data, dataEditSwitch }) => {
         <button class="btn btn-primary" onClick={buttonClickHandler}>zmień dane</button>
       </div>
     </div>
-  )
+  );
 });
 
 const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
@@ -110,7 +110,7 @@ const ContactFormRow = (({ row, withAddButton, dataEditSwitch }) => {
     ))}
     {withAddButton ? contactAddItem : null }
     </div>
-  )
+  );
 });
 
 const allDataMapToProps = (
@@ -124,7 +124,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
     name: '',
     phone: '',
     email: '',
-  }
+  };
 
   const [formVisible, setFormVisible] = useState(false);
   const [addingNew, setAddingNew] = useState(true);
@@ -215,7 +215,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
           withAddButton={withAddButton}
           dataEditSwitch={switchEditMode}
         />
-      )
+      );
     })}
       {
         addButtonSeparate &&
@@ -229,7 +229,7 @@ const ContactGridBase = (({ contactData, setContactData }) => {
       {formVisible ? formSection : null}
       {toastVisible && <Toast toastList={toastList} />}
     </div>
-  )
+  );
 });
 
 const ContactGrid = connect(allDataMapToProps, actions)(ContactGridBase);

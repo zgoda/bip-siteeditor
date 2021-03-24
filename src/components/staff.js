@@ -33,7 +33,7 @@ const StaffMemberForm = (({ data, setData }) => {
       name: 'Kierownik',
       value: 'manager'
     }
-  ]
+  ];
 
   const submitHandler = ((e) => {
     e.preventDefault();
@@ -86,7 +86,7 @@ const StaffMemberForm = (({ data, setData }) => {
         <SubmitButton />
       </fieldset>
     </form>
-  )
+  );
 });
 
 const StaffMemberItem = (({ person }) => {
@@ -122,7 +122,7 @@ const StaffMemberItem = (({ person }) => {
         <img src={person.photo_url} alt={person.name} />
       </figure>
     </div>
-  )
+  );
 
   return (
     <div class="tile">
@@ -136,7 +136,7 @@ const StaffMemberItem = (({ person }) => {
         <button class="btn btn-primary btn-sm">zmień dane</button>
       </div>
     </div>
-  )
+  );
 });
 
 const StaffSection = (({ departmentName, staff }) => {
@@ -149,10 +149,10 @@ const StaffSection = (({ departmentName, staff }) => {
             key={`${departmentName}-staff-${item.person_name}`}
             person={item}
           />
-        )
+        );
       })}
     </>
-  )
+  );
 });
 
 export { StaffMemberForm, StaffSection };
