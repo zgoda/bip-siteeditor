@@ -15,8 +15,6 @@ function App() {
   useMeta({ name: 'author', content: 'Jarek Zgoda' });
   useMeta({ name: 'descritpion', content: 'Program do edycji danych instancji BIP' });
 
-  const clearData = (() => store.reset());
-
   return (
     <Provider store={store}>
       <div class='container grid-lg my-2'>
@@ -25,7 +23,7 @@ function App() {
         <AddressData />
         <ContactData />
         <DepartmentsData />
-        <StartOverAgain clearFunc={clearData} />
+        <StartOverAgain />
       </div>
     </Provider>
   );

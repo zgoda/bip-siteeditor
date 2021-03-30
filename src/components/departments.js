@@ -75,6 +75,8 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
 
   const staffButtonRef = useRef(null);
 
+  const midDot = String.fromCharCode(183);
+
   const showLocationLine = departmentData.location || departmentData.domain;
   const locationLine = (() => {
     let elems = [];
@@ -84,7 +86,7 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
     if (departmentData.domain) {
       elems.push(departmentData.domain);
     }
-    return elems.join(` ${String.fromCharCode(183)} `);
+    return elems.join(` ${midDot} `);
   });
 
   const showContactLine = departmentData.phone || departmentData.email;
@@ -96,7 +98,7 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
     if (departmentData.email) {
       elems.push(departmentData.email);
     }
-    return elems.join(` ${String.fromCharCode(183)} `);
+    return elems.join(` ${midDot} `);
   });
 
   const displayStaffButtonClick = ((e) => {

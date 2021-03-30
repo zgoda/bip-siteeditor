@@ -1,7 +1,18 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { AlertCircle, CheckCircle, Info, PlusCircle, XCircle } from 'preact-feather';
 
-function StartOverAgain({ clearFunc }) {
+import store from '../store';
+
+function StartOverAgain() {
+
+  const buttonRef = useRef(null);
+
+  const handleClearClick = ((e) => {
+    e.preventDefault();
+    buttonRef.current && buttonRef.current.blur();
+    store.reset();
+  });
+
   return (
     <div class='warning-box'>
       <p>
@@ -9,7 +20,9 @@ function StartOverAgain({ clearFunc }) {
         edycję od początku.
       </p>
       <p>
-        <button class='btn btn-primary' onClick={() => clearFunc()}>wyzeruj</button>
+        <button class='btn btn-primary' ref={buttonRef} onClick={handleClearClick}>
+          wyzeruj
+        </button>
       </p>
     </div>
   );
