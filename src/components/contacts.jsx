@@ -1,7 +1,8 @@
+import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { connect } from 'redux-zero/preact';
+import { contactDataActions } from '../state/actions';
+import { contactDataStore } from '../state/store';
 
-import actions from '../state/actions';
 import { SubmitButton, TextField } from './forms';
 import { EmptyCardItem, SectionTitle, Toast } from './misc';
 import { chunkArray, genToastId } from './utils';
@@ -23,7 +24,7 @@ function ContactForm({ data, setData, switchEditMode }) {
 
   const origData = { ...data };
 
-  const submitHandler = (e) => {
+  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     setData(origData, { name, phone, email });
     switchEditMode(false);
@@ -119,9 +120,7 @@ function ContactFormRow({ row, withAddButton, dataEditSwitch }) {
   );
 }
 
-const allDataMapToProps = ({ contactData }) => ({ contactData });
-
-function ContactGridBase({ contactData, setContactData }) {
+function ContactGrid() {
   const rowSize = 4;
   const emptyData = {
     name: '',
@@ -135,7 +134,9 @@ function ContactGridBase({ contactData, setContactData }) {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastList, setToastList] = useState([]);
 
-  const contactArray = contactData || [];
+  const contactArray = useStore(contactDataStore);
+
+  /** @type {Array<Array<import('../..').ContactData>>} */
   let rows = [];
   if (contactArray.length) {
     if (contactArray.length > rowSize) {
@@ -155,7 +156,7 @@ function ContactGridBase({ contactData, setContactData }) {
       }
       return item;
     });
-    setContactData(newData);
+    contactDataActions.set(newData);
     const newList = Array.from(toastList);
     newList.push({
       id: genToastId(),
@@ -168,9 +169,8 @@ function ContactGridBase({ contactData, setContactData }) {
   };
 
   const contactDataAdded = (_oldItem, newItem) => {
-    let newData = Array.from(contactData);
-    newData.push(newItem);
-    setContactData(newData);
+    const newData = [...contactArray, newItem];
+    contactDataActions.set(newData);
     const newList = Array.from(toastList);
     newList.push({
       id: genToastId(),
@@ -233,7 +233,5 @@ function ContactGridBase({ contactData, setContactData }) {
     </div>
   );
 }
-
-const ContactGrid = connect(allDataMapToProps, actions)(ContactGridBase);
 
 export { ContactGrid };

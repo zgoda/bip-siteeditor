@@ -1,5 +1,6 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { uid } from 'uid';
 
 import {
   addressDataActions,
@@ -163,8 +164,18 @@ function FileInput() {
       zipCode: jsonData.address.zip_code,
       town: jsonData.address.town,
     });
-    contactDataActions.set(jsonData.contacts);
-    departmentdataActions.set(jsonData.departments);
+    const contactData = jsonData.contacts.map((/** @type {Array<any>} */ item) => {
+      return { ...item, id: uid(16) };
+    });
+    contactDataActions.set(contactData);
+    const deptData = jsonData.departments.map((/** @type {Array<any>} */ item) => {
+      // @ts-ignore
+      const staff = item.staff.map((person) => {
+        return { ...person, id: uid(16) };
+      });
+      return { ...deptData, staff, id: uid(16) };
+    });
+    departmentdataActions.set(deptData);
   };
 
   const fileSelectorClick = () => {

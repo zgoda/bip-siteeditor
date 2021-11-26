@@ -21,6 +21,7 @@ export interface AddressData {
 }
 
 export interface ContactData {
+  id: string;
   name: string;
   phone: string;
   email: string;
@@ -29,6 +30,7 @@ export interface ContactData {
 export type StaffMemberRoleType = 'staff' | 'manager';
 
 export interface StaffMember {
+  id: string;
   name: string;
   role: string;
   roleType: StaffMemberRoleType;
@@ -38,6 +40,7 @@ export interface StaffMember {
 }
 
 export interface Department {
+  id: string;
   name: string;
   domain?: string;
   location?: string;
