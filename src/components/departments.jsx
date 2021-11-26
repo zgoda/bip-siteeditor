@@ -1,7 +1,8 @@
+import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { connect } from 'redux-zero/preact';
+import { departmentDataActions } from '../state/actions';
+import { departmentDataStore } from '../state/store';
 
-import actions from '../state/actions';
 import { SubmitButton, TextField } from './forms';
 import { EmptyTileItem, SectionTitle } from './misc';
 import { StaffMemberForm, StaffSection } from './staff';
@@ -195,9 +196,7 @@ function DepartmentSection({
   );
 }
 
-const allDataMapToProps = ({ departmentData }) => ({ departmentData });
-
-function DepartmentGridBase({ departmentData, setDepartmentData }) {
+function DepartmentGrid() {
   const [staffFormVisible, setStaffFormVisible] = useState(false);
   const [staffAddButtonVisible, setStaffAddButtonVisible] = useState(false);
   const [currentDepartment, setCurrentDepartment] = useState('');
@@ -223,7 +222,7 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
     setCurrentDepartment(department);
   };
 
-  const deptArray = departmentData || [];
+  const deptArray = useStore(departmentDataStore);
 
   const staffMap = {};
   deptArray.forEach((element) => {
@@ -241,7 +240,7 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
         <div class="column col-xs-3">
           <DepartmentSection
             departmentData={deptArray}
-            setDepartmentData={setDepartmentData}
+            setDepartmentData={departmentDataActions.set}
             departmentStaffDisplay={displayDepartmentStaff}
           />
         </div>
@@ -265,7 +264,5 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
     </div>
   );
 }
-
-const DepartmentGrid = connect(allDataMapToProps, actions)(DepartmentGridBase);
 
 export { DepartmentGrid };

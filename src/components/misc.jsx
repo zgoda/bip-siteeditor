@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { createElement } from 'preact';
 import { AlertCircle, CheckCircle, Info, PlusCircle, XCircle } from 'preact-feather';
-
-import { store } from '../state/store';
+import { clearState } from '../state/store';
 
 function StartOverAgain() {
   const buttonRef = useRef(null);
@@ -10,7 +9,7 @@ function StartOverAgain() {
   const handleClearClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     buttonRef.current && buttonRef.current.blur();
-    store.reset();
+    clearState();
   };
 
   return (

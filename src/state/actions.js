@@ -6,15 +6,6 @@ import {
   genericDataStore,
 } from './store';
 
-const actions = () => ({
-  setGenericData: (_state, newData) => ({ genericData: newData }),
-  setAddressData: (_state, newData) => ({ addressData: newData }),
-  setContactData: (_state, newData) => ({ contactData: newData }),
-  setDepartmentData: (_state, newData) => ({ departmentData: newData }),
-});
-
-export default actions;
-
 export const genericDataActions = {
   set: action(
     genericDataStore,
@@ -46,9 +37,44 @@ export const contactDataActions = {
       return store.get();
     },
   ),
+  add: action(
+    contactDataStore,
+    'add',
+    (store, /** @type {import('../..').ContactData} */ item) => {
+      store.set([...store.get(), item]);
+      return store.get();
+    },
+  ),
+  update: action(
+    contactDataStore,
+    'update',
+    (store, /** @type {import('../..').ContactData} */ item) => {
+      const newContent = store.get().map((contact) => {
+        if (contact.id === item.id) {
+          return item;
+        }
+        return contact;
+      });
+      store.set(newContent);
+      return store.get();
+    },
+  ),
+  remove: action(
+    contactDataStore,
+    'remove',
+    (store, /** @type {import('../..').ContactData} */ item) => {
+      const newContent = store.get().filter((contact) => {
+        if (contact.id !== item.id) {
+          return contact;
+        }
+      });
+      store.set(newContent);
+      return store.get();
+    },
+  ),
 };
 
-export const departmentdataActions = {
+export const departmentDataActions = {
   set: action(
     departmentDataStore,
     'set',

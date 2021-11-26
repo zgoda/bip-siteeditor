@@ -5,7 +5,7 @@ import { uid } from 'uid';
 import {
   addressDataActions,
   contactDataActions,
-  departmentdataActions,
+  departmentDataActions,
   genericDataActions,
 } from '../state/actions';
 import { addressDataStore, genericDataStore } from '../state/store';
@@ -175,7 +175,7 @@ function FileInput() {
       });
       return { ...deptData, staff, id: uid(16) };
     });
-    departmentdataActions.set(deptData);
+    departmentDataActions.set(deptData);
   };
 
   const fileSelectorClick = () => {

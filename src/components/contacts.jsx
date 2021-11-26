@@ -1,5 +1,6 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { uid } from 'uid';
 import { contactDataActions } from '../state/actions';
 import { contactDataStore } from '../state/store';
 
@@ -7,7 +8,19 @@ import { SubmitButton, TextField } from './forms';
 import { EmptyCardItem, SectionTitle, Toast } from './misc';
 import { chunkArray, genToastId } from './utils';
 
+/**
+ * @typedef {(arg0: boolean, arg1: import('../..').ContactData) => void} DataEditSwitchFunc
+ *
+ * @typedef {object} ContactFormProps
+ * @property {import('../..').ContactData} data
+ * @property {(arg0: import('../..').ContactData) => void} setData
+ * @property {DataEditSwitchFunc} switchEditMode
+ *
+ * @param {ContactFormProps} props
+ * @returns
+ */
 function ContactForm({ data, setData, switchEditMode }) {
+  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -16,18 +29,17 @@ function ContactForm({ data, setData, switchEditMode }) {
 
   useEffect(() => {
     if (data) {
+      setId(data.id || uid(16));
       setName(data.name || '');
       setPhone(data.phone || '');
       setEmail(data.email || '');
     }
   }, [data]);
 
-  const origData = { ...data };
-
   const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
-    setData(origData, { name, phone, email });
-    switchEditMode(false);
+    setData({ id, name, phone, email });
+    switchEditMode(false, null);
   };
 
   return (
@@ -62,6 +74,14 @@ function ContactForm({ data, setData, switchEditMode }) {
   );
 }
 
+/**
+ * @typedef {object} ContactItemProps
+ * @property {import('../..').ContactData} data
+ * @property {DataEditSwitchFunc} dataEditSwitch
+ *
+ * @param {ContactItemProps} props
+ * @returns {JSX.Element}
+ */
 function ContactItem({ data, dataEditSwitch }) {
   const buttonClickHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
@@ -90,13 +110,22 @@ function ContactItem({ data, dataEditSwitch }) {
   );
 }
 
+/**
+ * @typedef {object} ContactFormRowProps
+ * @property {Array<import('../..').ContactData>} row
+ * @property {boolean} withAddButton
+ * @property {DataEditSwitchFunc} dataEditSwitch
+ *
+ * @param {ContactFormRowProps} props
+ * @returns {JSX.Element}
+ */
 function ContactFormRow({ row, withAddButton, dataEditSwitch }) {
   const addContactButtonRef = useRef(null);
 
   const emptyItemClickHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     addContactButtonRef.current && addContactButtonRef.current.blur();
-    dataEditSwitch(true);
+    dataEditSwitch(true, null);
   };
 
   const contactAddItem = (
@@ -123,6 +152,7 @@ function ContactFormRow({ row, withAddButton, dataEditSwitch }) {
 function ContactGrid() {
   const rowSize = 4;
   const emptyData = {
+    id: uid(16),
     name: '',
     phone: '',
     email: '',
@@ -132,6 +162,7 @@ function ContactGrid() {
   const [addingNew, setAddingNew] = useState(true);
   const [formData, setFormData] = useState(emptyData);
   const [toastVisible, setToastVisible] = useState(false);
+  /** @type {[Array<import('../..').Notification>, import('preact/hooks').StateUpdater<Array<import('../..').Notification>>]} */
   const [toastList, setToastList] = useState([]);
 
   const contactArray = useStore(contactDataStore);
@@ -148,15 +179,8 @@ function ContactGrid() {
 
   const addButtonSeparate = contactArray.length % rowSize === 0;
 
-  const contactDataChanged = (oldItem, newItem) => {
-    const itemIndex = contactArray.findIndex((x) => x.name === oldItem.name);
-    const newData = contactArray.map((item, j) => {
-      if (j === itemIndex) {
-        return newItem;
-      }
-      return item;
-    });
-    contactDataActions.set(newData);
+  const contactDataChanged = (/** @type {import('../..').ContactData} */ newItem) => {
+    contactDataActions.update(newItem);
     const newList = Array.from(toastList);
     newList.push({
       id: genToastId(),
@@ -168,27 +192,26 @@ function ContactGrid() {
     setToastVisible(true);
   };
 
-  const contactDataAdded = (_oldItem, newItem) => {
-    const newData = [...contactArray, newItem];
-    contactDataActions.set(newData);
-    const newList = Array.from(toastList);
-    newList.push({
+  const contactDataAdded = (/** @type {import('../..').ContactData} */ newItem) => {
+    contactDataActions.add(newItem);
+    const toast = {
       id: genToastId(),
       icon: 'success',
       title: 'Dane kontaktu zapisane',
       message: 'Dane nowego kontaktu zostały zapisane',
-    });
-    setToastList(newList);
+    };
+    setToastList([...toastList, toast]);
     setToastVisible(true);
   };
 
   const formSectionTitle = addingNew ? 'Dodaj nowy kontakt' : 'Edytuj dane kontaktu';
 
-  const changedDataHandler = (oldItem, newItem) => {
+  const changedDataHandler = (/** @type {import('../..').ContactData} */ newItem) => {
     const func = addingNew ? contactDataAdded : contactDataChanged;
-    func(oldItem, newItem);
+    func(newItem);
   };
 
+  /** @type {DataEditSwitchFunc} */
   const switchEditMode = (val, data) => {
     setAddingNew(val);
     setFormData(val ? emptyData : data);

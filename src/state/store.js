@@ -1,14 +1,4 @@
-import createStore from 'redux-zero';
-import { atom, map } from 'nanostores';
-
-const initialState = {
-  genericData: {},
-  addressData: {},
-  contactData: [],
-  departmentData: [],
-};
-
-export const store = createStore(initialState);
+import { atom, cleanStores, map } from 'nanostores';
 
 /** @type {import('nanostores').MapStore<import('../..').GenericData>} */
 export const genericDataStore = map({});
@@ -21,3 +11,12 @@ export const contactDataStore = atom([]);
 
 /** @type {import('nanostores').WritableAtom<Array<import('../..').Department>>} */
 export const departmentDataStore = atom([]);
+
+export function clearState() {
+  cleanStores(
+    genericDataStore,
+    addressDataStore,
+    contactDataStore,
+    departmentDataStore,
+  );
+}
