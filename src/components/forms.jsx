@@ -1,23 +1,42 @@
+import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { connect } from 'redux-zero/preact';
 
-import actions from '../state/actions';
+import {
+  addressDataActions,
+  contactDataActions,
+  departmentdataActions,
+  genericDataActions,
+} from '../state/actions';
+import { addressDataStore, genericDataStore } from '../state/store';
 
+/**
+ * @typedef {object} LabelProps
+ * @property {string} forElement
+ * @property {string} labelText
+ * @property {boolean} [isRequired=false]
+ *
+ * @param {LabelProps} props
+ * @returns {JSX.Element}
+ */
 function Label({ forElement, labelText, isRequired = false }) {
-  if (isRequired) {
-    return (
-      <label class="form-label" for={forElement}>
-        {labelText} <span class="label-required-marker">*</span>
-      </label>
-    );
-  }
   return (
     <label class="form-label" for={forElement}>
-      {labelText}
+      {labelText} {isRequired && <span class="label-required-marker">*</span>}
     </label>
   );
 }
 
+/**
+ * @typedef {object} TextInputProps
+ * @property {string} id
+ * @property {string} name
+ * @property {string} value
+ * @property {(value: string) => void} changeHandler
+ * @property {boolean} required
+ *
+ * @param {TextInputProps} props
+ * @returns {JSX.Element}
+ */
 function TextInput({ id, name, value, changeHandler, required }) {
   return (
     <input
@@ -33,6 +52,18 @@ function TextInput({ id, name, value, changeHandler, required }) {
   );
 }
 
+/**
+ * @typedef {object} TextFieldProps
+ * @property {string} name
+ * @property {string} value
+ * @property {(value: string) => void} changeHandler
+ * @property {boolean} [required=false]
+ * @property {string} label
+ * @property {string} formName
+ *
+ * @param {TextFieldProps} props
+ * @returns {JSX.Element}
+ */
 function TextField({ name, value, changeHandler, required = false, label, formName }) {
   const inputId = `input-${formName}-${name}`;
   return (
@@ -48,6 +79,20 @@ function TextField({ name, value, changeHandler, required = false, label, formNa
     </div>
   );
 }
+
+/**
+ * @typedef {object} ChoiceSingleProps
+ * @property {string} name
+ * @property {string} value
+ * @property {Array<Record<string, string>>} choices
+ * @property {(value: string) => void} changeHandler
+ * @property {boolean} [required=false]
+ * @property {string} label
+ * @property {string} formName
+ *
+ * @param {ChoiceSingleProps} props
+ * @returns {JSX.Element}
+ */
 
 function ChoiceSingle({
   name,
@@ -83,6 +128,13 @@ function ChoiceSingle({
   );
 }
 
+/**
+ * @typedef {object} SubmitButtonProps
+ * @property {string} [text='zapisz']
+ *
+ * @param {SubmitButtonProps} props
+ * @returns {JSX.Element}
+ */
 function SubmitButton({ text = 'zapisz' }) {
   return (
     <button class="btn btn-primary" type="submit">
@@ -91,52 +143,43 @@ function SubmitButton({ text = 'zapisz' }) {
   );
 }
 
-const allDataMapToProps = ({
-  genericData,
-  addressData,
-  contactData,
-  departmentData,
-}) => ({ genericData, addressData, contactData, departmentData });
-
-function FileInputBase({
-  setGenericData,
-  setAddressData,
-  setContactData,
-  setDepartmentData,
-}) {
+function FileInput() {
   const fileInput = useRef(null);
 
-  const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
-  const addressFields = ['street', 'zip_code', 'town'];
-
-  const parseSiteDataParts = (content) => {
+  const parseSiteDataParts = (/** @type {string} */ content) => {
     const jsonData = JSON.parse(content);
     // parse generic data
-    let data = {};
-    genericFields.map((name) => {
-      data[name] = jsonData[name];
+    genericDataActions.set({
+      name: jsonData.name,
+      bipUrl: jsonData.bip_url,
+      nip: jsonData.nip,
+      regon: jsonData.regon,
+      shortName: jsonData.short_name,
+      krs: jsonData.krs,
     });
-    setGenericData(data);
     // parse address data
-    data = {};
-    addressFields.map((name) => {
-      data[name] = jsonData.address[name];
+    addressDataActions.set({
+      street: jsonData.address.street,
+      zipCode: jsonData.address.zip_code,
+      town: jsonData.address.town,
     });
-    setAddressData(data);
-    setContactData(jsonData.contacts);
-    setDepartmentData(jsonData.departments);
+    contactDataActions.set(jsonData.contacts);
+    departmentdataActions.set(jsonData.departments);
   };
 
   const fileSelectorClick = () => {
     fileInput.current && fileInput.current.click();
   };
 
-  const onFileAdded = (e) => {
+  const onFileAdded = (
+    /** @type {import("preact").JSX.TargetedEvent<HTMLInputElement, Event>} */ e,
+  ) => {
     e.preventDefault();
+    // @ts-ignore
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      parseSiteDataParts(e.target.result);
+      parseSiteDataParts(e.target.result.toString());
     };
     reader.readAsText(file);
   };
@@ -154,7 +197,7 @@ function FileInputBase({
           ref={fileInput}
           accept="application/json"
           style="display:none"
-          onInput={onFileAdded}
+          onInput={(e) => onFileAdded(e)}
         />
         <button class="btn btn-primary" id="fileSelect" onClick={fileSelectorClick}>
           wybierz plik
@@ -164,11 +207,7 @@ function FileInputBase({
   );
 }
 
-const FileInput = connect(allDataMapToProps, actions)(FileInputBase);
-
-const genericDataMapToProps = ({ genericData }) => ({ genericData });
-
-function GenericDataFormBase({ genericData, setGenericData }) {
+function GenericDataForm() {
   const [name, setName] = useState('');
   const [bip_url, setBipUrl] = useState('');
   const [nip, setNip] = useState('');
@@ -176,20 +215,29 @@ function GenericDataFormBase({ genericData, setGenericData }) {
   const [short_name, setShortName] = useState('');
   const [krs, setKrs] = useState('');
 
+  const genericData = useStore(genericDataStore);
+
   useEffect(() => {
     if (genericData) {
       setName(genericData.name || '');
-      setBipUrl(genericData.bip_url || '');
+      setBipUrl(genericData.bipUrl || '');
       setNip(genericData.nip || '');
       setRegon(genericData.regon || '');
-      setShortName(genericData.short_name || '');
+      setShortName(genericData.shortName || '');
       setKrs(genericData.krs || '');
     }
   }, [genericData]);
 
-  const submitHandler = (e) => {
+  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
-    setGenericData({ name, bip_url, nip, regon, short_name, krs });
+    genericDataActions.set({
+      name,
+      bipUrl: bip_url,
+      nip,
+      regon,
+      shortName: short_name,
+      krs,
+    });
   };
 
   const formName = 'generic';
@@ -249,26 +297,24 @@ function GenericDataFormBase({ genericData, setGenericData }) {
   );
 }
 
-const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
-
-const addressDataMapToProps = ({ addressData }) => ({ addressData });
-
-function AddressDataFormBase({ addressData, setAddressData }) {
+function AddressDataForm() {
   const [street, setStreet] = useState('');
   const [zip_code, setZipCode] = useState('');
   const [town, setTown] = useState('');
 
+  const addressData = useStore(addressDataStore);
+
   useEffect(() => {
     if (addressData) {
       setStreet(addressData.street || '');
-      setZipCode(addressData.zip_code || '');
+      setZipCode(addressData.zipCode || '');
       setTown(addressData.town || '');
     }
   }, [addressData]);
 
-  const submitHandler = (e) => {
+  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
-    setAddressData({ street, zip_code, town });
+    addressDataActions.set({ street, zipCode: zip_code, town });
   };
 
   const formName = 'address';
@@ -305,8 +351,6 @@ function AddressDataFormBase({ addressData, setAddressData }) {
     </form>
   );
 }
-
-const AddressDataForm = connect(addressDataMapToProps, actions)(AddressDataFormBase);
 
 export {
   AddressDataForm,
