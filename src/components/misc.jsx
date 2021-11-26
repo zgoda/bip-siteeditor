@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { createElement } from 'preact';
 import { AlertCircle, CheckCircle, Info, PlusCircle, XCircle } from 'preact-feather';
 
-import store from '../store';
+import { store } from '../state/store';
 
 function StartOverAgain() {
   const buttonRef = useRef(null);
@@ -28,8 +29,7 @@ function StartOverAgain() {
 }
 
 function SectionTitle({ title, level = 2 }) {
-  const Tag = `h${level}`;
-  return <Tag>{title}</Tag>;
+  return createElement(`h${level}`, {}, title);
 }
 
 function EmptyCardItem({ clickHandler, itemRef }) {
@@ -89,7 +89,7 @@ function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeout, list]);
 
-  const statusToIcon = (status) => {
+  const statusToIcon = (/** @type {string} */ status) => {
     switch (status) {
       case 'success':
         return <CheckCircle />;
@@ -102,14 +102,14 @@ function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
     }
   };
 
-  const statusToColor = (status) => {
+  const statusToColor = (/** @type {string} */ status) => {
     if (status === 'info') {
       return 'primary';
     }
     return status;
   };
 
-  const deleteToast = (id) => {
+  const deleteToast = (/** @type {string} */ id) => {
     const listItemIndex = list.findIndex((e) => e.id === id);
     const toastListItem = toastList.findIndex((e) => e.id === id);
     list.splice(listItemIndex, 1);

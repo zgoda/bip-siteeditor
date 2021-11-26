@@ -7,6 +7,4 @@ const initialState = {
   departmentData: [],
 };
 
-const store = createStore(initialState);
-
-export default store;
+export const store = createStore(initialState);

@@ -9,7 +9,7 @@ import {
   DepartmentsData,
   GenericData,
 } from './components/parts';
-import store from './store';
+import { store } from './state/store';
 
 function App() {
   const appTitle = 'Edytor danych instancji BIP';

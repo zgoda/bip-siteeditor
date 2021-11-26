@@ -1,5 +1,10 @@
-import { uid } from 'uid/secure';
+import { uid } from 'uid';
 
+/**
+ * @param {Array<any>} array
+ * @param {number} chunkSize
+ * @returns {Array<Array<any>>}
+ */
 function chunkArray(array, chunkSize) {
   let a = array || [];
   let R = [];

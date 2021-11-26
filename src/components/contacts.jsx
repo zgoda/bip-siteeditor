@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
-import actions from '../actions';
+import actions from '../state/actions';
 import { SubmitButton, TextField } from './forms';
 import { EmptyCardItem, SectionTitle, Toast } from './misc';
 import { chunkArray, genToastId } from './utils';

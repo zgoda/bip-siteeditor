@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { connect } from 'redux-zero/preact';
 
-import actions from '../actions';
+import actions from '../state/actions';
 
 function Label({ forElement, labelText, isRequired = false }) {
   if (isRequired) {

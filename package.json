@@ -1,43 +1,24 @@
 {
-  "private": true,
-  "name": "bip-siteeditor",
-  "version": "1.0.0",
-  "license": "GPL-3.0-or-later",
-  "author": {
-    "name": "Jarek Zgoda",
-    "url": "https://github.com/zgoda"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zgoda/bip-siteeditor.git"
-  },
+  "name": "bse",
+  "version": "0.0.0",
   "scripts": {
-    "build": "preact build",
-    "serve": "sirv build --port 8080 --cors --single",
-    "dev": "preact watch --no-sw",
-    "lint": "eslint src"
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-react-jsx-source": "^7.16.0",
-    "babel-plugin-transform-hook-names": "^1.0.2",
-    "eslint": "^7.32.0",
-    "eslint-config-preact": "^1.2.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "preact-cli": "^3.3.2",
-    "prettier": "^2.5.0",
-    "sass": "^1.43.5",
-    "sass-loader": "^10.1.1",
-    "sirv-cli": "1.0.14"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
+    "@nanostores/preact": "^0.1.2",
     "hoofd": "^1.4.0",
+    "nanostores": "^0.5.6",
     "preact": "^10.6.1",
     "preact-feather": "^4.2.1",
-    "preact-render-to-string": "^5.1.19",
     "redux-zero": "^5.1.7",
     "spectre.css": "^0.5.9",
     "uid": "^2.0.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.1.5",
+    "sass": "^1.43.5",
+    "vite": "^2.6.14"
   }
 }

@@ -7,25 +7,27 @@
     "allowJs": true,
     "checkJs": true,
     // "strict": true,
+    "isolatedModules": true,
     "noEmit": true,
     "moduleResolution": "node",
     "target": "ESNext",
     "module": "esnext",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "typeRoots": [
-      "./src/**/*"
-    ]
+    "downlevelIteration": true
   },
   "include": [
-    "node_modules/preact/src/index.d.ts",
+    "vite/dist/node",
+    "vite/client",
     "**/*"
   ],
   "typeAcquisition": {
     "enable": true,
     "exclude": [
-      "source-map"
-    ]  
+      "source-map",
+      "source-map-js",
+      "agent-base",
+      "https-proxy-agent"
+    ]
   }
 }
