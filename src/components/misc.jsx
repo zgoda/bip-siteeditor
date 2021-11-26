@@ -7,7 +7,7 @@ import { store } from '../state/store';
 function StartOverAgain() {
   const buttonRef = useRef(null);
 
-  const handleClearClick = (e) => {
+  const handleClearClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     buttonRef.current && buttonRef.current.blur();
     store.reset();
@@ -67,9 +67,14 @@ function EmptyTileItem({ clickHandler, itemRef }) {
 }
 
 /**
- * Toast component
+ * @typedef {object} ToastProps
+ * @property {Array<import('../..').Notification>} toastList
+ * @property {string} [position='bottom-left']
+ * @property {number} [timeout=4000]
+ *
+ * @param {ToastProps} props
+ * @returns {JSX.Element}
  */
-
 function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
   const [list, setList] = useState(toastList);
 
@@ -119,10 +124,10 @@ function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
 
   return (
     <div class={`notification-container ${position}`}>
-      {list.map((toast, i) => {
+      {list.map((toast) => {
         return (
           <div
-            key={i}
+            key={toast.id}
             class={`notification snackbar ${position} bg-${statusToColor(toast.icon)}`}
           >
             <button onClick={() => deleteToast(toast.id)}>x</button>

@@ -3,6 +3,13 @@ import { DepartmentGrid } from './departments';
 import { AddressDataForm, FileInput, GenericDataForm } from './forms';
 import { SectionTitle } from './misc';
 
+/**
+ * @typedef {object} AppInfoProps
+ * @property {string} appTitle
+ *
+ * @param {AppInfoProps} props
+ * @returns {JSX.Element}
+ */
 function AppInfo({ appTitle }) {
   return (
     <>

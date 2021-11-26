@@ -11,6 +11,8 @@ function ContactForm({ data, setData, switchEditMode }) {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
+  const formName = 'ContactForm';
+
   useEffect(() => {
     if (data) {
       setName(data.name || '');
@@ -36,6 +38,7 @@ function ContactForm({ data, setData, switchEditMode }) {
           changeHandler={setName}
           label="Nazwa kontaktu"
           required={true}
+          formName={formName}
         />
         <TextField
           name="phone"
@@ -43,12 +46,14 @@ function ContactForm({ data, setData, switchEditMode }) {
           changeHandler={setPhone}
           label="Numer telefonu"
           required={true}
+          formName={formName}
         />
         <TextField
           name="email"
           value={email}
           changeHandler={setEmail}
           label="Adres email"
+          formName={formName}
         />
         <SubmitButton />
       </fieldset>
@@ -57,7 +62,7 @@ function ContactForm({ data, setData, switchEditMode }) {
 }
 
 function ContactItem({ data, dataEditSwitch }) {
-  const buttonClickHandler = (e) => {
+  const buttonClickHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     dataEditSwitch(false, data);
   };
@@ -87,7 +92,7 @@ function ContactItem({ data, dataEditSwitch }) {
 function ContactFormRow({ row, withAddButton, dataEditSwitch }) {
   const addContactButtonRef = useRef(null);
 
-  const emptyItemClickHandler = (e) => {
+  const emptyItemClickHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     addContactButtonRef.current && addContactButtonRef.current.blur();
     dataEditSwitch(true);

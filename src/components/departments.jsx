@@ -13,6 +13,8 @@ function DepartmentForm({ data, setData }) {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
+  const formName = 'DepartmentForm';
+
   useEffect(() => {
     if (data) {
       setName(data.name || '');
@@ -39,30 +41,35 @@ function DepartmentForm({ data, setData }) {
           changeHandler={setName}
           label="Nazwa wydziału / jednostki organizacyjnej"
           required={true}
+          formName={formName}
         />
         <TextField
           name="domain"
           value={domain}
           changeHandler={setDomain}
           label="Zakres działalności"
+          formName={formName}
         />
         <TextField
           name="location"
           value={location}
           changeHandler={setLocation}
           label="Lokalizacja"
+          formName={formName}
         />
         <TextField
           name="phone"
           value={phone}
           changeHandler={setPhone}
           label="Numer telefonu"
+          formName={formName}
         />
         <TextField
           name="email"
           value={email}
           changeHandler={setEmail}
           label="Adres email"
+          formName={formName}
         />
         <SubmitButton />
       </fieldset>
@@ -122,7 +129,7 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
             <small class="tile-subtitle text-gray">{contactLine()}</small>
           )}
           <p>
-            <button class="btn btn-primary btn-sm" onclick={editButtonClick}>
+            <button class="btn btn-primary btn-sm" onClick={editButtonClick}>
               zmień dane
             </button>
           </p>
@@ -130,7 +137,7 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
         <div class="tile-action">
           <button
             class="btn btn-link"
-            onclick={displayStaffButtonClick}
+            onClick={displayStaffButtonClick}
             ref={staffButtonRef}
           >
             pracownicy
@@ -194,6 +201,7 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
   const [staffFormVisible, setStaffFormVisible] = useState(false);
   const [staffAddButtonVisible, setStaffAddButtonVisible] = useState(false);
   const [currentDepartment, setCurrentDepartment] = useState('');
+
   const addStaffMemberButtonRef = useRef(null);
 
   const emptyStaffData = {

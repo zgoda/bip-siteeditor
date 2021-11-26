@@ -11,6 +11,8 @@ function StaffMemberForm({ data, setData }) {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
+  const formName = 'StaffMemberForm';
+
   useEffect(() => {
     if (data) {
       setPersonName(data.person_name || '');
@@ -49,6 +51,7 @@ function StaffMemberForm({ data, setData }) {
           changeHandler={setPersonName}
           label="Imię i nazwisko osoby"
           required={true}
+          formName={formName}
         />
         <TextField
           name="role_name"
@@ -56,6 +59,7 @@ function StaffMemberForm({ data, setData }) {
           changeHandler={setRoleName}
           label="Stanowisko"
           required={true}
+          formName={formName}
         />
         <ChoiceSingle
           name="role_type"
@@ -64,24 +68,28 @@ function StaffMemberForm({ data, setData }) {
           changeHandler={setRoleType}
           label="Rodzaj stanowiska"
           required={true}
+          formName={formName}
         />
         <TextField
           name="photo_url"
           value={photo_url}
           changeHandler={setPhotoUrl}
           label="Adres URL zdjęcia"
+          formName={formName}
         />
         <TextField
           name="phone"
           value={phone}
           changeHandler={setPhone}
           label="Numer telefonu"
+          formName={formName}
         />
         <TextField
           name="email"
           value={email}
           changeHandler={setEmail}
           label="Adres email"
+          formName={formName}
         />
         <SubmitButton />
       </fieldset>
