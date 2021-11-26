@@ -27,61 +27,61 @@ function StaffMemberForm({ data, setData }) {
   const roleTypeChoices = [
     {
       name: 'Pracownik',
-      value: 'staff'
+      value: 'staff',
     },
     {
       name: 'Kierownik',
-      value: 'manager'
-    }
+      value: 'manager',
+    },
   ];
 
-  const submitHandler = ((e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     setData(origData, { person_name, role_name, role_type, photo_url, phone, email });
-  });
+  };
 
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
         <TextField
-          name='person_name'
+          name="person_name"
           value={person_name}
           changeHandler={setPersonName}
-          label='Imię i nazwisko osoby'
+          label="Imię i nazwisko osoby"
           required={true}
         />
         <TextField
-          name='role_name'
+          name="role_name"
           value={role_name}
           changeHandler={setRoleName}
-          label='Stanowisko'
+          label="Stanowisko"
           required={true}
         />
         <ChoiceSingle
-          name='role_type'
+          name="role_type"
           value={role_type}
           choices={roleTypeChoices}
           changeHandler={setRoleType}
-          label='Rodzaj stanowiska'
+          label="Rodzaj stanowiska"
           required={true}
         />
         <TextField
-          name='photo_url'
+          name="photo_url"
           value={photo_url}
           changeHandler={setPhotoUrl}
-          label='Adres URL zdjęcia'
+          label="Adres URL zdjęcia"
         />
         <TextField
-          name='phone'
+          name="phone"
           value={phone}
           changeHandler={setPhone}
-          label='Numer telefonu'
+          label="Numer telefonu"
         />
         <TextField
-          name='email'
+          name="email"
           value={email}
           changeHandler={setEmail}
-          label='Adres email'
+          label="Adres email"
         />
         <SubmitButton />
       </fieldset>
@@ -90,21 +90,17 @@ function StaffMemberForm({ data, setData }) {
 }
 
 function StaffMemberItem({ person }) {
-
-  const roleLine = (() => {
+  const roleLine = () => {
     const rolesMap = {
       manager: 'kierownik',
       staff: 'pracownik',
     };
-    const elems = [
-      rolesMap[person.role_type] || 'pracownik',
-      person.role_name,
-    ];
+    const elems = [rolesMap[person.role_type] || 'pracownik', person.role_name];
     const line = elems.join(` ${String.fromCharCode(183)} `);
     return `Stanowisko: ${line}`;
-  });
+  };
 
-  const contactLine = (() => {
+  const contactLine = () => {
     const elems = [];
     if (person.phone) {
       elems.push(person.phone);
@@ -114,7 +110,7 @@ function StaffMemberItem({ person }) {
     }
     const line = elems.join(` ${String.fromCharCode(183)} `);
     return `Kontakt: ${line}`;
-  });
+  };
 
   const personPhoto = (
     <div class="tile-icon">

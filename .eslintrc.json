@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "extends": [
+    "preact",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "ignorePatterns": [
+    "build/",
+    "dist/"
+  ],
+  "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-loss-of-precision": "error",
+    "no-nonoctal-decimal-escape": "error",
+    "no-unsafe-optional-chaining": "error",
+    "no-useless-backreference": "error"
+  }
+}

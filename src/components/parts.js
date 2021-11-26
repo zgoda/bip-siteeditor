@@ -14,7 +14,7 @@ function AppInfo({ appTitle }) {
       </p>
       <p>
         We wszystkich poniższych formularzach wypełnienie pól oznaczonych czerwoną
-        gwiazdką (<span class='label-required-marker'>*</span>) jest wymagane.
+        gwiazdką (<span class="label-required-marker">*</span>) jest wymagane.
       </p>
       <hr />
     </>
@@ -24,7 +24,7 @@ function AppInfo({ appTitle }) {
 function GenericData() {
   return (
     <>
-      <SectionTitle title='Dane podstawowe' />
+      <SectionTitle title="Dane podstawowe" />
       <p>Podstawowe dane instytucji.</p>
       <GenericDataForm />
       <hr />
@@ -35,7 +35,7 @@ function GenericData() {
 function AddressData() {
   return (
     <>
-      <SectionTitle title='Dane adresowe' />
+      <SectionTitle title="Dane adresowe" />
       <p>Dane adresowe instytucji.</p>
       <AddressDataForm />
       <hr />
@@ -46,7 +46,7 @@ function AddressData() {
 function ContactData() {
   return (
     <>
-      <SectionTitle title='Dane kontaktowe' />
+      <SectionTitle title="Dane kontaktowe" />
       <p>Dane kontaktowe instytucji.</p>
       <ContactGrid />
       <hr />
@@ -57,10 +57,9 @@ function ContactData() {
 function DepartmentsData() {
   return (
     <>
-      <SectionTitle title='Dane wydziałów i pracowników' />
+      <SectionTitle title="Dane wydziałów i pracowników" />
       <p>
-        Dane jednostek organizacyjnych instytucji oraz pracowników w nich
-        zatrudnionych.
+        Dane jednostek organizacyjnych instytucji oraz pracowników w nich zatrudnionych.
       </p>
       <DepartmentGrid />
       <hr />

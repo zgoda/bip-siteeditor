@@ -6,13 +6,15 @@ import actions from '../actions';
 function Label({ forElement, labelText, isRequired = false }) {
   if (isRequired) {
     return (
-      <label class='form-label' for={forElement}>
-        {labelText} <span class='label-required-marker'>*</span>
+      <label class="form-label" for={forElement}>
+        {labelText} <span class="label-required-marker">*</span>
       </label>
     );
   }
   return (
-    <label class='form-label' for={forElement}>{labelText}</label>
+    <label class="form-label" for={forElement}>
+      {labelText}
+    </label>
   );
 }
 
@@ -20,10 +22,11 @@ function TextInput({ id, name, value, changeHandler, required }) {
   return (
     <input
       id={id}
-      class='form-input'
-      type='text'
+      class="form-input"
+      type="text"
       name={name}
       value={value}
+      // @ts-ignore
       onInput={(e) => changeHandler(e.target.value)}
       required={required}
     />
@@ -33,7 +36,7 @@ function TextInput({ id, name, value, changeHandler, required }) {
 function TextField({ name, value, changeHandler, required = false, label, formName }) {
   const inputId = `input-${formName}-${name}`;
   return (
-    <div class='form-group'>
+    <div class="form-group">
       <Label forElement={inputId} labelText={label} isRequired={required} />
       <TextInput
         id={inputId}
@@ -46,26 +49,35 @@ function TextField({ name, value, changeHandler, required = false, label, formNa
   );
 }
 
-function ChoiceSingle(
-      { name, value, choices, changeHandler, required = false, label, formName }
-    ) {
+function ChoiceSingle({
+  name,
+  value,
+  choices,
+  changeHandler,
+  required = false,
+  label,
+  formName,
+}) {
   const inputId = `input-${formName}-${name}`;
   return (
-    <div class='form-group'>
+    <div class="form-group">
       <Label forElement={inputId} labelText={label} isRequired={required} />
       <select
-        class='form-select'
+        class="form-select"
         value={value}
+        // @ts-ignore
         onChange={(e) => changeHandler(e.target.value)}
         required={required}
         name={name}
         id={inputId}
       >
-      {choices.map((item) => {
-        return (
-          <option value={item.value} key={item.value}>{item.name}</option>
-        );
-      })}
+        {choices.map((item) => {
+          return (
+            <option value={item.value} key={item.value}>
+              {item.name}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
@@ -73,24 +85,31 @@ function ChoiceSingle(
 
 function SubmitButton({ text = 'zapisz' }) {
   return (
-    <button class='btn btn-primary' type='submit'>{text}</button>
+    <button class="btn btn-primary" type="submit">
+      {text}
+    </button>
   );
 }
 
-const allDataMapToProps = (
-  ({ genericData, addressData, contactData, departmentData }) =>
-      ({ genericData, addressData, contactData, departmentData })
-);
+const allDataMapToProps = ({
+  genericData,
+  addressData,
+  contactData,
+  departmentData,
+}) => ({ genericData, addressData, contactData, departmentData });
 
-function FileInputBase(
-      { setGenericData, setAddressData, setContactData, setDepartmentData }
-    ) {
+function FileInputBase({
+  setGenericData,
+  setAddressData,
+  setContactData,
+  setDepartmentData,
+}) {
   const fileInput = useRef(null);
 
   const genericFields = ['name', 'bip_url', 'nip', 'regon', 'short_name', 'krs'];
   const addressFields = ['street', 'zip_code', 'town'];
 
-  const parseSiteDataParts = ((content) => {
+  const parseSiteDataParts = (content) => {
     const jsonData = JSON.parse(content);
     // parse generic data
     let data = {};
@@ -106,38 +125,38 @@ function FileInputBase(
     setAddressData(data);
     setContactData(jsonData.contacts);
     setDepartmentData(jsonData.departments);
-  });
+  };
 
-  const fileSelectorClick = (() => {
+  const fileSelectorClick = () => {
     fileInput.current && fileInput.current.click();
-  });
+  };
 
-  const onFileAdded = ((e) => {
+  const onFileAdded = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onload = ((e) => {
+    reader.onload = (e) => {
       parseSiteDataParts(e.target.result);
-    });
+    };
     reader.readAsText(file);
-  });
+  };
 
   return (
-    <div class='form-group'>
+    <div class="form-group">
       <p>
-        Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by
-        załadować dane do edycji.
+        Wybierz plik z danymi twojej instancji BIP (<code>site.json</code>) by załadować
+        dane do edycji.
       </p>
       <fieldset>
         <input
-          class='form-input'
-          type='file'
+          class="form-input"
+          type="file"
           ref={fileInput}
-          accept='application/json'
-          style='display:none'
+          accept="application/json"
+          style="display:none"
           onInput={onFileAdded}
         />
-        <button class='btn btn-primary' id='fileSelect' onClick={fileSelectorClick}>
+        <button class="btn btn-primary" id="fileSelect" onClick={fileSelectorClick}>
           wybierz plik
         </button>
       </fieldset>
@@ -147,9 +166,7 @@ function FileInputBase(
 
 const FileInput = connect(allDataMapToProps, actions)(FileInputBase);
 
-const genericDataMapToProps = (
-  ({ genericData }) => ({ genericData })
-);
+const genericDataMapToProps = ({ genericData }) => ({ genericData });
 
 function GenericDataFormBase({ genericData, setGenericData }) {
   const [name, setName] = useState('');
@@ -170,10 +187,10 @@ function GenericDataFormBase({ genericData, setGenericData }) {
     }
   }, [genericData]);
 
-  const submitHandler = ((e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     setGenericData({ name, bip_url, nip, regon, short_name, krs });
-  });
+  };
 
   const formName = 'generic';
 
@@ -181,49 +198,49 @@ function GenericDataFormBase({ genericData, setGenericData }) {
     <form onSubmit={submitHandler}>
       <fieldset>
         <TextField
-          name='name'
+          name="name"
           value={name}
           changeHandler={setName}
-          label='Nazwa instytucji'
+          label="Nazwa instytucji"
           required={true}
           formName={formName}
         />
         <TextField
-          name='shortName'
+          name="shortName"
           value={short_name}
           changeHandler={setShortName}
-          label='Nazwa skrócona'
+          label="Nazwa skrócona"
           formName={formName}
         />
         <TextField
-          name='bipUrl'
+          name="bipUrl"
           value={bip_url}
           changeHandler={setBipUrl}
-          label='Adres strony BIP'
+          label="Adres strony BIP"
           required={true}
           formName={formName}
         />
         <TextField
-          name='nip'
+          name="nip"
           value={nip}
           changeHandler={setNip}
-          label='Numer NIP'
+          label="Numer NIP"
           required={true}
           formName={formName}
         />
         <TextField
-          name='regon'
+          name="regon"
           value={regon}
           changeHandler={setRegon}
-          label='Numer REGON'
+          label="Numer REGON"
           required={true}
           formName={formName}
         />
         <TextField
-          name='krs'
+          name="krs"
           value={krs}
           changeHandler={setKrs}
-          label='Numer wpisu w KRS'
+          label="Numer wpisu w KRS"
           formName={formName}
         />
         <SubmitButton />
@@ -234,9 +251,7 @@ function GenericDataFormBase({ genericData, setGenericData }) {
 
 const GenericDataForm = connect(genericDataMapToProps, actions)(GenericDataFormBase);
 
-const addressDataMapToProps = (
-  ({ addressData }) => ({ addressData })
-);
+const addressDataMapToProps = ({ addressData }) => ({ addressData });
 
 function AddressDataFormBase({ addressData, setAddressData }) {
   const [street, setStreet] = useState('');
@@ -251,10 +266,10 @@ function AddressDataFormBase({ addressData, setAddressData }) {
     }
   }, [addressData]);
 
-  const submitHandler = ((e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     setAddressData({ street, zip_code, town });
-  });
+  };
 
   const formName = 'address';
 
@@ -262,26 +277,26 @@ function AddressDataFormBase({ addressData, setAddressData }) {
     <form onSubmit={submitHandler}>
       <fieldset>
         <TextField
-          name='street'
+          name="street"
           value={street}
           changeHandler={setStreet}
-          label='Ulica lub miejscowość z numerem budynku'
+          label="Ulica lub miejscowość z numerem budynku"
           required={true}
           formName={formName}
         />
         <TextField
-          name='zip_code'
+          name="zip_code"
           value={zip_code}
           changeHandler={setZipCode}
-          label='Kod pocztowy'
+          label="Kod pocztowy"
           required={true}
           formName={formName}
         />
         <TextField
-          name='town'
+          name="town"
           value={town}
           changeHandler={setTown}
-          label='Miejscowość / poczta'
+          label="Miejscowość / poczta"
           required={true}
           formName={formName}
         />
@@ -294,5 +309,10 @@ function AddressDataFormBase({ addressData, setAddressData }) {
 const AddressDataForm = connect(addressDataMapToProps, actions)(AddressDataFormBase);
 
 export {
-  AddressDataForm, ChoiceSingle, FileInput, GenericDataForm, SubmitButton, TextField
+  AddressDataForm,
+  ChoiceSingle,
+  FileInput,
+  GenericDataForm,
+  SubmitButton,
+  TextField,
 };

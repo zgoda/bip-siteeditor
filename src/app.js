@@ -3,7 +3,11 @@ import { Provider } from 'redux-zero/preact';
 
 import { StartOverAgain } from './components/misc';
 import {
-  AddressData, AppInfo, ContactData, DepartmentsData, GenericData
+  AddressData,
+  AppInfo,
+  ContactData,
+  DepartmentsData,
+  GenericData,
 } from './components/parts';
 import store from './store';
 
@@ -17,7 +21,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div class='container grid-lg my-2'>
+      <div class="container grid-lg my-2">
         <AppInfo appTitle={appTitle} />
         <GenericData />
         <AddressData />
@@ -28,6 +32,5 @@ function App() {
     </Provider>
   );
 }
-
 
 export { App };

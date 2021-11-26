@@ -4,23 +4,22 @@ import { AlertCircle, CheckCircle, Info, PlusCircle, XCircle } from 'preact-feat
 import store from '../store';
 
 function StartOverAgain() {
-
   const buttonRef = useRef(null);
 
-  const handleClearClick = ((e) => {
+  const handleClearClick = (e) => {
     e.preventDefault();
     buttonRef.current && buttonRef.current.blur();
     store.reset();
-  });
+  };
 
   return (
-    <div class='warning-box'>
+    <div class="warning-box">
       <p>
         Klikając poniższy przycisk wyczyścisz wszystkie wprowadzone dane i zaczniesz
         edycję od początku.
       </p>
       <p>
-        <button class='btn btn-primary' ref={buttonRef} onClick={handleClearClick}>
+        <button class="btn btn-primary" ref={buttonRef} onClick={handleClearClick}>
           wyzeruj
         </button>
       </p>
@@ -30,9 +29,7 @@ function StartOverAgain() {
 
 function SectionTitle({ title, level = 2 }) {
   const Tag = `h${level}`;
-  return (
-    <Tag>{title}</Tag>
-  );
+  return <Tag>{title}</Tag>;
 }
 
 function EmptyCardItem({ clickHandler, itemRef }) {
@@ -89,10 +86,10 @@ function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
       }, timeout);
       return () => clearInterval(interval);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeout, list]);
 
-  const statusToIcon = ((status) => {
+  const statusToIcon = (status) => {
     switch (status) {
       case 'success':
         return <CheckCircle />;
@@ -103,22 +100,22 @@ function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
       default:
         return <Info />;
     }
-  });
+  };
 
-  const statusToColor = ((status) =>{
+  const statusToColor = (status) => {
     if (status === 'info') {
       return 'primary';
     }
     return status;
-  });
+  };
 
-  const deleteToast = ((id) => {
+  const deleteToast = (id) => {
     const listItemIndex = list.findIndex((e) => e.id === id);
     const toastListItem = toastList.findIndex((e) => e.id === id);
     list.splice(listItemIndex, 1);
     toastList.splice(toastListItem, 1);
     setList([...list]);
-  });
+  };
 
   return (
     <div class={`notification-container ${position}`}>
@@ -129,9 +126,7 @@ function Toast({ toastList, position = 'bottom-left', timeout = 4000 }) {
             class={`notification snackbar ${position} bg-${statusToColor(toast.icon)}`}
           >
             <button onClick={() => deleteToast(toast.id)}>x</button>
-            <div class="notification-image">
-              {statusToIcon(toast.icon)}
-            </div>
+            <div class="notification-image">{statusToIcon(toast.icon)}</div>
             <div>
               <p class="notification-title">{toast.title}</p>
               <p class="notification-message">{toast.message}</p>

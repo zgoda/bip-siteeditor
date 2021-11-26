@@ -25,44 +25,44 @@ function DepartmentForm({ data, setData }) {
 
   const origData = { ...data };
 
-  const submitHandler = ((e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     setData(origData, { name, domain, location, phone, email });
-  });
+  };
 
   return (
     <form onSubmit={submitHandler}>
       <fieldset>
         <TextField
-          name='name'
+          name="name"
           value={name}
           changeHandler={setName}
-          label='Nazwa wydziału / jednostki organizacyjnej'
+          label="Nazwa wydziału / jednostki organizacyjnej"
           required={true}
         />
         <TextField
-          name='domain'
+          name="domain"
           value={domain}
           changeHandler={setDomain}
-          label='Zakres działalności'
+          label="Zakres działalności"
         />
         <TextField
-          name='location'
+          name="location"
           value={location}
           changeHandler={setLocation}
-          label='Lokalizacja'
+          label="Lokalizacja"
         />
         <TextField
-          name='phone'
+          name="phone"
           value={phone}
           changeHandler={setPhone}
-          label='Numer telefonu'
+          label="Numer telefonu"
         />
         <TextField
-          name='email'
+          name="email"
           value={email}
           changeHandler={setEmail}
-          label='Adres email'
+          label="Adres email"
         />
         <SubmitButton />
       </fieldset>
@@ -78,7 +78,7 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
   const midDot = String.fromCharCode(183);
 
   const showLocationLine = departmentData.location || departmentData.domain;
-  const locationLine = (() => {
+  const locationLine = () => {
     let elems = [];
     if (departmentData.location) {
       elems.push(departmentData.location);
@@ -87,10 +87,10 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
       elems.push(departmentData.domain);
     }
     return elems.join(` ${midDot} `);
-  });
+  };
 
   const showContactLine = departmentData.phone || departmentData.email;
-  const contactLine = (() => {
+  const contactLine = () => {
     let elems = [];
     if (departmentData.phone) {
       elems.push(departmentData.phone);
@@ -99,18 +99,18 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
       elems.push(departmentData.email);
     }
     return elems.join(` ${midDot} `);
-  });
+  };
 
-  const displayStaffButtonClick = ((e) => {
+  const displayStaffButtonClick = (e) => {
     e.preventDefault();
     staffButtonRef && staffButtonRef.current.blur();
     departmentStaffDisplay(departmentData.name);
-  });
+  };
 
-  const editButtonClick = ((e) => {
+  const editButtonClick = (e) => {
     e.preventDefault();
     setFormVisible(!formVisible);
-  });
+  };
 
   return (
     <>
@@ -118,10 +118,9 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
         <div class="tile-content">
           <p class="tile-title text-large text-bold">{departmentData.name}</p>
           {showLocationLine && <p class="tile-subtitle">{locationLine()}</p>}
-          {
-            showContactLine &&
-                <small class="tile-subtitle text-gray">{contactLine()}</small>
-          }
+          {showContactLine && (
+            <small class="tile-subtitle text-gray">{contactLine()}</small>
+          )}
           <p>
             <button class="btn btn-primary btn-sm" onclick={editButtonClick}>
               zmień dane
@@ -143,9 +142,11 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
   );
 }
 
-function DepartmentSection(
-      { departmentData, setDepartmentData, departmentStaffDisplay }
-    ) {
+function DepartmentSection({
+  departmentData,
+  setDepartmentData,
+  departmentStaffDisplay,
+}) {
   const [deptFormVisible, setDeptFormVisible] = useState(false);
   const addDepartmentButtonRef = useRef(null);
 
@@ -157,15 +158,15 @@ function DepartmentSection(
     email: '',
   };
 
-  const addDepartmentClick = ((e) => {
+  const addDepartmentClick = (e) => {
     e.preventDefault();
     addDepartmentButtonRef.current && addDepartmentButtonRef.current.blur();
     setDeptFormVisible(!deptFormVisible);
-  });
+  };
 
   return (
     <>
-      <SectionTitle title='Dane wydziałów' level={3} />
+      <SectionTitle title="Dane wydziałów" level={3} />
       {departmentData.map((item) => {
         return (
           <DepartmentItem
@@ -180,17 +181,14 @@ function DepartmentSection(
         clickHandler={addDepartmentClick}
         itemRef={addDepartmentButtonRef}
       />
-      {
-        deptFormVisible &&
-            <DepartmentForm data={emptyDeptData} setData={setDepartmentData} />
-      }
+      {deptFormVisible && (
+        <DepartmentForm data={emptyDeptData} setData={setDepartmentData} />
+      )}
     </>
   );
 }
 
-const allDataMapToProps = (
-  ({ departmentData }) => ({ departmentData })
-);
+const allDataMapToProps = ({ departmentData }) => ({ departmentData });
 
 function DepartmentGridBase({ departmentData, setDepartmentData }) {
   const [staffFormVisible, setStaffFormVisible] = useState(false);
@@ -207,15 +205,15 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
     email: '',
   };
 
-  const addStaffMemberClick = ((e) => {
+  const addStaffMemberClick = (e) => {
     e.preventDefault();
     addStaffMemberButtonRef.current && addStaffMemberButtonRef.current.blur();
     setStaffFormVisible(!staffFormVisible);
-  });
+  };
 
-  const displayDepartmentStaff = ((department) => {
+  const displayDepartmentStaff = (department) => {
     setCurrentDepartment(department);
-  });
+  };
 
   const deptArray = departmentData || [];
 
@@ -230,7 +228,7 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
   }
 
   return (
-    <div class='container'>
+    <div class="container">
       <div class="columns">
         <div class="column col-xs-3">
           <DepartmentSection
@@ -241,20 +239,18 @@ function DepartmentGridBase({ departmentData, setDepartmentData }) {
         </div>
         <div class="divider-vert" />
         <div class="column col-xs-9">
-          {
-            currentDepartment &&
-                <StaffSection
-                  departmentName={currentDepartment}
-                  staff={staffMap[currentDepartment] || []} 
-                />
-          }
-          {
-            staffAddButtonVisible &&
-                <EmptyTileItem
-                  clickHandler={addStaffMemberClick}
-                  itemRef={addStaffMemberButtonRef}
-                />
-          }
+          {currentDepartment && (
+            <StaffSection
+              departmentName={currentDepartment}
+              staff={staffMap[currentDepartment] || []}
+            />
+          )}
+          {staffAddButtonVisible && (
+            <EmptyTileItem
+              clickHandler={addStaffMemberClick}
+              itemRef={addStaffMemberButtonRef}
+            />
+          )}
           {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
         </div>
       </div>
