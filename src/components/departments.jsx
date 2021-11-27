@@ -1,8 +1,9 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { uid } from 'uid';
+
 import { departmentDataActions } from '../state/actions';
 import { departmentDataStore } from '../state/store';
-
 import { SubmitButton, TextField } from './forms';
 import { EmptyTileItem, SectionTitle } from './misc';
 import { StaffMemberForm, StaffSection } from './staff';
@@ -28,7 +29,7 @@ function DepartmentForm({ data, setData }) {
 
   const origData = { ...data };
 
-  const submitHandler = (e) => {
+  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     setData(origData, { name, domain, location, phone, email });
   };
@@ -109,13 +110,15 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
     return elems.join(` ${midDot} `);
   };
 
-  const displayStaffButtonClick = (e) => {
+  const displayStaffButtonClick = (
+    /** @type {{ preventDefault: () => void; }} */ e,
+  ) => {
     e.preventDefault();
     staffButtonRef && staffButtonRef.current.blur();
     departmentStaffDisplay(departmentData.name);
   };
 
-  const editButtonClick = (e) => {
+  const editButtonClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     setFormVisible(!formVisible);
   };
@@ -166,7 +169,7 @@ function DepartmentSection({
     email: '',
   };
 
-  const addDepartmentClick = (e) => {
+  const addDepartmentClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     addDepartmentButtonRef.current && addDepartmentButtonRef.current.blur();
     setDeptFormVisible(!deptFormVisible);
@@ -204,15 +207,15 @@ function DepartmentGrid() {
   const addStaffMemberButtonRef = useRef(null);
 
   const emptyStaffData = {
-    person_name: '',
-    role_name: '',
-    role_type: 'staff',
-    photo_url: '',
+    name: '',
+    role: '',
+    roleType: 'staff',
+    photoUrl: '',
     phone: '',
     email: '',
   };
 
-  const addStaffMemberClick = (e) => {
+  const addStaffMemberClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
     addStaffMemberButtonRef.current && addStaffMemberButtonRef.current.blur();
     setStaffFormVisible(!staffFormVisible);
@@ -258,7 +261,9 @@ function DepartmentGrid() {
               itemRef={addStaffMemberButtonRef}
             />
           )}
-          {staffFormVisible && <StaffMemberForm data={emptyStaffData} />}
+          {staffFormVisible && (
+            <StaffMemberForm data={{ ...emptyStaffData, id: uid(16) }} />
+          )}
         </div>
       </div>
     </div>

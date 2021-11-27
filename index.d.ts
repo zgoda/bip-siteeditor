@@ -27,13 +27,11 @@ export interface ContactData {
   email: string;
 }
 
-export type StaffMemberRoleType = 'staff' | 'manager';
-
 export interface StaffMember {
   id: string;
   name: string;
   role: string;
-  roleType: StaffMemberRoleType;
+  roleType: string;
   photoUrl?: string;
   phone?: string;
   email?: string;

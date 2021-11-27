@@ -1,13 +1,24 @@
 import { useEffect, useState } from 'preact/hooks';
+import { uid } from 'uid';
 
 import { ChoiceSingle, SubmitButton, TextField } from './forms';
 import { SectionTitle } from './misc';
+import { MIDDOT } from '../const';
 
+/**
+ * @typedef {object} StaffMemberFormProps
+ * @property {import('../..').StaffMember} data
+ * @property {(arg0: import('../..').StaffMember) => void} setData
+ *
+ * @param {StaffMemberFormProps} props
+ * @returns {JSX.Element}
+ */
 function StaffMemberForm({ data, setData }) {
-  const [person_name, setPersonName] = useState('');
-  const [role_name, setRoleName] = useState('');
-  const [role_type, setRoleType] = useState('');
-  const [photo_url, setPhotoUrl] = useState('');
+  const [id, setId] = useState('');
+  const [personName, setPersonName] = useState('');
+  const [role, setRoleName] = useState('');
+  const [roleType, setRoleType] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
@@ -15,16 +26,15 @@ function StaffMemberForm({ data, setData }) {
 
   useEffect(() => {
     if (data) {
-      setPersonName(data.person_name || '');
-      setRoleName(data.role_name || '');
-      setRoleType(data.role_type || '');
-      setPhotoUrl(data.photo_url || '');
+      setId(data.id || uid(16));
+      setPersonName(data.name || '');
+      setRoleName(data.role || '');
+      setRoleType(data.roleType || '');
+      setPhotoUrl(data.photoUrl || '');
       setPhone(data.phone || '');
       setEmail(data.email || '');
     }
   }, [data]);
-
-  const origData = { ...data };
 
   const roleTypeChoices = [
     {
@@ -37,9 +47,17 @@ function StaffMemberForm({ data, setData }) {
     },
   ];
 
-  const submitHandler = (e) => {
+  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
     e.preventDefault();
-    setData(origData, { person_name, role_name, role_type, photo_url, phone, email });
+    setData({
+      id,
+      name: personName,
+      role,
+      roleType,
+      photoUrl,
+      phone,
+      email,
+    });
   };
 
   return (
@@ -47,7 +65,7 @@ function StaffMemberForm({ data, setData }) {
       <fieldset>
         <TextField
           name="person_name"
-          value={person_name}
+          value={personName}
           changeHandler={setPersonName}
           label="Imię i nazwisko osoby"
           required={true}
@@ -55,7 +73,7 @@ function StaffMemberForm({ data, setData }) {
         />
         <TextField
           name="role_name"
-          value={role_name}
+          value={role}
           changeHandler={setRoleName}
           label="Stanowisko"
           required={true}
@@ -63,7 +81,7 @@ function StaffMemberForm({ data, setData }) {
         />
         <ChoiceSingle
           name="role_type"
-          value={role_type}
+          value={roleType}
           choices={roleTypeChoices}
           changeHandler={setRoleType}
           label="Rodzaj stanowiska"
@@ -72,7 +90,7 @@ function StaffMemberForm({ data, setData }) {
         />
         <TextField
           name="photo_url"
-          value={photo_url}
+          value={photoUrl}
           changeHandler={setPhotoUrl}
           label="Adres URL zdjęcia"
           formName={formName}
@@ -97,14 +115,21 @@ function StaffMemberForm({ data, setData }) {
   );
 }
 
+/**
+ * @typedef {object} StaffMemberItemProps
+ * @property {import('../..').StaffMember} person
+ *
+ * @param {StaffMemberItemProps} props
+ * @returns {JSX.Element}
+ */
 function StaffMemberItem({ person }) {
   const roleLine = () => {
     const rolesMap = {
       manager: 'kierownik',
       staff: 'pracownik',
     };
-    const elems = [rolesMap[person.role_type] || 'pracownik', person.role_name];
-    const line = elems.join(` ${String.fromCharCode(183)} `);
+    const elems = [rolesMap[person.roleType] || 'pracownik', person.role];
+    const line = elems.join(` ${MIDDOT} `);
     return `Stanowisko: ${line}`;
   };
 
@@ -116,23 +141,23 @@ function StaffMemberItem({ person }) {
     if (person.email) {
       elems.push(person.email);
     }
-    const line = elems.join(` ${String.fromCharCode(183)} `);
+    const line = elems.join(` ${MIDDOT} `);
     return `Kontakt: ${line}`;
   };
 
   const personPhoto = (
     <div class="tile-icon">
       <figure class="avatar avatar-xl">
-        <img src={person.photo_url} alt={person.name} />
+        <img src={person.photoUrl} alt={person.name} />
       </figure>
     </div>
   );
 
   return (
     <div class="tile">
-      {person.photo_url ? personPhoto : null}
+      {person.photoUrl ? personPhoto : null}
       <div class="tile-content">
-        <p class="tile-title text-large text-bold">{person.person_name}</p>
+        <p class="tile-title text-large text-bold">{person.name}</p>
         <p class="tile-subtitle">{roleLine()}</p>
         <small class="tile-subtitle text-gray">{contactLine()}</small>
       </div>
@@ -143,16 +168,21 @@ function StaffMemberItem({ person }) {
   );
 }
 
+/**
+ * @typedef {object} StaffSectionProps
+ * @property {string} departmentName
+ * @property {Array<import('../..').StaffMember>} staff
+ *
+ * @param {StaffSectionProps} props
+ * @returns {JSX.Element}
+ */
 function StaffSection({ departmentName, staff }) {
   return (
     <>
       <SectionTitle title={`${departmentName} - pracownicy`} level={3} />
       {staff.map((item) => {
         return (
-          <StaffMemberItem
-            key={`${departmentName}-staff-${item.person_name}`}
-            person={item}
-          />
+          <StaffMemberItem key={`${departmentName}-staff-${item.name}`} person={item} />
         );
       })}
     </>

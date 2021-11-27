@@ -170,9 +170,20 @@ function FileInput() {
     contactDataActions.set(contactData);
     const deptData = jsonData.departments.map((/** @type {Array<any>} */ item) => {
       // @ts-ignore
-      const staff = item.staff.map((person) => {
-        return { ...person, id: uid(16) };
-      });
+      const staff = item.staff.map(
+        (
+          /** @type {{ person_name: string; photo_url: string; role_name: string; role_type: string; }} */ person,
+        ) => {
+          return {
+            ...person,
+            id: uid(16),
+            name: person.person_name,
+            photoUrl: person.photo_url,
+            role: person.role_name,
+            roleType: person.role_type,
+          };
+        },
+      );
       return { ...deptData, staff, id: uid(16) };
     });
     departmentDataActions.set(deptData);
