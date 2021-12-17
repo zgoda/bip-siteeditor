@@ -17,7 +17,7 @@ import { chunkArray, genToastId } from './utils';
  * @property {DataEditSwitchFunc} switchEditMode
  *
  * @param {ContactFormProps} props
- * @returns
+ * @returns {JSX.Element}
  */
 function ContactForm({ data, setData, switchEditMode }) {
   const [id, setId] = useState('');

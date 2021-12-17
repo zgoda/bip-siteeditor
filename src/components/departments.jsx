@@ -221,7 +221,7 @@ function DepartmentGrid() {
     setStaffFormVisible(!staffFormVisible);
   };
 
-  const displayDepartmentStaff = (department) => {
+  const displayDepartmentStaff = (/** @type {string} */ department) => {
     setCurrentDepartment(department);
   };
 
@@ -236,6 +236,17 @@ function DepartmentGrid() {
   if (deptArray.length > 0 && !currentDepartment) {
     setCurrentDepartment(deptArray[0].name);
   }
+
+  const dataUpdated = (data) => {
+    const department = staffMap[currentDepartment];
+    department.forEach((staffMember, index) => {
+      if (staffMember.id === data.id) {
+        department[index] = data;
+        return;
+      }
+    });
+    staffMap[currentDepartment] = [...department, data];
+  };
 
   return (
     <div class="container">
@@ -262,7 +273,10 @@ function DepartmentGrid() {
             />
           )}
           {staffFormVisible && (
-            <StaffMemberForm data={{ ...emptyStaffData, id: uid(16) }} />
+            <StaffMemberForm
+              data={{ ...emptyStaffData, id: uid(16) }}
+              setData={dataUpdated}
+            />
           )}
         </div>
       </div>
