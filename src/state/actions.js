@@ -83,4 +83,22 @@ export const departmentDataActions = {
       return store.get();
     },
   ),
+  setStaff: action(
+    departmentDataStore,
+    'setStaff',
+    (
+      store,
+      /** @type {string} */ department,
+      /** @type {Array<import('../..').StaffMember>} */ staff,
+    ) => {
+      const newContent = store.get().map((item) => {
+        if (item.name === department) {
+          item.staff = staff;
+        }
+        return item;
+      });
+      store.set(newContent);
+      return store.get();
+    },
+  ),
 };
