@@ -9,11 +9,11 @@ import { EmptyCardItem, SectionTitle, Toast } from './misc';
 import { chunkArray, genToastId } from './utils';
 
 /**
- * @typedef {(arg0: boolean, arg1: import('../..').ContactData) => void} DataEditSwitchFunc
+ * @typedef {(isNewObject: boolean, contactData: import('../..').ContactData) => void} DataEditSwitchFunc
  *
  * @typedef {object} ContactFormProps
  * @property {import('../..').ContactData} data
- * @property {(arg0: import('../..').ContactData) => void} setData
+ * @property {(contactData: import('../..').ContactData) => void} setData
  * @property {DataEditSwitchFunc} switchEditMode
  *
  * @param {ContactFormProps} props

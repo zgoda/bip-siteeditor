@@ -8,7 +8,7 @@ import { MIDDOT } from '../const';
 /**
  * @typedef {object} StaffMemberFormProps
  * @property {import('../..').StaffMember} data
- * @property {(arg0: import('../..').StaffMember) => void} setData
+ * @property {(staffMember: import('../..').StaffMember) => void} setData
  *
  * @param {StaffMemberFormProps} props
  * @returns {JSX.Element}

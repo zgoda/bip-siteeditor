@@ -6,7 +6,9 @@ import { clearState } from '../state/store';
 function StartOverAgain() {
   const buttonRef = useRef(null);
 
-  const handleClearClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const handleClearClick = (
+    /** @type {import('preact').JSX.TargetedEvent<HTMLButtonElement, Event>} */ e,
+  ) => {
     e.preventDefault();
     buttonRef.current && buttonRef.current.blur();
     clearState();
