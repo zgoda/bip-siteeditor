@@ -29,7 +29,9 @@ function DepartmentForm({ data, setData }) {
 
   const origData = { ...data };
 
-  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const submitHandler = (
+    /** @type {import('preact').JSX.TargetedEvent<HTMLFormElement, Event>} */ e,
+  ) => {
     e.preventDefault();
     setData(origData, { name, domain, location, phone, email });
   };
@@ -111,14 +113,16 @@ function DepartmentItem({ departmentData, setData, departmentStaffDisplay }) {
   };
 
   const displayStaffButtonClick = (
-    /** @type {{ preventDefault: () => void; }} */ e,
+    /** @type {import('preact').JSX.TargetedMouseEvent<HTMLButtonElement>} */ e,
   ) => {
     e.preventDefault();
     staffButtonRef && staffButtonRef.current.blur();
     departmentStaffDisplay(departmentData.name);
   };
 
-  const editButtonClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const editButtonClick = (
+    /** @type {import('preact').JSX.TargetedMouseEvent<HTMLButtonElement>} */ e,
+  ) => {
     e.preventDefault();
     setFormVisible(!formVisible);
   };
@@ -169,7 +173,9 @@ function DepartmentSection({
     email: '',
   };
 
-  const addDepartmentClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const addDepartmentClick = (
+    /** @type {import('preact').JSX.TargetedMouseEvent<HTMLButtonElement>} */ e,
+  ) => {
     e.preventDefault();
     addDepartmentButtonRef.current && addDepartmentButtonRef.current.blur();
     setDeptFormVisible(!deptFormVisible);
@@ -215,7 +221,9 @@ function DepartmentGrid() {
     email: '',
   };
 
-  const addStaffMemberClick = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const addStaffMemberClick = (
+    /** @type {import('preact').JSX.TargetedMouseEvent<HTMLButtonElement>} */ e,
+  ) => {
     e.preventDefault();
     addStaffMemberButtonRef.current && addStaffMemberButtonRef.current.blur();
     setStaffFormVisible(!staffFormVisible);
@@ -237,14 +245,19 @@ function DepartmentGrid() {
     setCurrentDepartment(deptArray[0].name);
   }
 
-  const dataUpdated = (data) => {
+  const dataUpdated = (/** @type {import('../..').Department} */ data) => {
     const department = staffMap[currentDepartment];
-    department.forEach((staffMember, index) => {
-      if (staffMember.id === data.id) {
-        department[index] = data;
-        return;
-      }
-    });
+    department.forEach(
+      (
+        /** @type {import('../..').StaffMember} */ staffMember,
+        /** @type {number} */ index,
+      ) => {
+        if (staffMember.id === data.id) {
+          department[index] = data;
+          return;
+        }
+      },
+    );
     staffMap[currentDepartment] = [...department, data];
   };
 

@@ -36,7 +36,9 @@ function ContactForm({ data, setData, switchEditMode }) {
     }
   }, [data]);
 
-  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const submitHandler = (
+    /** @type {import('preact').JSX.TargetedEvent<HTMLFormElement, Event>} */ e,
+  ) => {
     e.preventDefault();
     setData({ id, name, phone, email });
     switchEditMode(false, null);
@@ -83,7 +85,9 @@ function ContactForm({ data, setData, switchEditMode }) {
  * @returns {JSX.Element}
  */
 function ContactItem({ data, dataEditSwitch }) {
-  const buttonClickHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const buttonClickHandler = (
+    /** @type {import('preact').JSX.TargetedMouseEvent<HTMLButtonElement>} */ e,
+  ) => {
     e.preventDefault();
     dataEditSwitch(false, data);
   };
@@ -122,7 +126,9 @@ function ContactItem({ data, dataEditSwitch }) {
 function ContactFormRow({ row, withAddButton, dataEditSwitch }) {
   const addContactButtonRef = useRef(null);
 
-  const emptyItemClickHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const emptyItemClickHandler = (
+    /** @type {import('preact').JSX.TargetedMouseEvent<HTMLButtonElement>} */ e,
+  ) => {
     e.preventDefault();
     addContactButtonRef.current && addContactButtonRef.current.blur();
     dataEditSwitch(true, null);

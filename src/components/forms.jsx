@@ -250,7 +250,9 @@ function GenericDataForm() {
     }
   }, [genericData]);
 
-  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const submitHandler = (
+    /** @type {import('preact').JSX.TargetedEvent<HTMLFormElement, Event>} */ e,
+  ) => {
     e.preventDefault();
     genericDataActions.set({
       name,
@@ -334,7 +336,9 @@ function AddressDataForm() {
     }
   }, [addressData]);
 
-  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const submitHandler = (
+    /** @type {import('preact').JSX.TargetedEvent<HTMLFormElement, Event>} */ e,
+  ) => {
     e.preventDefault();
     addressDataActions.set({ street, zipCode: zip_code, town });
   };

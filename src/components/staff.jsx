@@ -48,7 +48,7 @@ function StaffMemberForm({ data, setData }) {
   ];
 
   const submitHandler = (
-    /** @type {import('preact/src/jsx').JSXInternal.TargetedEvent<HTMLFormElement, Event>} */ e,
+    /** @type {import('preact').JSX.TargetedEvent<HTMLFormElement, Event>} */ e,
   ) => {
     e.preventDefault();
     setData({
