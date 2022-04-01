@@ -47,7 +47,9 @@ function StaffMemberForm({ data, setData }) {
     },
   ];
 
-  const submitHandler = (/** @type {{ preventDefault: () => void; }} */ e) => {
+  const submitHandler = (
+    /** @type {import('preact/src/jsx').JSXInternal.TargetedEvent<HTMLFormElement, Event>} */ e,
+  ) => {
     e.preventDefault();
     setData({
       id,
