@@ -7,7 +7,15 @@
   "head": {
     "lang": "pl",
     "title": "Edytor danych instancji BIP",
-    "author": "Jarek Zgoda",
-    "description": "Program do edycji danych instancji Biuletynu Informacji Pyblicznych (BIP)"
+    "meta": [
+      {
+        "name": "author",
+        "content": "Jarek Zgoda"
+      },
+      {
+        "name": "description",
+        "content": "Program do edycji danych instancji Biuletynu Informacji Publicznych (BIP)"
+      }
+    ]
   }
 }
