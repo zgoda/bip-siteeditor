@@ -1,4 +1,10 @@
 import { render } from 'preact';
 import { App } from './app';
+import { AppState, createAppState } from './state';
 
-render(<App />, document.getElementById('app'));
+render(
+  <AppState.Provider value={createAppState()}>
+    <App />
+  </AppState.Provider>,
+  document.getElementById('app'),
+);
