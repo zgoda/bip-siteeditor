@@ -1,31 +1,20 @@
 import { useLang, useMeta, useTitle } from 'hoofd/preact';
 
-import { StartOverAgain } from './components/misc';
-import {
-  AddressData,
-  AppInfo,
-  ContactData,
-  DepartmentsData,
-  GenericData,
-} from './components/parts';
+import { mast, head } from './app.json';
 
 function App() {
-  const appTitle = 'Edytor danych instancji BIP';
-
-  useLang('pl');
-  useTitle(appTitle);
-  useMeta({ name: 'author', content: 'Jarek Zgoda' });
-  useMeta({ name: 'descritpion', content: 'Program do edycji danych instancji BIP' });
+  useLang(head.lang);
+  useTitle(head.title);
+  useMeta({ name: 'author', content: head.author });
+  useMeta({ name: 'descritpion', content: head.description });
 
   return (
-    <div class="container grid-lg my-2">
-      <AppInfo appTitle={appTitle} />
-      <GenericData />
-      <AddressData />
-      <ContactData />
-      <DepartmentsData />
-      <StartOverAgain />
-    </div>
+    <>
+      <h1>{head.title}</h1>
+      {mast.paragraphs.map((para, index) => (
+        <p key={index}>{para}</p>
+      ))}
+    </>
   );
 }
 

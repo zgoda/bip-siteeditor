@@ -1,0 +1,13 @@
+{
+  "mast": {
+    "paragraphs": [
+      "Witamy w programie do edycji danych instytucji obsługiwanej przez aplikację Biuletynu Informacji Publicznych (BIP). Proszę wybrać sekcję dokumentu do edycji z menu."
+    ]
+  },
+  "head": {
+    "lang": "pl",
+    "title": "Edytor danych instancji BIP",
+    "author": "Jarek Zgoda",
+    "description": "Program do edycji danych instancji Biuletynu Informacji Pyblicznych (BIP)"
+  }
+}
