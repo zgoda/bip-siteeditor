@@ -5,7 +5,8 @@ import { mast, head } from './app.json';
 function App() {
   useLang(head.lang);
   useTitle(head.title);
-  head.meta.map(({ name, content }) => useMeta({ name, content }));
+  useMeta({ name: 'author', content: head.author });
+  useMeta({ name: 'descritpion', content: head.description });
 
   return (
     <>
