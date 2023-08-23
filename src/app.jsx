@@ -1,8 +1,9 @@
 import { useLang, useMeta, useTitle } from 'hoofd/preact';
 
 import { mast, head } from './app.json';
+import { MenuTree } from './menutree';
 
-function App() {
+export function App() {
   useLang(head.lang);
   useTitle(head.title);
   useMeta({ name: 'author', content: head.author });
@@ -14,8 +15,9 @@ function App() {
       {mast.paragraphs.map((para, index) => (
         <p key={index}>{para}</p>
       ))}
+      <div class="parent">
+        <MenuTree />
+      </div>
     </>
   );
 }
-
-export { App };
