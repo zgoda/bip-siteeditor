@@ -12,8 +12,8 @@ export function App() {
   return (
     <>
       <h1>{head.title}</h1>
-      {mast.paragraphs.map((para, index) => (
-        <p key={index}>{para}</p>
+      {mast.paragraphs.map((para) => (
+        <p key={para}>{para}</p>
       ))}
       <div class="parent">
         <MenuTree />
