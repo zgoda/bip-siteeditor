@@ -14,7 +14,7 @@
   "dependencies": {
     "@picocss/pico": "^1.5.10",
     "@preact/signals": "^1.2.1",
-    "hoofd": "^1.7.0",
+    "hoofd": "^1.7.1",
     "preact": "^10.17.1",
     "preact-feather": "^4.2.1",
     "uid": "^2.0.2"

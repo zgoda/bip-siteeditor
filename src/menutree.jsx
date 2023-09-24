@@ -1,5 +1,6 @@
 import { useContext } from 'preact/hooks';
 import { AppState } from './state';
+import { addContactButton, addDepartmentButton } from './menutree.json';
 
 export function MenuTree() {
   const state = useContext(AppState);
@@ -32,12 +33,18 @@ export function MenuTree() {
             {state.contactsData.value.map((contact) => {
               return <p key={contact.name}>{contact.name}</p>;
             })}
+            <p role="button" class="secondary outline">
+              {addContactButton.label}
+            </p>
           </li>
           <li>
             <h4>Działy</h4>
             {state.departmentsData.value.map((department) => {
               return <p key={department.name}>{department.name}</p>;
             })}
+            <p role="button" class="secondary outline">
+              {addDepartmentButton.label}
+            </p>
           </li>
         </ul>
       </nav>
