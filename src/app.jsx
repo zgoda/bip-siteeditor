@@ -1,9 +1,10 @@
 import { useLang, useMeta, useTitle } from 'hoofd/preact';
 
 import { mast, head } from './app.json';
-import { MenuTree } from './menutree';
 import { GenericData } from './components/genericdata';
 import { AddressData } from './components/addressdata';
+import { ContactList } from './components/contactlist';
+import { DepartmentList } from './components/departmentlist';
 
 export function App() {
   useLang(head.lang);
@@ -17,15 +18,10 @@ export function App() {
       {mast.paragraphs.map((para) => (
         <p key={para}>{para}</p>
       ))}
-      <div class="parent">
-        <div>
-          <MenuTree />
-        </div>
-        <div>
-          <GenericData />
-          <AddressData />
-        </div>
-      </div>
+      <GenericData />
+      <AddressData />
+      <ContactList />
+      <DepartmentList />
     </>
   );
 }
