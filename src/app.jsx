@@ -2,6 +2,8 @@ import { useLang, useMeta, useTitle } from 'hoofd/preact';
 
 import { mast, head } from './app.json';
 import { MenuTree } from './menutree';
+import { GenericData } from './components/genericdata';
+import { AddressData } from './components/addressdata';
 
 export function App() {
   useLang(head.lang);
@@ -16,7 +18,13 @@ export function App() {
         <p key={para}>{para}</p>
       ))}
       <div class="parent">
-        <MenuTree />
+        <div>
+          <MenuTree />
+        </div>
+        <div>
+          <GenericData />
+          <AddressData />
+        </div>
       </div>
     </>
   );
