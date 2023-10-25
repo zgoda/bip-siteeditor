@@ -70,3 +70,8 @@ span.icon > svg {
   height: 1rem;
   vertical-align: text-top;
 }
+
+.grid label {
+  margin-top: auto;
+  margin-bottom: auto;
+}
